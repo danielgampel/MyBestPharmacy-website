@@ -100,6 +100,10 @@
     footer a { transition: color 0.2s; }
     footer a:hover { color: var(--green) !important; }
     a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; border-radius: 4px; }
+
+    /* ── Mobile hero image sizing ─────────────────── */
+    .hero-compounding-img { height: 260px; }
+    @media (min-width: 768px) { .hero-compounding-img { height: 480px; } }
   </style>
 </head>
 <body>
@@ -171,11 +175,11 @@
         </div>
       </div>
       <!-- RIGHT: Compounding photo -->
-      <div class="fu fu-0 hidden md:flex items-center justify-center">
+      <div class="fu fu-0 flex items-center justify-center">
         <div style="position:relative; width:100%;">
           <div style="position:absolute;inset:-16px;background:radial-gradient(ellipse at center, rgba(106,191,75,0.18) 0%, rgba(27,82,38,0.1) 45%, transparent 70%);border-radius:32px;pointer-events:none;"></div>
           <div style="position:relative;border-radius:24px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.5),0 8px 28px rgba(0,0,0,0.28),0 0 0 1px rgba(255,255,255,0.09);">
-            <img src="website_pics/compoundingpic.jpg" alt="Compounding pharmacy — custom medications prepared by My Best Pharmacy" style="width:100%;height:480px;object-fit:cover;object-position:center center;display:block;" />
+            <img src="website_pics/compoundingpic.jpg" alt="Compounding pharmacy — custom medications prepared by My Best Pharmacy" class="hero-compounding-img" style="width:100%;object-fit:cover;object-position:center center;display:block;" />
             <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(6,26,8,0.55) 0%,rgba(6,26,8,0.05) 40%,transparent 100%);"></div>
             <div style="position:absolute;bottom:16px;left:18px;display:flex;align-items:center;gap:8px;">
               <span style="width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(106,191,75,0.8);"></span>
