@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Providers — My Best Pharmacy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue: #1B5226;
+      --blue-dk: #0B3016;
+      --blue-md: #14421E;
+      --blue-lt: #226E32;
+      --green: #6ABF4B;
+      --green-dk: #4E9035;
+      --off-white: #F8F9FA;
+      --gray-50: #EEF3F9;
+      --gray-100: #D8E4F0;
+      --gray-600: #4A607A;
+      --gray-700: #3D5570;
+      --gray-900: #0B3016;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--gray-900); -webkit-font-smoothing: antialiased; margin: 0; padding: 0; }
+    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; margin: 0; }
+    p { margin: 0; }
+    a { text-decoration: none; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--off-white); }
+    ::-webkit-scrollbar-thumb { background: var(--gray-100); border-radius: 3px; }
+
+    #navbar {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 rgba(27,82,38,0.08);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    #navbar.scrolled {
+      background: rgba(248,249,250,0.99) !important;
+      box-shadow: 0 1px 0 rgba(27,82,38,0.11), 0 4px 24px rgba(27,82,38,0.07) !important;
+    }
+    .nav-link { position: relative; color: var(--blue); font-weight: 500; font-size: 15px; transition: color 0.2s; }
+    .nav-link::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 2px; background: var(--green); border-radius: 2px; transition: width 0.2s ease; }
+    .nav-link:hover { color: var(--green); }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    .nav-btn { background: var(--green); color: #fff; font-weight: 600; font-size: 15px; padding: 10px 22px; border-radius: 8px; transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; box-shadow: 0 2px 10px rgba(106,191,75,0.3); }
+    .nav-btn:hover { background: var(--green-dk); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(106,191,75,0.4); }
+
+    .mob-menu { position: fixed; top: 0; right: 0; bottom: 0; width: 280px; background: #fff; z-index: 200; padding: 28px 24px; transform: translateX(100%); transition: transform 0.32s cubic-bezier(0.22,1,0.36,1); display: flex; flex-direction: column; box-shadow: -4px 0 40px rgba(0,0,0,0.14); }
+    .mob-menu.open { transform: translateX(0); }
+    .mob-overlay { position: fixed; inset: 0; background: rgba(7,26,11,0.45); z-index: 199; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .mob-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .hex-bg {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='1' d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V50l28-16 28 16v34L28 100z'/%3E%3C/svg%3E");
+    }
+
+    .btn-green { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; background: var(--green); color: #fff; font-family: 'DM Sans',sans-serif; font-weight: 600; font-size: 15px; border-radius: 10px; border: none; cursor: pointer; transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; box-shadow: 0 4px 16px rgba(106,191,75,0.38); }
+    .btn-green:hover { background: var(--green-dk); transform: translateY(-1px); box-shadow: 0 6px 22px rgba(106,191,75,0.45); }
+    .btn-green:active { transform: translateY(0); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fu { opacity: 0; animation: fadeUp 0.75s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .fu-0 { animation-delay: 0s; }
+    .fu-1 { animation-delay: 0.08s; }
+    .fu-2 { animation-delay: 0.22s; }
+    .fu-3 { animation-delay: 0.38s; }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+    .underline-g { position: relative; padding-bottom: 18px; }
+    .underline-g::after { content: ''; position: absolute; bottom: 0; left: 0; width: 44px; height: 3px; background: var(--green); border-radius: 2px; }
+
+    /* Form badge */
+    .form-badge { display: inline-block; padding: 3px 10px; background: rgba(27,82,38,0.08); color: var(--blue); border-radius: 100px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+
+    /* Compound entry */
+    .cpd-entry { padding: 16px 0; border-bottom: 1px solid var(--gray-100); }
+    .cpd-entry:last-child { border-bottom: none; }
+
+    /* Specialty section header */
+    .spec-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .spec-num { width: 36px; height: 36px; border-radius: 8px; background: var(--blue); color: #fff; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    /* How-to cards */
+    .how-card { transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease; }
+    .how-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(27,82,38,0.12), 0 4px 14px rgba(27,82,38,0.06) !important; }
+
+    footer a { transition: color 0.2s; }
+    footer a:hover { color: var(--green) !important; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════ NAVIGATION ══════════════════════════ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex items-center justify-between h-20 md:h-28">
+      <a href="index.html" class="flex-shrink-0">
+        <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-16 md:h-24 w-auto" />
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="services.html" class="nav-link">For Patients</a>
+        <a href="equipment.html" class="nav-link">Equipment</a>
+        <a href="providers.html" class="nav-link active">Providers</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+
+      </div>
+      <button id="ham" class="md:hidden p-2" style="color: var(--blue);" aria-label="Open menu">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div id="mob-overlay" class="mob-overlay"></div>
+<div id="mob-menu" class="mob-menu">
+  <button id="mob-close" class="absolute top-5 right-5 p-2" style="color: var(--blue);" aria-label="Close menu">
+    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="mt-10 flex flex-col gap-5">
+    <a href="index.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">Home</a>
+    <a href="services.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">For Patients</a>
+    <a href="equipment.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">Equipment</a>
+    <a href="providers.html" style="color: var(--green); font-weight: 600; font-size: 20px;">Providers</a>
+    <a href="contact.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">Contact</a>
+
+  </div>
+  <div class="mt-auto pt-6" style="border-top: 1px solid var(--gray-100);">
+    <p style="font-size: 12px; color: var(--gray-600); margin-bottom: 6px;">Call us</p>
+    <a href="tel:5612004245" style="color: var(--blue); font-weight: 600;">(561) 200-4245</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════ PAGE HERO ══════════════════════════ -->
+<section class="relative overflow-hidden" style="padding: 140px 0 100px; background: linear-gradient(150deg, #071A0C 0%, #1B5226 55%, #14421E 100%);">
+  <div class="hex-bg absolute inset-0" style="opacity: 0.7;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 70% at 80% 50%, rgba(106,191,75,0.09) 0%, transparent 60%);"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <!-- LEFT: Text -->
+      <div>
+        <div class="fu fu-1 inline-flex items-center gap-2 mb-5" style="padding: 6px 14px; border-radius: 100px; border: 1px solid rgba(106,191,75,0.4); background: rgba(106,191,75,0.08);">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--green);"></span>
+          <span style="color: var(--green); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;">Healthcare Providers</span>
+        </div>
+        <h1 class="fu fu-2" style="font-size: clamp(2.6rem, 6vw, 4.5rem); font-weight: 700; color: #fff; letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 14px;">For Healthcare<br/>Providers</h1>
+        <p class="fu fu-2" style="font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--green); font-weight: 600; letter-spacing: -0.01em; margin-bottom: 16px;">My Best Pharmacy — Compounding Partners</p>
+        <p class="fu fu-3" style="font-size: clamp(1rem, 1.5vw, 1.15rem); color: rgba(255,255,255,0.7); line-height: 1.75; max-width: 520px;">We make it simple to prescribe compounded medications for your patients. Send us an Rx and we'll handle the rest.</p>
+        <div class="fu fu-3 flex flex-wrap gap-3 mt-8">
+          <a href="tel:5612004245" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--green);color:#fff;font-family:'DM Sans',sans-serif;font-weight:700;font-size:16px;border-radius:10px;box-shadow:0 4px 16px rgba(106,191,75,0.4);">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.18a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 12.1a16 16 0 006 6l.35-.35a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            (561) 200-4245
+          </a>
+          <div style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:15px;border-radius:10px;">
+            Fax: 561.200.4236
+          </div>
+        </div>
+      </div>
+      <!-- RIGHT: Compounding photo -->
+      <div class="fu fu-0 hidden md:flex items-center justify-center">
+        <div style="position:relative; width:100%;">
+          <div style="position:absolute;inset:-16px;background:radial-gradient(ellipse at center, rgba(106,191,75,0.18) 0%, rgba(27,82,38,0.1) 45%, transparent 70%);border-radius:32px;pointer-events:none;"></div>
+          <div style="position:relative;border-radius:24px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.5),0 8px 28px rgba(0,0,0,0.28),0 0 0 1px rgba(255,255,255,0.09);">
+            <img src="website_pics/compoundingpic.jpg" alt="Compounding pharmacy — custom medications prepared by My Best Pharmacy" style="width:100%;height:480px;object-fit:cover;object-position:center center;display:block;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(6,26,8,0.55) 0%,rgba(6,26,8,0.05) 40%,transparent 100%);"></div>
+            <div style="position:absolute;bottom:16px;left:18px;display:flex;align-items:center;gap:8px;">
+              <span style="width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(106,191,75,0.8);"></span>
+              <span style="color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;letter-spacing:0.04em;">Custom Compounding · Licensed in Florida</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ HOW TO SEND RX ══════════════════════════ -->
+<section style="padding: 100px 0; background: var(--off-white);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="reveal" style="margin-bottom: 56px;">
+      <span class="tag">Getting Started</span>
+      <h2 class="underline-g" style="font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em;">How to Send a Prescription</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <!-- Fax -->
+      <div class="how-card reveal bg-white rounded-2xl p-8" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
+        <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6" style="background: linear-gradient(135deg, rgba(27,82,38,0.1), rgba(106,191,75,0.07));">
+          <svg width="26" height="26" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z"/></svg>
+        </div>
+        <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--gray-900); margin-bottom: 10px;">Fax Your Prescription</h3>
+        <p style="color: var(--gray-700); font-size: 15px; line-height: 1.7; margin-bottom: 16px;">The fastest way to send us a compounding order.</p>
+        <p style="font-size: 1.5rem; font-weight: 700; color: var(--blue); letter-spacing: -0.01em;">561.200.4236</p>
+      </div>
+      <!-- Phone 1 -->
+      <div class="how-card reveal bg-white rounded-2xl p-8" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
+        <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6" style="background: linear-gradient(135deg, rgba(27,82,38,0.1), rgba(106,191,75,0.07));">
+          <svg width="26" height="26" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+        </div>
+        <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--gray-900); margin-bottom: 10px;">Call Us Directly</h3>
+        <p style="color: var(--gray-700); font-size: 15px; line-height: 1.7; margin-bottom: 16px;">Speak with our compounding pharmacists to discuss formulation details.</p>
+        <a href="tel:5612004245" style="font-size: 1.5rem; font-weight: 700; color: var(--blue); letter-spacing: -0.01em; transition: color 0.2s;">(561) 200-4245</a>
+      </div>
+      <!-- Online -->
+      <div class="how-card reveal bg-white rounded-2xl p-8" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
+        <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6" style="background: linear-gradient(135deg, rgba(27,82,38,0.1), rgba(106,191,75,0.07));">
+          <svg width="26" height="26" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+        </div>
+        <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--gray-900); margin-bottom: 10px;">Contact Us</h3>
+        <p style="color: var(--gray-700); font-size: 15px; line-height: 1.7; margin-bottom: 16px;">Questions about a formula or turnaround time? Reach out anytime.</p>
+        <a href="contact.html" style="font-size: 1rem; font-weight: 600; color: var(--green); letter-spacing: -0.01em; transition: color 0.2s;">Visit Contact Page →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ COMPOUNDS WE PREPARE ══════════════════════════ -->
+<section style="padding: 80px 0 100px; background: var(--gray-50);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="reveal" style="margin-bottom: 56px;">
+      <span class="tag">Full Formulary</span>
+      <h2 class="underline-g" style="font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em;">Compounds We Prepare</h2>
+      <p style="margin-top: 16px; color: var(--gray-700); font-size: 16px; max-width: 600px; line-height: 1.7;">All formulations are prepared to your specific prescription. Delivery forms may be adjusted based on clinical need and patient tolerability.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-8">
+
+      <!-- ── HORMONE THERAPY ── -->
+      <div class="reveal bg-white rounded-2xl overflow-hidden" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07);">
+        <div style="background: linear-gradient(135deg, var(--blue) 0%, var(--blue-lt) 100%); padding: 24px 28px;">
+          <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 6px;">Specialty</p>
+          <h3 style="font-size: 1.6rem; font-weight: 700; color: #fff;">Hormone Therapy</h3>
+        </div>
+        <div style="padding: 24px 28px;">
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Menopause / Perimenopause HRT</p>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.6; margin-bottom: 8px;">Estradiol, Progesterone, Testosterone, Estriol, DHEA</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Cream</span>
+              <span class="form-badge">Capsules</span>
+              <span class="form-badge">Troches</span>
+            </div>
+          </div>
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Vaginal Products</p>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.6; margin-bottom: 8px;">Estradiol, Estriol, Progesterone, Vitamin E</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Cream</span>
+              <span class="form-badge">Ovule</span>
+              <span class="form-badge">Suppository</span>
+            </div>
+          </div>
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Low Libido / Sexual Function</p>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.6; margin-bottom: 8px;">Testosterone, Biest 80/20, Biest 50/50, Estradiol, Progesterone</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Cream</span>
+              <span class="form-badge">Gel</span>
+            </div>
+          </div>
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Chronic Inflammation / Autoimmune / Chronic Pain</p>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.6; margin-bottom: 8px;">Low Dose Naltrexone (LDN)</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Capsule</span>
+              <span class="form-badge">Suspension</span>
+            </div>
+          </div>
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Pelvic Pain (Vulvodynia / Vaginismus)</p>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.6; margin-bottom: 8px;">Baclofen, Diazepam</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Suspension</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── DERMATOLOGY ── -->
+      <div class="reveal bg-white rounded-2xl overflow-hidden" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07);">
+        <div style="background: linear-gradient(135deg, #0E3B2F 0%, #1A6B4A 100%); padding: 24px 28px;">
+          <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 6px;">Specialty</p>
+          <h3 style="font-size: 1.6rem; font-weight: 700; color: #fff;">Dermatology</h3>
+        </div>
+        <div style="padding: 24px 28px;">
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Skin Brightening / Hyperpigmentation (FATH/HATHK)</p>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.6; margin-bottom: 8px;">Fluocinonide, Tretinoin, Hydroquinone, Kojic Acid, Ascorbic Acid, Tranexamic Acid, Niacinamide, Clindamycin, Hydrocortisone</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Cream</span>
+              <span class="form-badge">Gel</span>
+            </div>
+          </div>
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Acne / Rosacea</p>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.6; margin-bottom: 8px;">Niacinamide, Azelaic Acid, Metronidazole, Tretinoin, Spironolactone, Clindamycin, Ivermectin, Hyaluronic Acid, Kojic Acid, Benzoyl Peroxide, Fluocinonide</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Cream</span>
+              <span class="form-badge">Gel</span>
+            </div>
+          </div>
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Anti-Inflammatory (Turmeric &amp; Ceramide Base)</p>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.6; margin-bottom: 8px;">Niacinamide, Fluocinonide, Clobetasol, Triamcinolone Acetonide, Desonide</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Ointment</span>
+              <span class="form-badge">Cream</span>
+              <span class="form-badge">Gel</span>
+            </div>
+          </div>
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Actinic Keratosis</p>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.6; margin-bottom: 8px;">Fluorouracil, Calcipotriene, Niacinamide</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Cream</span>
+            </div>
+          </div>
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Scar / Keloid Gel</p>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.6; margin-bottom: 8px;">Pracasil Plus, Silicone, Topiramate, Betamethasone Valerate, Niacinamide, Scar Care Base (Keloids)</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Gel</span>
+            </div>
+          </div>
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Numbing Agents</p>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.6; margin-bottom: 8px;">Benzocaine, Lidocaine, Prilocaine, Tetracaine</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Ointment</span>
+            </div>
+          </div>
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Baby Ointment</p>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.6; margin-bottom: 8px;">Miconazole, Zinc Oxide, Niacinamide</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Gel</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ── GASTROENTEROLOGY ── -->
+      <div class="reveal bg-white rounded-2xl overflow-hidden" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07);">
+        <div style="background: linear-gradient(135deg, #2E1A0E 0%, #7B4520 100%); padding: 24px 28px;">
+          <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 6px;">Specialty</p>
+          <h3 style="font-size: 1.6rem; font-weight: 700; color: #fff;">Gastroenterology</h3>
+        </div>
+        <div style="padding: 24px 28px;">
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Nitroglycerin Rectal Compound</p>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.6; margin-bottom: 8px;">With optional Lidocaine and/or Hydrocortisone</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Ointment</span>
+            </div>
+          </div>
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Diltiazem Rectal Compound</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Ointment</span>
+              <span class="form-badge">Suppositories</span>
+            </div>
+          </div>
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Hydrocortisone Rectal Compound</p>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.6; margin-bottom: 8px;">With Lidocaine</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Suppositories</span>
+              <span class="form-badge">Ointment</span>
+            </div>
+          </div>
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Combination Rectal Compounds</p>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.6; margin-bottom: 8px;">Diltiazem, Nifedipine, Diclofenac, Lidocaine, Hydrocortisone</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Ointment</span>
+              <span class="form-badge">Suppositories</span>
+            </div>
+          </div>
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Mesalamine 1,000 mg / Budesonide 2 mg</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Suppositories</span>
+            </div>
+          </div>
+
+          <div class="cpd-entry">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 14px; margin-bottom: 4px;">Baclofen / Cyclobenzaprine / Guaifenesin</p>
+            <div class="flex flex-wrap gap-1">
+              <span class="form-badge">Suppositories</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ CONTACT STRIP ══════════════════════════ -->
+<section style="padding: 80px 0; background: var(--off-white); border-top: 1px solid var(--gray-100);">
+  <div class="max-w-4xl mx-auto px-6 lg:px-10 text-center">
+    <span class="reveal tag">Contact the Pharmacy</span>
+    <h2 class="reveal" style="font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em; margin-bottom: 16px;">Questions? We're here to help.</h2>
+    <p class="reveal" style="color: var(--gray-700); font-size: 16px; line-height: 1.7; margin-bottom: 40px;">Our pharmacists are available during business hours to discuss formulations, delivery options, and patient-specific needs.</p>
+    <div class="reveal flex flex-wrap justify-center gap-4">
+      <a href="tel:5612004245" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; background: var(--blue); color: #fff; font-weight: 600; font-size: 15px; border-radius: 10px; transition: background 0.2s, transform 0.15s; box-shadow: 0 4px 14px rgba(27,82,38,0.25);">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.18a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 12.1a16 16 0 006 6l.35-.35a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        (561) 200-4245
+      </a>
+      <div style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; background: var(--gray-50); color: var(--blue); font-weight: 600; font-size: 15px; border-radius: 10px; border: 1px solid var(--gray-100);">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m10.5 0a48.536 48.536 0 00-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5zm-3 0h.008v.008H15V10.5z"/></svg>
+        Fax: 561.200.4236
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ FOOTER ══════════════════════════ -->
+<footer style="background: var(--gray-900); color: #fff;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10" style="padding-top: 72px; padding-bottom: 32px;">
+    <div class="grid md:grid-cols-4 gap-10" style="margin-bottom: 48px;">
+      <div class="md:col-span-2">
+        <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-14 w-auto mb-4" style="filter: brightness(0) invert(1);" />
+        <p style="color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.75; max-width: 300px;">Full-service pharmacy serving patients and providers throughout South Florida.</p>
+        <p class="mt-4" style="color: var(--green); font-size: 13px; font-weight: 500;">Licensed pharmacy in the State of Florida.</p>
+      </div>
+      <div>
+        <p style="font-weight: 600; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 18px;">Quick Links</p>
+        <ul style="display: flex; flex-direction: column; gap: 12px; list-style: none; padding: 0; margin: 0;">
+          <li><a href="index.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">Home</a></li>
+          <li><a href="services.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">For Patients</a></li>
+          <li><a href="providers.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">For Providers</a></li>
+          <li><a href="contact.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-weight: 600; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 18px;">Contact</p>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <p style="color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.6;">1050 E Gateway Blvd, Ste 101<br/>Boynton Beach, FL 33426</p>
+          <a href="tel:5612004245" style="color: rgba(255,255,255,0.55); font-size: 14px;">(561) 200-4245</a>
+          <p style="color: rgba(255,255,255,0.55); font-size: 14px;">Fax: 561.200.4236</p>
+          <div style="color: rgba(255,255,255,0.4); font-size: 13px; line-height: 1.7; margin-top: 4px;">
+            <p>Mon–Fri: 9:00 AM – 6:00 PM</p>
+            <p>Sat: 9:00 AM – 2:00 PM</p>
+            <p>Sun: Closed</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center justify-between gap-4" style="padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.09);">
+      <p style="color: rgba(255,255,255,0.35); font-size: 13px;">© 2025 My Best Pharmacy. All rights reserved.</p>
+      <p style="color: rgba(255,255,255,0.35); font-size: 13px;">Boynton Beach, Florida</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 30); });
+
+  const ham = document.getElementById('ham');
+  const mob = document.getElementById('mob-menu');
+  const overlay = document.getElementById('mob-overlay');
+  const close = document.getElementById('mob-close');
+  ham.addEventListener('click', () => { mob.classList.add('open'); overlay.classList.add('open'); });
+  close.addEventListener('click', () => { mob.classList.remove('open'); overlay.classList.remove('open'); });
+  overlay.addEventListener('click', () => { mob.classList.remove('open'); overlay.classList.remove('open'); });
+
+  if (navigator.webdriver) {
+    document.querySelectorAll('.reveal, .fu').forEach(el => {
+      el.style.transition = 'none'; el.style.animation = 'none';
+      el.style.opacity = '1'; el.style.transform = 'none'; el.classList.add('in');
+    });
+  }
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => obs.observe(el));
+
+  // Hover states
+  document.querySelectorAll('a[href^="tel"]').forEach(a => {
+    a.addEventListener('mouseenter', () => a.style.color = 'var(--green)');
+    a.addEventListener('mouseleave', () => { if(!a.closest('footer')) a.style.color = 'var(--blue)'; });
+  });
+</script>
+</body>
+</html>

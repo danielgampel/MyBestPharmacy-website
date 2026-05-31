@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medical Equipment Rental &amp; Sales — My Best Pharmacy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue: #1B5226;
+      --blue-dk: #0B3016;
+      --blue-lt: #226E32;
+      --green: #6ABF4B;
+      --green-dk: #4E9035;
+      --off-white: #F8F9FA;
+      --gray-50: #EEF3F9;
+      --gray-100: #D8E4F0;
+      --gray-600: #4A607A;
+      --gray-700: #3D5570;
+      --gray-900: #0B3016;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--gray-900); -webkit-font-smoothing: antialiased; margin: 0; padding: 0; }
+    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; margin: 0; }
+    p { margin: 0; }
+    a { text-decoration: none; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--off-white); }
+    ::-webkit-scrollbar-thumb { background: var(--gray-100); border-radius: 3px; }
+
+    #navbar { background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 1px 0 rgba(27,82,38,0.08); transition: background 0.3s ease, box-shadow 0.3s ease; }
+    #navbar.scrolled { background: rgba(248,249,250,0.99) !important; box-shadow: 0 1px 0 rgba(27,82,38,0.11), 0 4px 24px rgba(27,82,38,0.07) !important; }
+    .nav-link { position: relative; color: var(--blue); font-weight: 500; font-size: 15px; transition: color 0.2s; }
+    .nav-link::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 2px; background: var(--green); border-radius: 2px; transition: width 0.2s ease; }
+    .nav-link:hover { color: var(--green); }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    .nav-btn { background: var(--green); color: #fff; font-weight: 600; font-size: 15px; padding: 10px 22px; border-radius: 8px; transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; box-shadow: 0 2px 10px rgba(106,191,75,0.3); }
+    .nav-btn:hover { background: var(--green-dk); transform: translateY(-1px); }
+
+    .mob-menu { position: fixed; top: 0; right: 0; bottom: 0; width: 280px; background: #fff; z-index: 200; padding: 28px 24px; transform: translateX(100%); transition: transform 0.32s cubic-bezier(0.22,1,0.36,1); display: flex; flex-direction: column; box-shadow: -4px 0 40px rgba(0,0,0,0.14); }
+    .mob-menu.open { transform: translateX(0); }
+    .mob-overlay { position: fixed; inset: 0; background: rgba(7,26,11,0.45); z-index: 199; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .mob-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .hex-bg { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='1' d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V50l28-16 28 16v34L28 100z'/%3E%3C/svg%3E"); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes scrollBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+    .fu { opacity: 0; animation: fadeUp 0.75s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .fu-0 { animation-delay: 0s; }
+    .fu-1 { animation-delay: 0.08s; } .fu-2 { animation-delay: 0.22s; } .fu-3 { animation-delay: 0.38s; }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+
+    /* Pricing table */
+    .price-table { width: 100%; border-collapse: collapse; }
+    .price-table th {
+      background: var(--blue);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 18px;
+      text-align: left;
+    }
+    .price-table th:not(:first-child) { text-align: center; }
+    .price-table td {
+      padding: 13px 18px;
+      font-size: 14px;
+      color: var(--gray-700);
+      border-bottom: 1px solid var(--gray-100);
+      vertical-align: middle;
+    }
+    .price-table td:not(:first-child) { text-align: center; font-weight: 600; color: var(--gray-900); }
+    .price-table td.na { color: var(--gray-600); font-weight: 400; }
+    .price-table tbody tr:last-child td { border-bottom: none; }
+    .price-table tbody tr:nth-child(even) td { background: var(--gray-50); }
+    .price-table tbody tr:hover td { background: rgba(106,191,75,0.05); }
+
+    /* Category card */
+    .cat-card { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 24px rgba(27,82,38,0.08), 0 1px 4px rgba(27,82,38,0.04); }
+    .cat-header { padding: 22px 24px 18px; border-bottom: 2px solid var(--green); display: flex; align-items: center; gap: 14px; }
+    .cat-icon { width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(27,82,38,0.1), rgba(106,191,75,0.08)); }
+
+    .note-text { font-size: 12px; color: var(--gray-600); font-style: italic; margin-top: 10px; padding: 0 4px; }
+
+    /* CTA section */
+    .btn-green { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; background: var(--green); color: #fff; font-family: 'DM Sans',sans-serif; font-weight: 600; font-size: 15px; border-radius: 10px; border: none; cursor: pointer; transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; box-shadow: 0 4px 16px rgba(106,191,75,0.38); }
+    .btn-green:hover { background: var(--green-dk); transform: translateY(-1px); }
+    footer a { transition: color 0.2s; }
+    footer a:hover { color: var(--green) !important; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; border-radius: 4px; }
+
+    /* ── Equipment Preview ── */
+    tr[data-item] { cursor: pointer; }
+    tr[data-item]:hover td { background: rgba(106,191,75,0.07) !important; }
+
+    .eq-eye {
+      display: inline-flex; align-items: center; margin-left: 7px;
+      color: var(--green); opacity: 0.7;
+      vertical-align: middle; flex-shrink: 0;
+    }
+
+    /* Modal overlay */
+    #eq-modal-overlay {
+      position: fixed; inset: 0; z-index: 600;
+      background: rgba(7,26,11,0.65);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    #eq-modal-overlay.open { opacity: 1; pointer-events: auto; }
+
+    /* Modal card */
+    #eq-modal {
+      background: #fff; border-radius: 20px; overflow: hidden;
+      max-width: 480px; width: 100%;
+      transform: translateY(18px) scale(0.97);
+      transition: transform 0.28s cubic-bezier(0.22,1,0.36,1);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+    }
+    #eq-modal-overlay.open #eq-modal { transform: translateY(0) scale(1); }
+    #eq-modal .modal-img-wrap { position: relative; }
+    #eq-modal img { width: 100%; height: 300px; object-fit: contain; display: block; background: #f2f5f2; padding: 16px; }
+    #eq-modal .modal-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(6,26,8,0.5) 0%, transparent 50%);
+    }
+    #eq-modal .modal-close {
+      position: absolute; top: 12px; right: 12px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(0,0,0,0.45); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; transition: background 0.2s ease;
+    }
+    #eq-modal .modal-close:hover { background: rgba(0,0,0,0.65); }
+    #eq-modal .modal-body { padding: 22px 26px 28px; }
+    #eq-modal .modal-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.55rem; font-weight: 700; color: var(--gray-900);
+      margin-bottom: 10px; line-height: 1.2;
+    }
+    #eq-modal .modal-desc {
+      font-size: 14px; color: var(--gray-700); line-height: 1.75;
+    }
+    #eq-modal .modal-tag {
+      display: inline-block; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════ NAVIGATION ══════════════════════════ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex items-center justify-between h-20 md:h-28">
+      <a href="index.html" class="flex-shrink-0">
+        <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-16 md:h-24 w-auto" />
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="services.html" class="nav-link">For Patients</a>
+        <a href="equipment.html" class="nav-link active">Equipment</a>
+        <a href="providers.html" class="nav-link">Providers</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+
+      </div>
+      <button id="ham" class="md:hidden p-2" style="color: var(--blue);" aria-label="Open menu">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div id="mob-overlay" class="mob-overlay"></div>
+<div id="mob-menu" class="mob-menu">
+  <button id="mob-close" class="absolute top-5 right-5 p-2" style="color: var(--blue);" aria-label="Close menu">
+    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="mt-10 flex flex-col gap-5">
+    <a href="index.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">Home</a>
+    <a href="services.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">For Patients</a>
+    <a href="equipment.html" style="color: var(--green); font-weight: 600; font-size: 20px;">Equipment</a>
+    <a href="providers.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">Providers</a>
+    <a href="contact.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">Contact</a>
+
+  </div>
+  <div class="mt-auto pt-6" style="border-top: 1px solid var(--gray-100);">
+    <p style="font-size: 12px; color: var(--gray-600); margin-bottom: 6px;">Call us</p>
+    <a href="tel:5612004245" style="color: var(--blue); font-weight: 600;">(561) 200-4245</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════ PAGE HERO ══════════════════════════ -->
+<section class="relative overflow-hidden" style="padding: 160px 0 100px; background: linear-gradient(150deg, #071A0C 0%, #1B5226 55%, #14421E 100%);">
+  <div class="hex-bg absolute inset-0" style="opacity: 0.7;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 55% 70% at 85% 40%, rgba(106,191,75,0.1) 0%, transparent 60%);"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 w-full">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+      <!-- LEFT: text content -->
+      <div>
+        <div class="fu fu-1 inline-flex items-center gap-2 mb-5" style="padding: 6px 14px; border-radius: 100px; border: 1px solid rgba(106,191,75,0.4); background: rgba(106,191,75,0.08);">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--green);"></span>
+          <span style="color: var(--green); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;">Durable Medical Equipment</span>
+        </div>
+        <h1 class="fu fu-2" style="font-size: clamp(2.6rem, 5.5vw, 4.2rem); font-weight: 700; color: #fff; letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 14px;">Equipment Rental <span style="color: var(--green);">&amp;</span> Sales</h1>
+        <p class="fu fu-2" style="font-size: clamp(1.1rem, 2vw, 1.35rem); color: var(--green); font-weight: 600; letter-spacing: -0.01em; margin-bottom: 16px;">My Best Pharmacy — Boynton Beach, FL</p>
+        <p class="fu fu-3" style="font-size: clamp(0.95rem, 1.4vw, 1.1rem); color: rgba(255,255,255,0.7); line-height: 1.8; max-width: 520px;">We carry a wide range of durable medical equipment available for <strong style="color: #fff;">rent or outright purchase</strong> — wheelchairs, walkers, hospital beds, oxygen concentrators, scooters, and more. Call us to check availability.</p>
+      </div>
+
+      <!-- RIGHT: Equipment Image -->
+      <div class="fu fu-0 hidden lg:flex items-center justify-center" style="padding: 20px 0;">
+        <div style="position:relative; width:88%;">
+          <!-- Ambient glow behind image -->
+          <div style="position:absolute;inset:-20px;background:radial-gradient(ellipse at center, rgba(106,191,75,0.2) 0%, rgba(27,82,38,0.1) 45%, transparent 70%);border-radius:32px;pointer-events:none;"></div>
+          <img
+            src="website_pics/equipment-hero.jpg"
+            alt="Medical Equipment Rental — wheelchair and mobility aids available at My Best Pharmacy"
+            style="width:100%;border-radius:18px;box-shadow:0 28px 64px rgba(0,0,0,0.52),0 8px 24px rgba(0,0,0,0.3),0 0 0 1px rgba(255,255,255,0.08);position:relative;z-index:1;display:block;"
+          />
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="flex flex-col items-center gap-3 pb-10 pt-6">
+    <span style="color: rgba(255,255,255,0.55); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;">Scroll down to see pricing</span>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; animation: scrollBounce 1.6s ease-in-out infinite;">
+      <svg width="22" height="22" fill="none" stroke="rgba(106,191,75,0.9)" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+      <svg width="22" height="22" fill="none" stroke="rgba(106,191,75,0.5)" stroke-width="2.2" viewBox="0 0 24 24" style="margin-top:-10px;"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ INTRO NOTE ══════════════════════════ -->
+<section style="padding: 48px 0 0; background: var(--off-white);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <!-- Rent vs Buy callout banner -->
+    <div class="reveal rounded-2xl overflow-hidden" style="background: linear-gradient(135deg, #0A2E14, #1B5226); box-shadow: 0 4px 24px rgba(27,82,38,0.25);">
+      <div class="flex flex-wrap items-center justify-between gap-6 p-6">
+        <div class="flex items-center gap-4">
+          <div style="width: 48px; height: 48px; background: rgba(106,191,75,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <svg width="22" height="22" fill="none" stroke="var(--green)" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+          </div>
+          <div>
+            <p style="font-weight: 700; color: #fff; font-size: 16px; margin-bottom: 4px;">All Equipment Available to Rent <em style="color: var(--green);">or</em> Purchase</p>
+            <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Rental rates are listed below. For purchase pricing, call us — we'll give you a quote on any item.</p>
+          </div>
+        </div>
+        <a href="tel:5612004245" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--green);color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:14px;border-radius:10px;white-space:nowrap;box-shadow:0 4px 16px rgba(106,191,75,0.4);transition:background 0.2s,transform 0.15s;" onmouseover="this.style.background='#4E9035';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='var(--green)';this.style.transform='none'">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.18a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 12.1a16 16 0 006 6l.35-.35a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Call for Purchase Pricing
+        </a>
+      </div>
+    </div>
+
+    <!-- Notes bar -->
+    <div class="reveal rounded-2xl p-5 flex flex-wrap gap-5 mt-4" style="background: #fff; border: 1px solid var(--gray-100); box-shadow: 0 2px 12px rgba(27,82,38,0.05);">
+      <div class="flex items-start gap-3 flex-1" style="min-width: 200px;">
+        <svg style="color: var(--green); flex-shrink: 0; margin-top: 2px;" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <p style="font-size: 13px; color: var(--gray-700); line-height: 1.65;">Rental deposits are refundable upon return of equipment in good condition.</p>
+      </div>
+      <div class="flex items-start gap-3 flex-1" style="min-width: 200px;">
+        <svg style="color: var(--green); flex-shrink: 0; margin-top: 2px;" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <p style="font-size: 13px; color: var(--gray-700); line-height: 1.65;">Call <a href="tel:5612004245" style="color: var(--blue); font-weight: 600;">(561) 200-4245</a> to confirm availability and purchase pricing.</p>
+      </div>
+      <div class="flex items-start gap-3 flex-1" style="min-width: 200px;">
+        <svg style="color: var(--green); flex-shrink: 0; margin-top: 2px;" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <p style="font-size: 13px; color: var(--gray-700); line-height: 1.65;">"—" = not available for that interval. "N/A" = pricing not applicable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ RENTAL PRICING TABLES ══════════════════════════ -->
+<section style="padding: 60px 0 100px; background: var(--off-white);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div style="display: flex; flex-direction: column; gap: 48px;">
+
+      <!-- ── Mobility Products ── -->
+      <div class="cat-card reveal">
+        <div class="cat-header">
+          <div class="cat-icon">
+            <svg width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v6l3 3M5 20a7 7 0 0114 0"/></svg>
+          </div>
+          <div>
+            <p class="tag" style="margin-bottom: 2px;">Manual</p>
+            <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900);">Mobility Products</h3>
+          </div>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th style="width: 50%;">Item</th>
+                <th>Monthly</th>
+                <th>Bi-weekly</th>
+                <th>Deposit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-item="standard-wheelchair"><td>Standard Wheelchair 16" – 18"<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$60</td><td>$40</td><td>$150</td></tr>
+              <tr data-item="heavy-duty-wheelchair"><td>Heavy Duty Wheelchair 20" – 22"<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$80</td><td>$45</td><td>$160</td></tr>
+              <tr data-item="transport-chair"><td>Transport Chairs 17" – 19"<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$50</td><td>$35</td><td>$100</td></tr>
+              <tr data-item="reclining-wheelchair"><td>Reclining Back Wheelchair<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$90</td><td>$60</td><td>$300</td></tr>
+              <tr><td>Elevating Legrests <span style="font-size:12px;font-weight:400;color:var(--gray-600);">(add-on)</span></td><td>$20</td><td>$15</td><td class="na">—</td></tr>
+              <tr data-item="2-wheel-walker"><td>2 Wheel Folding Walker<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$30</td><td class="na">N/A</td><td>$100</td></tr>
+              <tr data-item="3-wheel-walker"><td>3 Wheel Walker<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$35</td><td class="na">N/A</td><td>$100</td></tr>
+              <tr data-item="4-wheel-walker"><td>4 Wheel Walker / Seat<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$40</td><td class="na">N/A</td><td>$100</td></tr>
+              <tr data-item="knee-walker"><td>Knee Walker<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$100</td><td class="na">—</td><td>$100</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Electric Mobility Products ── -->
+      <div class="cat-card reveal">
+        <div class="cat-header">
+          <div class="cat-icon">
+            <svg width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+          </div>
+          <div>
+            <p class="tag" style="margin-bottom: 2px;">Powered</p>
+            <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900);">Electric Mobility Products</h3>
+          </div>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th style="width: 50%;">Item</th>
+                <th>Monthly</th>
+                <th>Bi-weekly</th>
+                <th>Deposit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-item="3-wheel-scooter"><td>3 Wheel Scooter<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$150</td><td>$100</td><td>$500</td></tr>
+              <tr data-item="4-wheel-scooter"><td>4 Wheel Scooter<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$175</td><td>$125</td><td>$500</td></tr>
+              <tr data-item="foldable-scooter"><td>Foldable Scooters (Luggie, Drive)<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$350</td><td>$200</td><td>$800</td></tr>
+              <tr data-item="power-chair"><td>Power Chairs<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td class="na">N/A</td><td>$250</td><td>$1,000</td></tr>
+              <tr data-item="portable-ramp-6ft"><td>Portable Ramps 6'<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$60</td><td>$40</td><td>$100</td></tr>
+              <tr data-item="portable-ramp-3ft"><td>Portable Ramps 3'<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$50</td><td>$40</td><td>$100</td></tr>
+              <tr data-item="drive-duet"><td>Drive Duet<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$40</td><td class="na">—</td><td>$100</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Hospital Beds ── -->
+      <div class="cat-card reveal">
+        <div class="cat-header">
+          <div class="cat-icon">
+            <svg width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 7.5h16.5M3.75 7.5A2.25 2.25 0 011.5 5.25V4.5a.75.75 0 01.75-.75h19.5a.75.75 0 01.75.75v.75a2.25 2.25 0 01-2.25 2.25M3.75 7.5v9.75a2.25 2.25 0 002.25 2.25h12a2.25 2.25 0 002.25-2.25V7.5M9 12h6"/></svg>
+          </div>
+          <div>
+            <p class="tag" style="margin-bottom: 2px;">Home Care</p>
+            <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900);">Hospital Beds &amp; Accessories</h3>
+          </div>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th style="width: 50%;">Item</th>
+                <th>Monthly</th>
+                <th>Bi-weekly</th>
+                <th>Deposit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Full Electric Bed</td><td>$160</td><td class="na">N/A</td><td>$500</td></tr>
+              <tr><td>Semi Electric Bed</td><td>$145</td><td class="na">N/A</td><td>$500</td></tr>
+              <tr><td>Air Mattress</td><td>$250</td><td class="na">N/A</td><td>$500</td></tr>
+              <tr><td>Mattress <span style="font-size:12px;font-weight:400;color:var(--gray-600);">* Vinyl protector not included</span></td><td>$40</td><td class="na">N/A</td><td>$200</td></tr>
+              <tr><td>Manual Patient Lift</td><td>$180</td><td class="na">N/A</td><td>$100</td></tr>
+              <tr><td>Trapeze Bars</td><td>$60</td><td class="na">N/A</td><td>$150</td></tr>
+              <tr><td>IV Pole</td><td>$20</td><td class="na">N/A</td><td>$30</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Breast Pumps & Suction ── -->
+      <div class="cat-card reveal">
+        <div class="cat-header">
+          <div class="cat-icon">
+            <svg width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+          </div>
+          <div>
+            <p class="tag" style="margin-bottom: 2px;">Pediatric &amp; Specialty</p>
+            <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900);">Breast Pumps &amp; Suction</h3>
+          </div>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th style="width: 50%;">Item</th>
+                <th>Monthly</th>
+                <th>Bi-weekly</th>
+                <th>Deposit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Medela Lactina Select <span style="font-size:12px;font-weight:400;color:var(--gray-600);">* Pump kit sold separately</span></td><td>$50</td><td class="na">N/A</td><td>$200</td></tr>
+              <tr><td>Medela Symphony <span style="font-size:12px;font-weight:400;color:var(--gray-600);">* Pump kit sold separately</span></td><td>$65</td><td class="na">N/A</td><td>$200</td></tr>
+              <tr><td>Suction Pump Aspirator <span style="font-size:12px;font-weight:400;color:var(--gray-600);">* Cannister sold separately</span></td><td>$80</td><td>$60</td><td>$300</td></tr>
+              <tr><td>Billi Blanket</td><td>$150<span style="font-size:12px;font-weight:400;color:var(--gray-600);">/day</span></td><td class="na">—</td><td>$500</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Oxygen & Respiratory ── -->
+      <div class="cat-card reveal">
+        <div class="cat-header">
+          <div class="cat-icon">
+            <svg width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+          </div>
+          <div>
+            <p class="tag" style="margin-bottom: 2px;">Respiratory</p>
+            <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900);">Oxygen &amp; Respiratory Equipment</h3>
+          </div>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th style="width: 50%;">Item</th>
+                <th>Monthly</th>
+                <th>Bi-weekly</th>
+                <th>Deposit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Oxygen Concentrator — Portable <span style="font-size:12px;font-weight:400;color:var(--gray-600);">* Tubing &amp; humidifier sold separately · Extra battery $40</span></td><td>$300</td><td class="na">N/A</td><td>$1,000</td></tr>
+              <tr><td>Oxygen Concentrator — Standard <span style="font-size:12px;font-weight:400;color:var(--gray-600);">* Tubing &amp; humidifier sold separately</span></td><td>$150</td><td class="na">N/A</td><td>$400</td></tr>
+              <tr><td>Oxygen Cylinder <span style="font-size:12px;font-weight:400;color:var(--gray-600);">* Rx required</span></td><td>$45</td><td class="na">N/A</td><td>$100</td></tr>
+              <tr><td>Nebulizer</td><td>$25</td><td class="na">N/A</td><td>$50</td></tr>
+              <tr><td>CPAP <span style="font-size:12px;font-weight:400;color:var(--gray-600);">* Masks sold separately</span></td><td>$100</td><td class="na">N/A</td><td>$350</td></tr>
+              <tr><td>Oxygen Tank Service</td><td colspan="2" style="text-align:center;color:var(--gray-700);font-weight:500;">$30 per fill</td><td class="na">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Seatlift Recliner & Crutches side by side ── -->
+      <div class="grid md:grid-cols-2 gap-8">
+
+        <!-- Seatlift Recliner -->
+        <div class="cat-card reveal">
+          <div class="cat-header">
+            <div class="cat-icon">
+              <svg width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"/></svg>
+            </div>
+            <div>
+              <p class="tag" style="margin-bottom: 2px;">Comfort</p>
+              <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900);">Seatlift Recliner</h3>
+            </div>
+          </div>
+          <div style="overflow-x: auto;">
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Monthly</th>
+                  <th>Bi-weekly</th>
+                  <th>Deposit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Liftchair</td><td>$250</td><td class="na">N/A</td><td>$500</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Crutches -->
+        <div class="cat-card reveal">
+          <div class="cat-header">
+            <div class="cat-icon">
+              <svg width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+            </div>
+            <div>
+              <p class="tag" style="margin-bottom: 2px;">Ambulatory</p>
+              <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900);">Crutches</h3>
+            </div>
+          </div>
+          <div style="overflow-x: auto;">
+            <table class="price-table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Monthly</th>
+                  <th>Bi-weekly</th>
+                  <th>Deposit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Adult Tall, Adult or Youth</td><td>$30</td><td>$20</td><td>$40</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ CTA ══════════════════════════ -->
+<section class="relative overflow-hidden" style="padding: 100px 0; background: linear-gradient(140deg, #071A0C 0%, #1B5226 55%, #14421E 100%);">
+  <div class="hex-bg absolute inset-0" style="opacity: 0.5;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 50% 80% at 90% 50%, rgba(106,191,75,0.09) 0%, transparent 60%);"></div>
+  <div class="relative z-10 max-w-4xl mx-auto px-6 lg:px-10 text-center">
+    <span class="reveal tag">Ready to Rent?</span>
+    <h2 class="reveal" style="font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 700; color: #fff; letter-spacing: -0.025em; margin-bottom: 16px;">Check Availability Today</h2>
+    <p class="reveal" style="color: rgba(255,255,255,0.65); font-size: 1.1rem; margin-bottom: 40px;">Call us at <strong style="color:#fff;">(561) 200-4245</strong> or visit us in Boynton Beach. We'll help you find the right equipment for your needs.</p>
+    <div class="reveal flex flex-wrap justify-center gap-4">
+      <a href="tel:5612004245" class="btn-green">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.18a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 12.1a16 16 0 006 6l.35-.35a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        Call (561) 200-4245
+      </a>
+      <a href="contact.html" style="display:inline-flex;align-items:center;gap:8px;padding:14px 30px;background:transparent;color:#fff;font-family:'DM Sans',sans-serif;font-weight:500;font-size:15px;border-radius:10px;border:2px solid rgba(255,255,255,0.38);transition:border-color 0.2s,background 0.2s;">
+        Contact Us
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ FOOTER ══════════════════════════ -->
+<footer style="background: var(--gray-900); color: #fff;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10" style="padding-top: 72px; padding-bottom: 32px;">
+    <div class="grid md:grid-cols-4 gap-10" style="margin-bottom: 48px;">
+      <div class="md:col-span-2">
+        <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-14 w-auto mb-4" style="filter: brightness(0) invert(1);" />
+        <p style="color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.75; max-width: 300px;">Custom compounding pharmacy serving patients and providers throughout South Florida.</p>
+        <p class="mt-4" style="color: var(--green); font-size: 13px; font-weight: 500;">Licensed compounding pharmacy in the State of Florida.</p>
+      </div>
+      <div>
+        <p style="font-weight: 600; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 18px;">Quick Links</p>
+        <ul style="display: flex; flex-direction: column; gap: 12px; list-style: none; padding: 0; margin: 0;">
+          <li><a href="index.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">Home</a></li>
+          <li><a href="services.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">For Patients</a></li>
+          <li><a href="equipment.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">Equipment &amp; Sales</a></li>
+          <li><a href="providers.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">For Providers</a></li>
+          <li><a href="contact.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-weight: 600; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 18px;">Contact</p>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <p style="color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.6;">1050 E Gateway Blvd, Ste 101<br/>Boynton Beach, FL 33426</p>
+          <a href="tel:5612004245" style="color: rgba(255,255,255,0.55); font-size: 14px;">(561) 200-4245</a>
+          <p style="color: rgba(255,255,255,0.55); font-size: 14px;">Fax: 561.200.4236</p>
+          <div style="color: rgba(255,255,255,0.4); font-size: 13px; line-height: 1.7; margin-top: 4px;">
+            <p>Mon–Fri: 9:00 AM – 6:00 PM</p>
+            <p>Sat: 9:00 AM – 2:00 PM</p>
+            <p>Sun: Closed</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center justify-between gap-4" style="padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.09);">
+      <p style="color: rgba(255,255,255,0.35); font-size: 13px;">© 2025 My Best Pharmacy. All rights reserved.</p>
+      <p style="color: rgba(255,255,255,0.35); font-size: 13px;">Boynton Beach, Florida</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 30); });
+
+  const ham = document.getElementById('ham');
+  const mob = document.getElementById('mob-menu');
+  const overlay = document.getElementById('mob-overlay');
+  const close = document.getElementById('mob-close');
+  const openMenu = () => { mob.classList.add('open'); overlay.classList.add('open'); };
+  const closeMenu = () => { mob.classList.remove('open'); overlay.classList.remove('open'); };
+  ham.addEventListener('click', openMenu);
+  close.addEventListener('click', closeMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  if (navigator.webdriver) {
+    document.querySelectorAll('.reveal, .fu').forEach(el => {
+      el.style.transition = 'none'; el.style.animation = 'none';
+      el.style.opacity = '1'; el.style.transform = 'none';
+      el.classList.add('in');
+    });
+  }
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  revealEls.forEach(el => obs.observe(el));
+</script>
+
+<!-- Equipment Preview Modal -->
+<div id="eq-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div id="eq-modal">
+    <div class="modal-img-wrap">
+      <img id="modal-img" src="" alt="" />
+      <div class="modal-img-overlay"></div>
+      <button class="modal-close" id="modal-close-btn" aria-label="Close preview">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-tag" id="modal-tag">Equipment</p>
+      <h3 class="modal-name" id="modal-title"></h3>
+      <p class="modal-desc" id="modal-desc"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const EQ_DATA = {
+    'standard-wheelchair':  { name: 'Standard Wheelchair 16"–18"',        tag: 'Mobility',        image: 'website_pics/equipment/standard-wheelchair.jpg',  desc: 'A lightweight manual wheelchair with padded armrests and adjustable footrests. Suitable for everyday indoor and outdoor use. Seat width 16–18 inches fits most adults comfortably.' },
+    'heavy-duty-wheelchair':{ name: 'Heavy Duty Wheelchair 20"–22"',       tag: 'Mobility',        image: 'website_pics/equipment/heavy-duty-wheelchair.jpg', desc: 'A reinforced manual wheelchair with a wider seat and higher weight capacity. Built for patients who need extra room and durability. Seat width 20–22 inches.' },
+    'transport-chair':      { name: 'Transport Chair 17"–19"',             tag: 'Mobility',        image: 'website_pics/equipment/transport-chair.webp',       desc: 'A slim, lightweight chair designed to be pushed by a caregiver. Features small rear wheels and a foldable frame for easy storage and car transport — not self-propelled.' },
+    'reclining-wheelchair': { name: 'Reclining Back Wheelchair',           tag: 'Mobility',        image: 'website_pics/equipment/reclining-wheelchair.webp',  desc: 'A manual wheelchair with a backrest that reclines for patients who cannot maintain an upright position for extended periods. Useful for post-surgical recovery and extended care.' },
+    '2-wheel-walker':       { name: '2 Wheel Folding Walker',              tag: 'Mobility',        image: 'website_pics/equipment/2-wheel-walker.webp',        desc: 'A standard walking frame with two front wheels and two rubber-tipped rear legs. Provides stable support for patients with balance or strength limitations. Folds flat for storage.' },
+    '3-wheel-walker':       { name: '3 Wheel Walker',                      tag: 'Mobility',        image: 'website_pics/equipment/3-wheel-walker.webp',        desc: 'A lightweight triangular walker with three wheels and hand brakes. Easier to maneuver in narrow hallways, bathrooms, and tight spaces compared to a 4-wheel rollator.' },
+    '4-wheel-walker':       { name: '4 Wheel Walker / Seat',               tag: 'Mobility',        image: 'website_pics/equipment/4-wheel-walker.webp',        desc: 'A four-wheeled rollator with hand brakes and a built-in padded seat for resting. Ideal for active patients who walk longer distances and need occasional seating support.' },
+    'knee-walker':          { name: 'Knee Walker',                         tag: 'Mobility',        image: 'website_pics/equipment/knee-walker.webp',           desc: 'A wheeled scooter that supports the lower leg and knee while keeping the foot elevated. Allows hands-free mobility during recovery from foot, ankle, or lower leg injuries or surgery.' },
+    '3-wheel-scooter':      { name: '3 Wheel Scooter',                     tag: 'Electric Mobility', image: 'website_pics/equipment/3-wheel-scooter.webp',    desc: 'A compact motorized mobility scooter with a tight turning radius. Well-suited for indoor use, shopping centers, and navigating smaller spaces. Battery-powered with a comfortable seat.' },
+    '4-wheel-scooter':      { name: '4 Wheel Scooter',                     tag: 'Electric Mobility', image: 'website_pics/equipment/4-wheel-scooter.jpg',     desc: 'A four-wheeled motorized scooter with enhanced stability. Better suited for outdoor use, parks, and uneven terrain. Wider base provides extra confidence for users on varied surfaces.' },
+    'foldable-scooter':     { name: 'Foldable Scooter (Luggie / Drive)',   tag: 'Electric Mobility', image: 'website_pics/equipment/foldable-scooter.webp',   desc: 'Lightweight electric scooters that fold compactly in seconds for transport in a car trunk or as checked luggage on airlines. Great for frequent travelers who need mobility support on the go.' },
+    'power-chair':          { name: 'Power Chair',                         tag: 'Electric Mobility', image: 'website_pics/equipment/power-chair.jpeg',         desc: 'A fully motorized electric wheelchair operated by a joystick controller. Provides maximum independence for patients with limited upper body strength, limited hand mobility, or severe fatigue.' },
+    'portable-ramp-6ft':    { name: "Portable Ramp 6'",                    tag: 'Accessibility',   image: 'website_pics/equipment/portable-ramp.webp',         desc: 'A 6-foot lightweight aluminum ramp that creates a gentle slope over stairs or raised curbs for wheelchair and scooter access. Folds in half for easy transport and storage.' },
+    'portable-ramp-3ft':    { name: "Portable Ramp 3'",                    tag: 'Accessibility',   image: 'website_pics/equipment/portable-ramp.webp',         desc: 'A 3-foot aluminum ramp for shorter steps and raised door thresholds. Lightweight, non-slip surface, and folds flat for easy transport in a vehicle.' },
+    'drive-duet':           { name: 'Drive Duet',                          tag: 'Electric Mobility', image: 'website_pics/equipment/drive-duet.jpg',           desc: 'A versatile mobility device that works as both a caregiver-pushed transport chair and a self-propelled manual wheelchair. Ideal for patients whose needs vary day to day.' }
+  };
+
+  /* Modal (click / tap) */
+  const modalOverlay = document.getElementById('eq-modal-overlay');
+  const modalImg     = document.getElementById('modal-img');
+  const modalTag     = document.getElementById('modal-tag');
+  const modalName    = document.getElementById('modal-title');
+  const modalDesc    = document.getElementById('modal-desc');
+  const closeBtn     = document.getElementById('modal-close-btn');
+
+  function openModal(key) {
+    const d = EQ_DATA[key]; if (!d) return;
+    modalImg.src = d.image; modalImg.alt = d.name;
+    modalTag.textContent  = d.tag;
+    modalName.textContent = d.name;
+    modalDesc.textContent = d.desc;
+    modalOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    modalOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('tr[data-item]').forEach(tr => {
+    tr.addEventListener('click', () => openModal(tr.dataset.item));
+  });
+  closeBtn.addEventListener('click', closeModal);
+  modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>

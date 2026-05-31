@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Best Pharmacy — Full-Service Pharmacy in Boynton Beach, FL</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue: #1B5226;
+      --blue-dk: #0B3016;
+      --blue-md: #14421E;
+      --blue-lt: #226E32;
+      --green: #6ABF4B;
+      --green-dk: #4E9035;
+      --off-white: #F8F9FA;
+      --gray-50: #EEF3F9;
+      --gray-100: #D8E4F0;
+      --gray-600: #4A607A;
+      --gray-700: #3D5570;
+      --gray-900: #0B3016;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--gray-900); -webkit-font-smoothing: antialiased; margin: 0; padding: 0; }
+    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; margin: 0; }
+    p { margin: 0; }
+    a { text-decoration: none; }
+
+    /* ── Scrollbar ─────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--off-white); }
+    ::-webkit-scrollbar-thumb { background: var(--gray-100); border-radius: 3px; }
+
+    /* ── Nav ─────────────────────────────────────────── */
+    #navbar {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 rgba(27,82,38,0.08);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    #navbar.scrolled {
+      background: rgba(248,249,250,0.99) !important;
+      box-shadow: 0 1px 0 rgba(27,82,38,0.11), 0 4px 24px rgba(27,82,38,0.07) !important;
+    }
+    .nav-link { position: relative; color: var(--blue); font-weight: 500; font-size: 15px; transition: color 0.2s; }
+    .nav-link::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 2px; background: var(--green); border-radius: 2px; transition: width 0.2s ease; }
+    .nav-link:hover { color: var(--green); }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    .nav-link.active { color: var(--blue); }
+    .nav-btn { background: var(--green); color: #fff; font-weight: 600; font-size: 15px; padding: 10px 22px; border-radius: 8px; transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; box-shadow: 0 2px 10px rgba(106,191,75,0.3); }
+    .nav-btn:hover { background: var(--green-dk); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(106,191,75,0.4); }
+    .nav-btn:active { transform: translateY(0); }
+
+    /* ── Mobile menu ─────────────────────────────────── */
+    .mob-menu { position: fixed; top: 0; right: 0; bottom: 0; width: 280px; background: #fff; z-index: 200; padding: 28px 24px; transform: translateX(100%); transition: transform 0.32s cubic-bezier(0.22,1,0.36,1); display: flex; flex-direction: column; box-shadow: -4px 0 40px rgba(0,0,0,0.14); }
+    .mob-menu.open { transform: translateX(0); }
+    .mob-overlay { position: fixed; inset: 0; background: rgba(7,26,11,0.45); z-index: 199; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .mob-overlay.open { opacity: 1; pointer-events: auto; }
+
+    /* ── Hero pattern ─────────────────────────────── */
+    .hex-bg {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='1' d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V50l28-16 28 16v34L28 100z'/%3E%3C/svg%3E");
+    }
+
+    /* ── Buttons ─────────────────────────────────────── */
+    .btn-green { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; background: var(--green); color: #fff; font-family: 'DM Sans',sans-serif; font-weight: 600; font-size: 15px; border-radius: 10px; border: none; cursor: pointer; transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; box-shadow: 0 4px 16px rgba(106,191,75,0.38); }
+    .btn-green:hover { background: var(--green-dk); transform: translateY(-1px); box-shadow: 0 6px 22px rgba(106,191,75,0.45); }
+    .btn-green:active { transform: translateY(0); }
+    .btn-green:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; border-radius: 10px; }
+
+    .btn-ghost-white { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; background: transparent; color: #fff; font-family: 'DM Sans',sans-serif; font-weight: 500; font-size: 15px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.38); cursor: pointer; transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease; }
+    .btn-ghost-white:hover { border-color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.08); transform: translateY(-1px); }
+    .btn-ghost-white:active { transform: translateY(0); }
+    .btn-ghost-white:focus-visible { outline: 3px solid #fff; outline-offset: 3px; border-radius: 10px; }
+
+    .btn-outline-blue { display: inline-flex; align-items: center; gap: 8px; padding: 12px 26px; background: transparent; color: var(--blue); font-family: 'DM Sans',sans-serif; font-weight: 500; font-size: 14px; border-radius: 8px; border: 2px solid var(--blue); cursor: pointer; transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease; }
+    .btn-outline-blue:hover { background: var(--blue); color: #fff; transform: translateY(-1px); }
+    .btn-outline-blue:active { transform: translateY(0); }
+
+    /* ── Animations ──────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-14px); }
+    }
+    .logo-float { animation: floatLogo 5s ease-in-out infinite; }
+    .fu { opacity: 0; animation: fadeUp 0.75s cubic-bezier(0.22,1,0.36,1) forwards; }
+
+    .fu-0 { animation-delay: 0s; }
+    .fu-1 { animation-delay: 0.08s; }
+    .fu-2 { animation-delay: 0.22s; }
+    .fu-3 { animation-delay: 0.38s; }
+    .fu-4 { animation-delay: 0.54s; }
+    .fu-5 { animation-delay: 0.70s; }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ── Cards ───────────────────────────────────────── */
+    .spec-card { transition: transform 0.32s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease; }
+    .spec-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(27,82,38,0.13), 0 6px 18px rgba(27,82,38,0.07) !important; }
+
+    .svc-pill { transition: transform 0.2s ease; }
+    .svc-pill:hover { transform: translateY(-3px); }
+
+    /* ── Section labels ────────────────────────────── */
+    .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+    .underline-g { position: relative; padding-bottom: 18px; }
+    .underline-g::after { content: ''; position: absolute; bottom: 0; left: 0; width: 44px; height: 3px; background: var(--green); border-radius: 2px; }
+    .underline-g-c::after { left: 50%; transform: translateX(-50%); }
+
+    /* ── Footer ──────────────────────────────────────── */
+    footer a { transition: color 0.2s; }
+    footer a:hover { color: var(--green) !important; }
+
+    /* ── Focus ───────────────────────────────────────── */
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════ NAVIGATION ══════════════════════════ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex items-center justify-between h-20 md:h-28">
+      <a href="index.html" class="flex-shrink-0">
+        <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-16 md:h-24 w-auto" />
+      </a>
+      <!-- Desktop -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="services.html" class="nav-link">For Patients</a>
+        <a href="equipment.html" class="nav-link">Equipment</a>
+        <a href="providers.html" class="nav-link">Providers</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+
+      </div>
+      <!-- Hamburger -->
+      <button id="ham" class="md:hidden p-2" style="color: var(--blue);" aria-label="Open menu">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mob-overlay" class="mob-overlay"></div>
+<div id="mob-menu" class="mob-menu">
+  <button id="mob-close" class="absolute top-5 right-5 p-2" style="color: var(--blue);" aria-label="Close menu">
+    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="mt-10 flex flex-col gap-5">
+    <a href="index.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">Home</a>
+    <a href="services.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">For Patients</a>
+    <a href="equipment.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">Equipment</a>
+    <a href="providers.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">Providers</a>
+    <a href="contact.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">Contact</a>
+
+  </div>
+  <div class="mt-auto pt-6" style="border-top: 1px solid var(--gray-100);">
+    <p style="font-size: 12px; color: var(--gray-600); margin-bottom: 6px;">Call us</p>
+    <a href="tel:5612004245" style="color: var(--blue); font-weight: 600;">(561) 200-4245</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════ HERO ══════════════════════════ -->
+<section class="relative flex items-center overflow-hidden" style="min-height: 100vh; background: linear-gradient(150deg, #071A0C 0%, #1B5226 55%, #14421E 100%);">
+  <!-- Hex grid -->
+  <div class="hex-bg absolute inset-0" style="opacity: 0.7;"></div>
+  <!-- Radial glow blobs -->
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 60% at 15% 75%, rgba(106,191,75,0.1) 0%, transparent 60%), radial-gradient(ellipse 50% 50% at 85% 20%, rgba(34,110,50,0.18) 0%, transparent 55%);"></div>
+  <!-- Bottom gradient -->
+  <div class="absolute bottom-0 left-0 right-0" style="height: 120px; background: linear-gradient(to bottom, transparent, rgba(6,26,8,0.35));"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 w-full" style="padding-top: 130px; padding-bottom: 80px;">
+    <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+      <!-- LEFT: Text content -->
+      <div>
+        <!-- Eyebrow -->
+        <div class="fu fu-1 inline-flex items-center gap-2 mb-6" style="padding: 6px 14px; border-radius: 100px; border: 1px solid rgba(106,191,75,0.4); background: rgba(106,191,75,0.08);">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--green);"></span>
+          <span style="color: var(--green); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;">Full-Service Pharmacy · Boynton Beach, FL</span>
+        </div>
+        <!-- Headline -->
+        <h1 class="fu fu-2" style="font-size: clamp(2.6rem, 5.5vw, 4.8rem); font-weight: 700; color: #fff; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 24px;">
+          Your Local Pharmacy.<br/>
+          <em style="font-style: italic; color: var(--green);">Expert Compounding.</em>
+        </h1>
+        <!-- Subheadline -->
+        <p class="fu fu-3" style="font-size: clamp(1rem, 1.4vw, 1.15rem); color: rgba(255,255,255,0.72); line-height: 1.75; max-width: 520px; margin-bottom: 40px;">
+          My Best Pharmacy is your neighborhood full-service pharmacy — OTC products, retail prescriptions, custom compounding, and durable medical equipment, all under one roof in Boynton Beach.
+        </p>
+        <!-- CTAs -->
+        <div class="fu fu-4 flex flex-wrap gap-4">
+          <a href="providers.html" class="btn-green">For Providers</a>
+          <a href="services.html" class="btn-ghost-white">For Patients</a>
+        </div>
+        <!-- Quick info bar -->
+        <div class="fu fu-5 flex flex-col gap-3 mt-12 pt-12" style="border-top: 1px solid rgba(255,255,255,0.1);">
+          <div class="flex items-center gap-2.5">
+            <svg style="color: var(--green); flex-shrink: 0;" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.18a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 12.1a16 16 0 006 6l.35-.35a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            <a href="tel:5612004245" style="color: rgba(255,255,255,0.9); font-size: 18px; font-weight: 700; letter-spacing: -0.01em;">(561) 200-4245</a>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <svg style="color: var(--green); flex-shrink: 0;" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            <span style="color: rgba(255,255,255,0.6); font-size: 14px;">Fax: 561.200.4236</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <svg style="color: var(--green); flex-shrink: 0;" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span style="color: rgba(255,255,255,0.6); font-size: 14px;">1050 E Gateway Blvd, Boynton Beach</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Logo + Pharmacy Photo -->
+      <div class="fu fu-0 hidden md:flex flex-col items-center gap-5" style="padding: 10px 0;">
+        <div style="position: relative; width: 100%; max-width: 520px;">
+          <!-- Green glow halo -->
+          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 130%; height: 130%; background: radial-gradient(ellipse, rgba(106,191,75,0.18) 0%, rgba(27,82,38,0.12) 40%, transparent 70%); pointer-events: none; z-index: 0; border-radius: 50%;"></div>
+          <!-- Logo card -->
+          <div class="logo-float" style="position: relative; z-index: 1; background: #ffffff; border-radius: 28px; padding: 38px 48px; box-shadow: 0 32px 100px rgba(0,0,0,0.48), 0 10px 32px rgba(0,0,0,0.22), 0 0 0 1px rgba(255,255,255,0.1); text-align: center;">
+            <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" style="width: 100%; height: auto; display: block;" />
+          </div>
+        </div>
+
+        <!-- Pharmacy storefront photo -->
+        <div style="position: relative; width: 100%; max-width: 520px;">
+          <div style="position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.45), 0 6px 20px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.08);">
+            <img src="website_pics/pharmacy-storefront.jpeg" alt="My Best Pharmacy storefront in Boynton Beach, FL" style="width: 100%; height: 290px; object-fit: cover; object-position: center 30%; display: block;" />
+            <!-- Gradient overlay -->
+            <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(6,26,8,0.72) 0%, rgba(6,26,8,0.1) 50%, transparent 100%);"></div>
+            <!-- Label badge -->
+            <div style="position: absolute; bottom: 14px; left: 16px; display: flex; align-items: center; gap: 8px;">
+              <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex-shrink: 0; box-shadow: 0 0 8px rgba(106,191,75,0.8);"></span>
+              <span style="color: #fff; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.04em;">Visit Us · 1050 E Gateway Blvd, Boynton Beach</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2" style="opacity: 0.35;">
+    <span style="color: #fff; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;">Scroll</span>
+    <svg width="16" height="24" fill="none" viewBox="0 0 16 24"><rect x="5.5" y="1.5" width="5" height="10" rx="2.5" stroke="white" stroke-width="1.5"/><circle cx="8" cy="6" r="1.5" fill="white"/><path d="M4 17l4 5 4-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</section>
+
+<!-- ══════════════════════════ WHAT WE OFFER ══════════════════════════ -->
+<section style="padding: 100px 0; background: var(--off-white);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="text-center reveal" style="margin-bottom: 60px;">
+      <span class="tag">Everything Under One Roof</span>
+      <h2 class="underline-g underline-g-c" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em;">What We Offer</h2>
+    </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+      <!-- OTC & Retail — Lead card -->
+      <div class="spec-card reveal bg-white rounded-2xl p-8" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
+        <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6" style="background: linear-gradient(135deg, rgba(106,191,75,0.14), rgba(27,82,38,0.07));">
+          <svg width="26" height="26" fill="none" stroke="var(--green)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/></svg>
+        </div>
+        <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin-bottom: 12px;">OTC &amp; Retail Pharmacy</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">A full selection of over-the-counter medications, vitamins, supplements, personal care, and health products. We also fill standard retail prescriptions — your everyday pharmacy needs covered.</p>
+        <a href="services.html" class="inline-flex items-center gap-2 mt-6" style="color: var(--blue); font-weight: 600; font-size: 14px; transition: color 0.2s;">
+          Learn more
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <!-- Hormone -->
+      <div class="spec-card reveal bg-white rounded-2xl p-8" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
+        <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6" style="background: linear-gradient(135deg, rgba(27,82,38,0.08), rgba(106,191,75,0.07));">
+          <svg width="26" height="26" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1 1 .03 2.798-1.4 2.798H4.198c-1.43 0-2.4-1.798-1.4-2.798L4 15.3"/></svg>
+        </div>
+        <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin-bottom: 12px;">Hormone Therapy</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">Bioidentical HRT, vaginal products, low-dose naltrexone, and sexual function support — compounded to each patient's exact prescription.</p>
+        <a href="services.html#hormone" class="inline-flex items-center gap-2 mt-6" style="color: var(--blue); font-weight: 600; font-size: 14px; transition: color 0.2s;">
+          View formulas
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <!-- Derm -->
+      <div class="spec-card reveal bg-white rounded-2xl p-8" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
+        <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6" style="background: linear-gradient(135deg, rgba(27,82,38,0.08), rgba(106,191,75,0.07));">
+          <svg width="26" height="26" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z"/></svg>
+        </div>
+        <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin-bottom: 12px;">Dermatology</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">Custom skin brightening, acne, rosacea, anti-inflammatory creams, scar gels, and numbing agents — compounded in cream, gel, or ointment form.</p>
+        <a href="services.html#derm" class="inline-flex items-center gap-2 mt-6" style="color: var(--blue); font-weight: 600; font-size: 14px; transition: color 0.2s;">
+          View formulas
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <!-- GI -->
+      <div class="spec-card reveal bg-white rounded-2xl p-8" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
+        <div class="w-14 h-14 rounded-xl flex items-center justify-center mb-6" style="background: linear-gradient(135deg, rgba(27,82,38,0.08), rgba(106,191,75,0.07));">
+          <svg width="26" height="26" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+        </div>
+        <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin-bottom: 12px;">Gastroenterology</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">Rectal compounds for anal fissures, hemorrhoids, IBD, and rectal spasm — prescribed by GI specialists and colorectal surgeons throughout South Florida.</p>
+        <a href="services.html#gi" class="inline-flex items-center gap-2 mt-6" style="color: var(--blue); font-weight: 600; font-size: 14px; transition: color 0.2s;">
+          View formulas
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════ EQUIPMENT RENTAL BANNER ══════════════════════════ -->
+<section style="padding: 80px 0; background: linear-gradient(135deg, #0A2E14 0%, #1B5226 60%, #1a5c30 100%); position: relative; overflow: hidden;">
+  <!-- Subtle pattern overlay -->
+  <div class="hex-bg absolute inset-0" style="opacity: 0.4;"></div>
+  <!-- Green glow -->
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 55% 80% at 85% 50%, rgba(106,191,75,0.18) 0%, transparent 65%);"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+      <!-- LEFT: Headline + CTA -->
+      <div class="reveal">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 mb-6" style="padding: 6px 16px; border-radius: 100px; border: 1px solid rgba(106,191,75,0.5); background: rgba(106,191,75,0.1);">
+          <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--green); display:inline-block;"></span>
+          <span style="color: var(--green); font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;">Now Available In-Store</span>
+        </div>
+        <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 4.5vw, 3.6rem); font-weight: 700; color: #fff; letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 18px;">
+          Medical Equipment<br/><em style="color: var(--green); font-style: italic;">For Rent &amp; For Sale</em>
+        </h2>
+        <p style="color: rgba(255,255,255,0.72); font-size: 1.05rem; line-height: 1.8; max-width: 480px; margin-bottom: 36px;">
+          My Best Pharmacy carries durable medical equipment — wheelchairs, walkers, hospital beds, oxygen concentrators, and scooters. Available for flexible rental or outright purchase.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="equipment.html" style="display:inline-flex;align-items:center;gap:10px;padding:16px 34px;background:var(--green);color:#fff;font-family:'DM Sans',sans-serif;font-weight:700;font-size:16px;border-radius:12px;box-shadow:0 6px 24px rgba(106,191,75,0.45);transition:background 0.2s,transform 0.15s;"
+            onmouseover="this.style.background='#4E9035';this.style.transform='translateY(-2px)'"
+            onmouseout="this.style.background='var(--green)';this.style.transform='translateY(0)'">
+            View Equipment &amp; Pricing
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="tel:5612004245" style="display:inline-flex;align-items:center;gap:10px;padding:16px 34px;background:rgba(255,255,255,0.12);color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:16px;border-radius:12px;border:2px solid rgba(255,255,255,0.8);transition:border-color 0.2s,background 0.2s;"
+            onmouseover="this.style.borderColor='#fff';this.style.background='rgba(255,255,255,0.22)'"
+            onmouseout="this.style.borderColor='rgba(255,255,255,0.8)';this.style.background='rgba(255,255,255,0.12)'">
+            Call to Check Availability
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Equipment Image -->
+      <div class="reveal" style="display:flex; flex-direction:column; align-items:center; gap:24px;">
+        <div style="position:relative; width:100%;">
+          <!-- Ambient glow behind image -->
+          <div style="position:absolute;inset:-20px;background:radial-gradient(ellipse at center, rgba(106,191,75,0.18) 0%, rgba(27,82,38,0.1) 45%, transparent 70%);border-radius:32px;pointer-events:none;"></div>
+          <img
+            src="website_pics/equipment-banner.jpg"
+            alt="Medical Equipment Rental — wheelchairs, crutches, walkers, and mobility aids available at My Best Pharmacy"
+            style="width:100%;border-radius:18px;box-shadow:0 28px 64px rgba(0,0,0,0.5),0 8px 24px rgba(0,0,0,0.3),0 0 0 1px rgba(255,255,255,0.08);position:relative;z-index:1;display:block;"
+          />
+        </div>
+
+        <!-- Category pills row -->
+        <div class="flex flex-wrap justify-center gap-2">
+          <a href="equipment.html" style="padding:8px 16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.22);border-radius:100px;color:#fff;font-size:12px;font-weight:600;letter-spacing:0.06em;text-decoration:none;transition:background 0.2s,border-color 0.2s;" onmouseover="this.style.background='rgba(106,191,75,0.25)';this.style.borderColor='rgba(106,191,75,0.6)'" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.borderColor='rgba(255,255,255,0.22)'">Wheelchairs &amp; Walkers</a>
+          <a href="equipment.html" style="padding:8px 16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.22);border-radius:100px;color:#fff;font-size:12px;font-weight:600;letter-spacing:0.06em;text-decoration:none;transition:background 0.2s,border-color 0.2s;" onmouseover="this.style.background='rgba(106,191,75,0.25)';this.style.borderColor='rgba(106,191,75,0.6)'" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.borderColor='rgba(255,255,255,0.22)'">Scooters &amp; Power Chairs</a>
+          <a href="equipment.html" style="padding:8px 16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.22);border-radius:100px;color:#fff;font-size:12px;font-weight:600;letter-spacing:0.06em;text-decoration:none;transition:background 0.2s,border-color 0.2s;" onmouseover="this.style.background='rgba(106,191,75,0.25)';this.style.borderColor='rgba(106,191,75,0.6)'" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.borderColor='rgba(255,255,255,0.22)'">Hospital Beds</a>
+          <a href="equipment.html" style="padding:8px 16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.22);border-radius:100px;color:#fff;font-size:12px;font-weight:600;letter-spacing:0.06em;text-decoration:none;transition:background 0.2s,border-color 0.2s;" onmouseover="this.style.background='rgba(106,191,75,0.25)';this.style.borderColor='rgba(106,191,75,0.6)'" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.borderColor='rgba(255,255,255,0.22)'">Oxygen &amp; Respiratory</a>
+          <a href="equipment.html" style="padding:8px 16px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.22);border-radius:100px;color:#fff;font-size:12px;font-weight:600;letter-spacing:0.06em;text-decoration:none;transition:background 0.2s,border-color 0.2s;" onmouseover="this.style.background='rgba(106,191,75,0.25)';this.style.borderColor='rgba(106,191,75,0.6)'" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.borderColor='rgba(255,255,255,0.22)'">+ More →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SERVICES STRIP ══════════════════════════ -->
+<section style="padding: 60px 0; background: #fff; border-top: 1px solid var(--gray-100); border-bottom: 1px solid var(--gray-100);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div class="svc-pill reveal flex flex-col items-center gap-3">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: var(--gray-50);">
+          <svg width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/></svg>
+        </div>
+        <p style="font-weight: 600; font-size: 14px; color: var(--blue);">OTC &amp; Retail Pharmacy</p>
+      </div>
+      <div class="svc-pill reveal flex flex-col items-center gap-3">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: var(--gray-50);">
+          <svg width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
+        </div>
+        <p style="font-weight: 600; font-size: 14px; color: var(--blue);">Delivery Service Available</p>
+      </div>
+      <div class="svc-pill reveal flex flex-col items-center gap-3">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: var(--gray-50);">
+          <svg width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg>
+        </div>
+        <p style="font-weight: 600; font-size: 14px; color: var(--blue);">Durable Medical Equipment</p>
+      </div>
+      <div class="svc-pill reveal flex flex-col items-center gap-3">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: var(--gray-50);">
+          <svg width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/></svg>
+        </div>
+        <p style="font-weight: 600; font-size: 14px; color: var(--blue);">Compounding Specialists</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ ACCEPTED PROGRAMS ══════════════════════════ -->
+<section style="padding: 52px 0; background: #fff; border-top: 1px solid var(--gray-100); border-bottom: 1px solid var(--gray-100);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="text-center reveal" style="margin-bottom: 32px;">
+      <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue);">Accepted Benefit Programs</p>
+    </div>
+    <div class="flex flex-wrap justify-center items-start gap-12 reveal">
+
+      <!-- Nations Benefits -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 200px; text-align: center;">
+        <div style="background: #f5f5f5; border-radius: 14px; padding: 16px 28px; display: flex; align-items: center; justify-content: center; min-width: 160px; min-height: 72px;">
+          <img src="website_pics/nationsbenefitslogo.png" alt="Nations Benefits" style="height: 44px; width: auto; display: block;" />
+        </div>
+        <p style="font-size: 13px; color: var(--gray-700); line-height: 1.6;">We accept <strong style="color: var(--gray-900);">Nations Benefits</strong> cards — eligible Medicare Advantage members can use their benefit allowance for OTC health products, vitamins, supplements, and medical equipment at our pharmacy.</p>
+      </div>
+
+      <!-- Divider -->
+      <div style="width: 1px; background: var(--gray-100); align-self: stretch; min-height: 80px;" class="hidden md:block"></div>
+
+      <!-- Express Scripts -->
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 200px; text-align: center;">
+        <div style="background: #003087; border-radius: 14px; padding: 16px 28px; display: flex; align-items: center; justify-content: center; min-width: 160px; min-height: 72px;">
+          <span style="color: #fff; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: -0.01em; line-height: 1.2;">Express<br/>Scripts<span style="color: #6ABF4B;">®</span></span>
+        </div>
+        <p style="font-size: 13px; color: var(--gray-700); line-height: 1.6;">We are an <strong style="color: var(--gray-900);">Express Scripts participating pharmacy</strong>. If your insurance plan uses Express Scripts as its pharmacy benefit manager, you can fill your retail prescriptions with us.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ PROVIDER CALLOUT ══════════════════════════ -->
+<section class="relative overflow-hidden" style="padding: 100px 0; background: linear-gradient(140deg, #071A0C 0%, #1B5226 55%, #14421E 100%);">
+  <div class="hex-bg absolute inset-0" style="opacity: 0.5;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 50% 80% at 90% 50%, rgba(106,191,75,0.09) 0%, transparent 60%);"></div>
+  <div class="relative z-10 max-w-4xl mx-auto px-6 lg:px-10 text-center">
+    <span class="reveal tag" style="color: var(--green);">Partner With Us</span>
+    <h2 class="reveal" style="font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 700; color: #fff; letter-spacing: -0.025em; margin-bottom: 16px;">Ready to start prescribing with us?</h2>
+    <p class="reveal" style="color: rgba(255,255,255,0.65); font-size: 1.1rem; margin-bottom: 40px;">Call or fax us directly. We accept prescriptions from licensed physicians, NPs, and PAs.</p>
+    <!-- Contact boxes -->
+    <div class="reveal flex flex-wrap justify-center gap-4 mb-10">
+      <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); backdrop-filter: blur(8px); border-radius: 14px; padding: 20px 32px; min-width: 180px;">
+        <p style="color: rgba(255,255,255,0.5); font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;">Phone</p>
+        <p style="color: #fff; font-size: 1.4rem; font-weight: 700; letter-spacing: -0.01em;">(561) 200-4245</p>
+      </div>
+      <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); backdrop-filter: blur(8px); border-radius: 14px; padding: 20px 32px; min-width: 180px;">
+        <p style="color: rgba(255,255,255,0.5); font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;">Fax</p>
+        <p style="color: #fff; font-size: 1.4rem; font-weight: 700; letter-spacing: -0.01em;">561.200.4236</p>
+      </div>
+    </div>
+    <a href="providers.html" class="reveal btn-green inline-flex">
+      Provider Information
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════ LOCATION & HOURS ══════════════════════════ -->
+<section style="padding: 100px 0; background: var(--off-white);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+      <!-- Info -->
+      <div class="reveal">
+        <span class="tag">Find Us</span>
+        <h2 class="underline-g" style="font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em; margin-bottom: 32px;">Location &amp; Hours</h2>
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div class="flex gap-3 items-start">
+            <svg style="color: var(--green); flex-shrink: 0; margin-top: 2px;" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>
+              <p style="font-weight: 600; color: var(--blue);">1050 E Gateway Blvd, Suite 101</p>
+              <p style="color: var(--gray-700);">Boynton Beach, FL 33426</p>
+            </div>
+          </div>
+          <div class="flex gap-3 items-start">
+            <svg style="color: var(--green); flex-shrink: 0; margin-top: 2px;" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.18a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 12.1a16 16 0 006 6l.35-.35a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            <div class="flex flex-wrap gap-x-2">
+              <a href="tel:5612004245" style="font-weight: 700; color: var(--blue); font-size: 1.25rem; transition: color 0.2s;">(561) 200-4245</a>
+            </div>
+          </div>
+        </div>
+        <!-- Hours card -->
+        <div class="mt-8 rounded-2xl p-6" style="background: #fff; border: 1px solid var(--gray-100); box-shadow: 0 2px 12px rgba(27,82,38,0.05);">
+          <p style="font-weight: 600; color: var(--blue); font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px;">Hours of Operation</p>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div class="flex justify-between">
+              <span style="color: var(--gray-700); font-size: 14px;">Monday – Friday</span>
+              <span style="font-weight: 500; color: var(--gray-900); font-size: 14px;">9:00 AM – 6:00 PM</span>
+            </div>
+            <div class="flex justify-between">
+              <span style="color: var(--gray-700); font-size: 14px;">Saturday</span>
+              <span style="font-weight: 500; color: var(--gray-900); font-size: 14px;">9:00 AM – 2:00 PM</span>
+            </div>
+            <div class="flex justify-between">
+              <span style="color: var(--gray-700); font-size: 14px;">Sunday</span>
+              <span style="color: var(--gray-600); font-size: 14px;">Closed</span>
+            </div>
+          </div>
+        </div>
+        <p class="flex items-center gap-2 mt-4" style="color: var(--gray-700); font-size: 14px;">
+          <svg width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Serving all of South Florida and shipping throughout the state.
+        </p>
+      </div>
+      <!-- Map -->
+      <div class="reveal">
+        <div style="border-radius: 18px; overflow: hidden; border: 1px solid var(--gray-100); box-shadow: 0 8px 36px rgba(27,82,38,0.1);">
+          <iframe
+            src="https://maps.google.com/maps?q=1050+E+Gateway+Blvd+Suite+101+Boynton+Beach+FL+33426&output=embed&z=15"
+            width="100%" height="380"
+            style="border:0; display:block;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="My Best Pharmacy Location">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ FOOTER ══════════════════════════ -->
+<footer style="background: var(--gray-900); color: #fff;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10" style="padding-top: 72px; padding-bottom: 32px;">
+    <div class="grid md:grid-cols-4 gap-10" style="margin-bottom: 48px;">
+      <!-- Brand col -->
+      <div class="md:col-span-2">
+        <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-14 w-auto mb-4" style="filter: brightness(0) invert(1);" />
+        <p style="color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.75; max-width: 300px;">Full-service pharmacy — OTC products, retail prescriptions, custom compounding, and medical equipment — serving Boynton Beach and South Florida.</p>
+        <p class="mt-4" style="color: var(--green); font-size: 13px; font-weight: 500;">Licensed pharmacy in the State of Florida.</p>
+      </div>
+      <!-- Quick links -->
+      <div>
+        <p style="font-weight: 600; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 18px;">Quick Links</p>
+        <ul style="display: flex; flex-direction: column; gap: 12px; list-style: none; padding: 0; margin: 0;">
+          <li><a href="index.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">Home</a></li>
+          <li><a href="services.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">Services</a></li>
+          <li><a href="providers.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">For Providers</a></li>
+          <li><a href="contact.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">Contact</a></li>
+        </ul>
+      </div>
+      <!-- Contact -->
+      <div>
+        <p style="font-weight: 600; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 18px;">Contact</p>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <p style="color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.6;">1050 E Gateway Blvd, Ste 101<br/>Boynton Beach, FL 33426</p>
+          <a href="tel:5612004245" style="color: rgba(255,255,255,0.55); font-size: 14px;">(561) 200-4245</a>
+          <p style="color: rgba(255,255,255,0.55); font-size: 14px;">Fax: 561.200.4236</p>
+          <div style="color: rgba(255,255,255,0.4); font-size: 13px; line-height: 1.7; margin-top: 4px;">
+            <p>Mon–Fri: 9:00 AM – 6:00 PM</p>
+            <p>Sat: 9:00 AM – 2:00 PM</p>
+            <p>Sun: Closed</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center justify-between gap-4" style="padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.09);">
+      <p style="color: rgba(255,255,255,0.35); font-size: 13px;">© 2025 My Best Pharmacy. All rights reserved.</p>
+      <p style="color: rgba(255,255,255,0.35); font-size: 13px;">Boynton Beach, Florida</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Sticky nav
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // Mobile menu
+  const ham = document.getElementById('ham');
+  const mob = document.getElementById('mob-menu');
+  const overlay = document.getElementById('mob-overlay');
+  const close = document.getElementById('mob-close');
+  const openMenu = () => { mob.classList.add('open'); overlay.classList.add('open'); };
+  const closeMenu = () => { mob.classList.remove('open'); overlay.classList.remove('open'); };
+  ham.addEventListener('click', openMenu);
+  close.addEventListener('click', closeMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  // Instant reveal for headless/screenshot mode
+  if (navigator.webdriver) {
+    document.querySelectorAll('.reveal, .fu').forEach(el => {
+      el.style.transition = 'none';
+      el.style.animation = 'none';
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      el.classList.add('in');
+    });
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => obs.observe(el));
+
+  // Hover color fix on card links
+  document.querySelectorAll('.spec-card a').forEach(a => {
+    a.addEventListener('mouseenter', () => a.style.color = 'var(--green)');
+    a.addEventListener('mouseleave', () => a.style.color = 'var(--blue)');
+  });
+
+  // Nav phone links hover
+  document.querySelectorAll('a[href^="tel"]').forEach(a => {
+    a.addEventListener('mouseenter', () => a.style.color = 'var(--green)');
+    a.addEventListener('mouseleave', () => a.style.color = 'var(--blue)');
+  });
+</script>
+</body>
+</html>

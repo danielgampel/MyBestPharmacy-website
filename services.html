@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Patients — My Best Pharmacy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue: #1B5226;
+      --blue-dk: #0B3016;
+      --blue-lt: #226E32;
+      --green: #6ABF4B;
+      --green-dk: #4E9035;
+      --off-white: #F8F9FA;
+      --gray-50: #EEF3F9;
+      --gray-100: #D8E4F0;
+      --gray-600: #4A607A;
+      --gray-700: #3D5570;
+      --gray-900: #0B3016;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--gray-900); -webkit-font-smoothing: antialiased; margin: 0; padding: 0; }
+    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; margin: 0; }
+    p { margin: 0; }
+    a { text-decoration: none; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--off-white); }
+    ::-webkit-scrollbar-thumb { background: var(--gray-100); border-radius: 3px; }
+
+    #navbar {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 rgba(27,82,38,0.08);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    #navbar.scrolled {
+      background: rgba(248,249,250,0.99) !important;
+      box-shadow: 0 1px 0 rgba(27,82,38,0.11), 0 4px 24px rgba(27,82,38,0.07) !important;
+    }
+    .nav-link { position: relative; color: var(--blue); font-weight: 500; font-size: 15px; transition: color 0.2s; }
+    .nav-link::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 2px; background: var(--green); border-radius: 2px; transition: width 0.2s ease; }
+    .nav-link:hover { color: var(--green); }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    .nav-btn { background: var(--green); color: #fff; font-weight: 600; font-size: 15px; padding: 10px 22px; border-radius: 8px; transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; box-shadow: 0 2px 10px rgba(106,191,75,0.3); }
+    .nav-btn:hover { background: var(--green-dk); transform: translateY(-1px); }
+
+    .mob-menu { position: fixed; top: 0; right: 0; bottom: 0; width: 280px; background: #fff; z-index: 200; padding: 28px 24px; transform: translateX(100%); transition: transform 0.32s cubic-bezier(0.22,1,0.36,1); display: flex; flex-direction: column; box-shadow: -4px 0 40px rgba(0,0,0,0.14); }
+    .mob-menu.open { transform: translateX(0); }
+    .mob-overlay { position: fixed; inset: 0; background: rgba(7,26,11,0.45); z-index: 199; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .mob-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .hex-bg { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='1' d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V50l28-16 28 16v34L28 100z'/%3E%3C/svg%3E"); }
+
+    .btn-green { display: inline-flex; align-items: center; gap: 8px; padding: 14px 30px; background: var(--green); color: #fff; font-family: 'DM Sans',sans-serif; font-weight: 600; font-size: 15px; border-radius: 10px; border: none; cursor: pointer; transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; box-shadow: 0 4px 16px rgba(106,191,75,0.38); }
+    .btn-green:hover { background: var(--green-dk); transform: translateY(-1px); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+    .fu { opacity: 0; animation: fadeUp 0.75s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .fu-0 { animation-delay: 0s; }
+    .fu-1 { animation-delay: 0.08s; } .fu-2 { animation-delay: 0.22s; } .fu-3 { animation-delay: 0.38s; }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+    .underline-g { position: relative; padding-bottom: 18px; }
+    .underline-g::after { content: ''; position: absolute; bottom: 0; left: 0; width: 44px; height: 3px; background: var(--green); border-radius: 2px; }
+
+    /* Step number */
+    .step-num { width: 44px; height: 44px; border-radius: 50%; background: var(--blue); color: #fff; font-weight: 700; font-size: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Cormorant Garamond', serif; }
+
+    /* Step connector */
+    .step-connector { width: 2px; background: var(--gray-100); flex: 1; min-height: 32px; margin-left: 21px; }
+
+    /* FAQ item */
+    .faq-item { border-bottom: 1px solid var(--gray-100); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; cursor: pointer; gap: 16px; }
+    .faq-q:hover p { color: var(--blue); }
+    .faq-a { display: none; padding-bottom: 20px; }
+    .faq-item.open .faq-a { display: block; }
+    .faq-chevron { transition: transform 0.25s ease; flex-shrink: 0; }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+
+    /* Info card */
+    .info-card { border-radius: 18px; padding: 28px 32px; border: 1px solid var(--gray-100); }
+
+    footer a { transition: color 0.2s; }
+    footer a:hover { color: var(--green) !important; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════ NAVIGATION ══════════════════════════ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex items-center justify-between h-20 md:h-28">
+      <a href="index.html" class="flex-shrink-0"><img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-16 md:h-24 w-auto" /></a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="services.html" class="nav-link active">For Patients</a>
+        <a href="equipment.html" class="nav-link">Equipment</a>
+        <a href="providers.html" class="nav-link">Providers</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+
+      </div>
+      <button id="ham" class="md:hidden p-2" style="color: var(--blue);" aria-label="Open menu">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div id="mob-overlay" class="mob-overlay"></div>
+<div id="mob-menu" class="mob-menu">
+  <button id="mob-close" class="absolute top-5 right-5 p-2" style="color: var(--blue);" aria-label="Close menu">
+    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="mt-10 flex flex-col gap-5">
+    <a href="index.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">Home</a>
+    <a href="services.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">For Patients</a>
+    <a href="equipment.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">Equipment</a>
+    <a href="providers.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">Providers</a>
+    <a href="contact.html" style="color: var(--blue); font-weight: 600; font-size: 20px;">Contact</a>
+
+  </div>
+  <div class="mt-auto pt-6" style="border-top: 1px solid var(--gray-100);">
+    <p style="font-size: 12px; color: var(--gray-600); margin-bottom: 6px;">Call us</p>
+    <a href="tel:5612004245" style="color: var(--blue); font-weight: 600;">(561) 200-4245</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════ PAGE HERO ══════════════════════════ -->
+<section class="relative overflow-hidden" style="padding: 140px 0 100px; background: linear-gradient(150deg, #071A0C 0%, #1B5226 55%, #14421E 100%);">
+  <div class="hex-bg absolute inset-0" style="opacity: 0.7;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 55% 70% at 85% 40%, rgba(106,191,75,0.1) 0%, transparent 60%);"></div>
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <!-- LEFT: Text -->
+      <div>
+        <div class="fu fu-1 inline-flex items-center gap-2 mb-5" style="padding: 6px 14px; border-radius: 100px; border: 1px solid rgba(106,191,75,0.4); background: rgba(106,191,75,0.08);">
+          <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--green);"></span>
+          <span style="color: var(--green); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;">Patient Information</span>
+        </div>
+        <h1 class="fu fu-2" style="font-size: clamp(2.6rem, 6vw, 4.5rem); font-weight: 700; color: #fff; letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 14px;">For Patients</h1>
+        <p class="fu fu-2" style="font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--green); font-weight: 600; letter-spacing: -0.01em; margin-bottom: 16px;">My Best Pharmacy — Boynton Beach, FL</p>
+        <p class="fu fu-3" style="font-size: clamp(1rem, 1.5vw, 1.15rem); color: rgba(255,255,255,0.7); line-height: 1.75; max-width: 520px;">Your doctor has prescribed a compounded medication. Here's everything you need to know about getting it filled at My Best Pharmacy.</p>
+        <div class="fu fu-3 flex items-center gap-3 mt-8">
+          <a href="tel:5612004245" style="display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:var(--green);color:#fff;font-family:'DM Sans',sans-serif;font-weight:700;font-size:16px;border-radius:10px;box-shadow:0 4px 16px rgba(106,191,75,0.4);">
+            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.18a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 12.1a16 16 0 006 6l.35-.35a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            (561) 200-4245
+          </a>
+        </div>
+      </div>
+      <!-- RIGHT: Pharmacist photo -->
+      <div class="fu fu-0 hidden md:flex items-center justify-center">
+        <div style="position:relative; width:100%;">
+          <div style="position:absolute;inset:-16px;background:radial-gradient(ellipse at center, rgba(106,191,75,0.18) 0%, rgba(27,82,38,0.1) 45%, transparent 70%);border-radius:32px;pointer-events:none;"></div>
+          <div style="position:relative;border-radius:24px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.5),0 8px 28px rgba(0,0,0,0.28),0 0 0 1px rgba(255,255,255,0.09);">
+            <img src="website_pics/pharmacyladyweb.jpg" alt="Pharmacist at My Best Pharmacy in Boynton Beach" style="width:100%;height:480px;object-fit:cover;object-position:center 15%;display:block;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(6,26,8,0.55) 0%,rgba(6,26,8,0.05) 40%,transparent 100%);"></div>
+            <div style="position:absolute;bottom:16px;left:18px;display:flex;align-items:center;gap:8px;">
+              <span style="width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px rgba(106,191,75,0.8);"></span>
+              <span style="color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;letter-spacing:0.04em;">Expert Care · Boynton Beach, FL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ HOW IT WORKS ══════════════════════════ -->
+<section style="padding: 100px 0; background: #fff;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="reveal">
+        <span class="tag">The Process</span>
+        <h2 class="underline-g" style="font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em; margin-bottom: 40px;">How It Works</h2>
+
+        <!-- Steps -->
+        <div style="display: flex; flex-direction: column;">
+
+          <div style="display: flex; gap: 20px;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div class="step-num">1</div>
+              <div class="step-connector"></div>
+            </div>
+            <div style="padding-bottom: 32px;">
+              <p style="font-weight: 600; color: var(--gray-900); font-size: 16px; margin-bottom: 6px;">Your doctor sends us the prescription</p>
+              <p style="color: var(--gray-700); font-size: 15px; line-height: 1.7;">Your prescriber can fax it directly to <strong style="color: var(--gray-900);">561.200.4236</strong> or call us. <strong style="color: var(--gray-900);">Please bring a paper copy with you to the pharmacy</strong> — we require a physical prescription on file.</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 20px;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div class="step-num">2</div>
+              <div class="step-connector"></div>
+            </div>
+            <div style="padding-bottom: 32px;">
+              <p style="font-weight: 600; color: var(--gray-900); font-size: 16px; margin-bottom: 6px;">We compound your medication fresh to order</p>
+              <p style="color: var(--gray-700); font-size: 15px; line-height: 1.7;">Our pharmacists prepare your custom compound from scratch. Compounded medications are <strong style="color: var(--gray-900);">cash-pay</strong> — we do not bill insurance for custom compounds. We'll give you a price estimate upfront and let you know when it's ready.</p>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 20px;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <div class="step-num">3</div>
+            </div>
+            <div style="padding-bottom: 8px;">
+              <p style="font-weight: 600; color: var(--gray-900); font-size: 16px; margin-bottom: 6px;">Pick up in-store or have it delivered</p>
+              <p style="color: var(--gray-700); font-size: 15px; line-height: 1.7;">Come to our Boynton Beach location, or ask about our delivery service — available throughout South Florida and by shipping across the state.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Side card -->
+      <div class="reveal">
+        <div class="info-card" style="background: var(--gray-50);">
+          <p style="font-weight: 700; font-size: 1.4rem; color: var(--gray-900); font-family: 'Cormorant Garamond', serif; margin-bottom: 20px;">Quick Contacts</p>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div>
+              <p style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 4px;">Call Us</p>
+              <a href="tel:5612004245" style="font-weight: 600; color: var(--blue); font-size: 1.1rem; display: block; transition: color 0.2s;">(561) 200-4245</a>
+            </div>
+            <div>
+              <p style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 4px;">Hours</p>
+              <p style="font-size: 14px; color: var(--gray-700); line-height: 1.75;">Mon–Fri: 9:00 AM – 6:00 PM<br/>Saturday: 9:00 AM – 2:00 PM<br/>Sunday: Closed</p>
+            </div>
+            <div>
+              <p style="font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 4px;">Address</p>
+              <p style="font-size: 14px; color: var(--gray-700);">1050 E Gateway Blvd, Suite 101<br/>Boynton Beach, FL 33426</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SERVICES GRID ══════════════════════════ -->
+<section style="padding: 80px 0 100px; background: var(--gray-50);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+      <!-- LEFT: patients image -->
+      <div class="reveal">
+        <div style="position:relative;border-radius:24px;overflow:hidden;box-shadow:0 24px 64px rgba(27,82,38,0.18),0 6px 20px rgba(27,82,38,0.1);">
+          <img src="website_pics/patients.png" alt="Patients at My Best Pharmacy" style="width:100%;height:520px;object-fit:cover;object-position:center top;display:block;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(6,26,8,0.5) 0%,transparent 50%);"></div>
+          <div style="position:absolute;bottom:20px;left:22px;">
+            <span style="display:inline-block;padding:6px 14px;background:rgba(106,191,75,0.22);border:1px solid rgba(106,191,75,0.5);border-radius:100px;color:var(--green);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;">Your Health, Our Priority</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: heading + 2×2 card grid -->
+      <div>
+        <div class="reveal" style="margin-bottom: 36px;">
+          <span class="tag">What We Offer</span>
+          <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em;">Patient Services</h2>
+        </div>
+        <div class="grid grid-cols-2 gap-5">
+
+          <!-- OTC & Retail -->
+          <div class="reveal bg-white rounded-2xl p-6" style="box-shadow: 0 2px 12px rgba(27,82,38,0.06); border: 1px solid var(--gray-100);">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: rgba(27,82,38,0.07);">
+              <svg width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/></svg>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Over-the-Counter Products</h3>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.7;">Full selection of OTC medications, vitamins, supplements, and wellness products.</p>
+          </div>
+
+          <!-- Delivery -->
+          <div class="reveal bg-white rounded-2xl p-6" style="box-shadow: 0 2px 12px rgba(27,82,38,0.06); border: 1px solid var(--gray-100);">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: rgba(27,82,38,0.07);">
+              <svg width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Delivery Service</h3>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.7;">Delivery throughout South Florida. Statewide shipping available.</p>
+          </div>
+
+          <!-- DME -->
+          <div class="reveal bg-white rounded-2xl p-6" style="box-shadow: 0 2px 12px rgba(27,82,38,0.06); border: 1px solid var(--gray-100);">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: rgba(27,82,38,0.07);">
+              <svg width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Durable Medical Equipment</h3>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.7;">Medical equipment available for rent or purchase at our Boynton Beach location.</p>
+          </div>
+
+          <!-- Specialists -->
+          <div class="reveal bg-white rounded-2xl p-6" style="box-shadow: 0 2px 12px rgba(27,82,38,0.06); border: 1px solid var(--gray-100);">
+            <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: rgba(27,82,38,0.07);">
+              <svg width="22" height="22" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/></svg>
+            </div>
+            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Compounding Specialists</h3>
+            <p style="color: var(--gray-700); font-size: 13px; line-height: 1.7;">Custom medications are our focus — not a side service.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ WHAT IS COMPOUNDING ══════════════════════════ -->
+<section style="padding: 80px 0 100px; background: #fff;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid lg:grid-cols-2 gap-14 items-center">
+
+      <!-- Text -->
+      <div class="reveal">
+        <span class="tag">Understanding Your Medication</span>
+        <h2 class="underline-g" style="font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em; margin-bottom: 28px;">What Is a Compounded Medication?</h2>
+        <p style="color: var(--gray-700); font-size: 16px; line-height: 1.8; margin-bottom: 18px;">A compounded medication is one that's made specifically for you by our pharmacists — not mass-manufactured. Your doctor prescribed it because the commercially available options don't meet your exact needs.</p>
+        <p style="color: var(--gray-700); font-size: 16px; line-height: 1.8; margin-bottom: 18px;">This could mean a different dose, a different delivery form (like a cream instead of a pill), a combination of ingredients, or a drug that isn't available commercially.</p>
+        <p style="color: var(--gray-700); font-size: 16px; line-height: 1.8;">My Best Pharmacy is a licensed compounding pharmacy in the State of Florida, and we prepare each compound to your prescriber's exact specification.</p>
+      </div>
+
+      <!-- 3 why-compound points -->
+      <div class="reveal" style="display: flex; flex-direction: column; gap: 20px;">
+        <div class="info-card" style="background: var(--gray-50);">
+          <div class="flex gap-4 items-start">
+            <div style="width: 36px; height: 36px; border-radius: 8px; background: var(--blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="16" height="16" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/></svg>
+            </div>
+            <div>
+              <p style="font-weight: 600; color: var(--gray-900); margin-bottom: 4px;">Custom Strength & Dosage</p>
+              <p style="color: var(--gray-700); font-size: 14px; line-height: 1.7;">Your exact dose — not what's on the shelf.</p>
+            </div>
+          </div>
+        </div>
+        <div class="info-card" style="background: var(--gray-50);">
+          <div class="flex gap-4 items-start">
+            <div style="width: 36px; height: 36px; border-radius: 8px; background: var(--blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="16" height="16" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1 1 .03 2.798-1.4 2.798H4.198c-1.43 0-2.4-1.798-1.4-2.798L4 15.3"/></svg>
+            </div>
+            <div>
+              <p style="font-weight: 600; color: var(--gray-900); margin-bottom: 4px;">Any Delivery Form</p>
+              <p style="color: var(--gray-700); font-size: 14px; line-height: 1.7;">Cream, capsule, gel, troche, suppository — whatever works for you.</p>
+            </div>
+          </div>
+        </div>
+        <div class="info-card" style="background: var(--gray-50);">
+          <div class="flex gap-4 items-start">
+            <div style="width: 36px; height: 36px; border-radius: 8px; background: var(--blue); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="16" height="16" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div>
+              <p style="font-weight: 600; color: var(--gray-900); margin-bottom: 4px;">Discontinued or Unavailable Drugs</p>
+              <p style="color: var(--gray-700); font-size: 14px; line-height: 1.7;">If it's not commercially available, we can often still make it.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ FAQ ══════════════════════════ -->
+<section style="padding: 80px 0 100px; background: var(--gray-50);">
+  <div class="max-w-3xl mx-auto px-6 lg:px-10">
+    <div class="text-center reveal" style="margin-bottom: 52px;">
+      <span class="tag">Common Questions</span>
+      <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em;">Frequently Asked Questions</h2>
+    </div>
+
+    <div class="reveal bg-white rounded-2xl overflow-hidden" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07); border: 1px solid var(--gray-100);">
+      <div style="padding: 0 28px;">
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 15px;">Do I need to bring a paper prescription?</p>
+            <svg class="faq-chevron" width="18" height="18" fill="none" stroke="var(--blue)" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="faq-a">
+            <p style="color: var(--gray-700); font-size: 15px; line-height: 1.7;">Yes. Please bring a paper prescription copy with you when you come to pick up your medication. Your doctor can also fax a copy to <strong style="color: var(--gray-900);">561.200.4236</strong> in advance, but we still require a physical prescription on file at the pharmacy.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 15px;">How long does it take to fill a compounded prescription?</p>
+            <svg class="faq-chevron" width="18" height="18" fill="none" stroke="var(--blue)" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="faq-a">
+            <p style="color: var(--gray-700); font-size: 15px; line-height: 1.7;">Compounded medications are made fresh to order and typically take longer than standard prescriptions. Timeframes vary by formulation — we'll give you an estimate when your prescription comes in and contact you when it's ready.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 15px;">Does my insurance cover compounded medications?</p>
+            <svg class="faq-chevron" width="18" height="18" fill="none" stroke="var(--blue)" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="faq-a">
+            <p style="color: var(--gray-700); font-size: 15px; line-height: 1.7;">Compounded medications are <strong style="color: var(--gray-900);">cash-pay only</strong> — we do not bill insurance for custom compounds. For standard retail prescriptions, we work with select benefit programs including Nations Benefits. Please call us with questions about your specific situation.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 15px;">Can you deliver to my home?</p>
+            <svg class="faq-chevron" width="18" height="18" fill="none" stroke="var(--blue)" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="faq-a">
+            <p style="color: var(--gray-700); font-size: 15px; line-height: 1.7;">Yes. We offer delivery service throughout South Florida and ship statewide. Ask us about delivery options when you call or when you pick up your first prescription.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 15px;">What if I have questions about my medication?</p>
+            <svg class="faq-chevron" width="18" height="18" fill="none" stroke="var(--blue)" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="faq-a">
+            <p style="color: var(--gray-700); font-size: 15px; line-height: 1.7;">Call us at <a href="tel:5612004245" style="color: var(--blue); font-weight: 600;">(561) 200-4245</a> during business hours. Our pharmacists are available to answer questions about your compound — how to store it, how to use it, what to expect.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-q">
+            <p style="font-weight: 600; color: var(--gray-900); font-size: 15px;">Is my information private?</p>
+            <svg class="faq-chevron" width="18" height="18" fill="none" stroke="var(--blue)" stroke-width="2" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+          <div class="faq-a">
+            <p style="color: var(--gray-700); font-size: 15px; line-height: 1.7;">Yes. We follow all HIPAA requirements and maintain the same confidentiality standards as any licensed pharmacy. Your medical information is never shared without your authorization.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Accepted Programs callout -->
+    <div class="reveal mt-8 rounded-2xl p-6" style="background: #fff; border: 1px solid var(--gray-100); box-shadow: 0 2px 12px rgba(27,82,38,0.05);">
+      <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--green); margin-bottom: 20px; text-align: center;">Accepted Benefit Programs</p>
+      <div style="display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0;">
+        <div style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 24px 0 8px;">
+          <div style="background: #f0f0f0; border-radius: 12px; padding: 16px 24px; margin-bottom: 14px; display: flex; align-items: center; justify-content: center; width: 100%; max-width: 180px;">
+            <img src="website_pics/nationsbenefitslogo.png" alt="Nations Benefits" style="height: 36px; width: auto; display: block;" />
+          </div>
+          <p style="font-size: 13px; color: var(--gray-700); line-height: 1.65;">We accept <strong style="color: var(--gray-900);">Nations Benefits</strong> cards — eligible Medicare Advantage members can use their benefit allowance for OTC health products, vitamins, supplements, and medical equipment at our pharmacy.</p>
+        </div>
+        <div style="background: var(--gray-100); width: 1px;"></div>
+        <div style="display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 8px 0 24px;">
+          <div style="background: #003087; border-radius: 12px; padding: 16px 24px; margin-bottom: 14px; display: flex; align-items: center; justify-content: center; width: 100%; max-width: 180px;">
+            <span style="color: #fff; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 18px; line-height: 1.3; white-space: nowrap;">Express<br>Scripts<span style="color: #6ABF4B;">®</span></span>
+          </div>
+          <p style="font-size: 13px; color: var(--gray-700); line-height: 1.65;">We are an <strong style="color: var(--gray-900);">Express Scripts participating pharmacy</strong>. If your insurance plan uses Express Scripts as its pharmacy benefit manager, you can fill your retail prescriptions with us.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Still have questions -->
+    <div class="reveal mt-8 rounded-2xl p-6 text-center" style="background: linear-gradient(135deg, rgba(27,82,38,0.06), rgba(106,191,75,0.04)); border: 1px solid var(--gray-100);">
+      <p style="font-weight: 600; color: var(--gray-900); margin-bottom: 6px;">Still have questions?</p>
+      <p style="color: var(--gray-700); font-size: 14px; margin-bottom: 14px;">Give us a call — we're happy to help.</p>
+      <a href="tel:5612004245" style="display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; background: var(--blue); color: #fff; font-weight: 600; font-size: 14px; border-radius: 8px; transition: background 0.2s, transform 0.15s; box-shadow: 0 3px 12px rgba(27,82,38,0.25);">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.18a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 12.1a16 16 0 006 6l.35-.35a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        (561) 200-4245
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ PROVIDER CTA ══════════════════════════ -->
+<section class="relative overflow-hidden" style="padding: 80px 0; background: linear-gradient(140deg, #071A0C 0%, #1B5226 55%, #14421E 100%);">
+  <div class="hex-bg absolute inset-0" style="opacity: 0.5;"></div>
+  <div class="relative z-10 max-w-4xl mx-auto px-6 lg:px-10 text-center">
+    <h2 class="reveal" style="font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 700; color: #fff; letter-spacing: -0.025em; margin-bottom: 14px;">Are you a healthcare provider?</h2>
+    <p class="reveal" style="color: rgba(255,255,255,0.65); font-size: 1rem; line-height: 1.7; margin-bottom: 32px;">See our full formulary, learn how to send prescriptions, and find contact information for our pharmacist team.</p>
+    <a href="providers.html" class="reveal btn-green inline-flex">
+      For Healthcare Providers
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════ FOOTER ══════════════════════════ -->
+<footer style="background: var(--gray-900); color: #fff;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10" style="padding-top: 72px; padding-bottom: 32px;">
+    <div class="grid md:grid-cols-4 gap-10" style="margin-bottom: 48px;">
+      <div class="md:col-span-2">
+        <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-14 w-auto mb-4" style="filter: brightness(0) invert(1);" />
+        <p style="color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.75; max-width: 300px;">Full-service pharmacy serving patients and providers throughout South Florida.</p>
+        <p class="mt-4" style="color: var(--green); font-size: 13px; font-weight: 500;">Licensed pharmacy in the State of Florida.</p>
+      </div>
+      <div>
+        <p style="font-weight: 600; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 18px;">Quick Links</p>
+        <ul style="display: flex; flex-direction: column; gap: 12px; list-style: none; padding: 0; margin: 0;">
+          <li><a href="index.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">Home</a></li>
+          <li><a href="services.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">For Patients</a></li>
+          <li><a href="providers.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">For Providers</a></li>
+          <li><a href="contact.html" style="color: rgba(255,255,255,0.55); font-size: 14px;">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-weight: 600; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 18px;">Contact</p>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <p style="color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.6;">1050 E Gateway Blvd, Ste 101<br/>Boynton Beach, FL 33426</p>
+          <a href="tel:5612004245" style="color: rgba(255,255,255,0.55); font-size: 14px;">(561) 200-4245</a>
+          <p style="color: rgba(255,255,255,0.55); font-size: 14px;">Fax: 561.200.4236</p>
+          <div style="color: rgba(255,255,255,0.4); font-size: 13px; line-height: 1.7; margin-top: 4px;">
+            <p>Mon–Fri: 9:00 AM – 6:00 PM</p>
+            <p>Sat: 9:00 AM – 2:00 PM</p>
+            <p>Sun: Closed</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center justify-between gap-4" style="padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.09);">
+      <p style="color: rgba(255,255,255,0.35); font-size: 13px;">© 2025 My Best Pharmacy. All rights reserved.</p>
+      <p style="color: rgba(255,255,255,0.35); font-size: 13px;">Boynton Beach, Florida</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 30); });
+  const ham = document.getElementById('ham');
+  const mob = document.getElementById('mob-menu');
+  const overlay = document.getElementById('mob-overlay');
+  const close = document.getElementById('mob-close');
+  ham.addEventListener('click', () => { mob.classList.add('open'); overlay.classList.add('open'); });
+  close.addEventListener('click', () => { mob.classList.remove('open'); overlay.classList.remove('open'); });
+  overlay.addEventListener('click', () => { mob.classList.remove('open'); overlay.classList.remove('open'); });
+
+  if (navigator.webdriver) {
+    document.querySelectorAll('.reveal, .fu').forEach(el => {
+      el.style.transition = 'none'; el.style.animation = 'none';
+      el.style.opacity = '1'; el.style.transform = 'none'; el.classList.add('in');
+    });
+  }
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => obs.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+
+  // Phone link hover
+  document.querySelectorAll('a[href^="tel"]').forEach(a => {
+    if (!a.closest('footer')) {
+      a.addEventListener('mouseenter', () => a.style.color = 'var(--green)');
+      a.addEventListener('mouseleave', () => a.style.color = 'var(--blue)');
+    }
+  });
+</script>
+</body>
+</html>
