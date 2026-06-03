@@ -385,12 +385,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>Full Electric Bed</td><td>$160</td><td class="na">N/A</td><td>$500</td></tr>
-              <tr><td>Semi Electric Bed</td><td>$145</td><td class="na">N/A</td><td>$500</td></tr>
+              <tr data-item="full-electric-bed"><td>Full Electric Bed<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$160</td><td class="na">N/A</td><td>$500</td></tr>
+              <tr data-item="semi-electric-bed"><td>Semi Electric Bed<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$145</td><td class="na">N/A</td><td>$500</td></tr>
               <tr><td>Air Mattress</td><td>$250</td><td class="na">N/A</td><td>$500</td></tr>
               <tr><td>Mattress <span style="font-size:12px;font-weight:400;color:var(--gray-600);">* Vinyl protector not included</span></td><td>$40</td><td class="na">N/A</td><td>$200</td></tr>
-              <tr><td>Manual Patient Lift</td><td>$180</td><td class="na">N/A</td><td>$100</td></tr>
-              <tr><td>Trapeze Bars</td><td>$60</td><td class="na">N/A</td><td>$150</td></tr>
+              <tr data-item="manual-patient-lift"><td>Manual Patient Lift<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$180</td><td class="na">N/A</td><td>$100</td></tr>
+              <tr data-item="trapeze-bars"><td>Trapeze Bars<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$60</td><td class="na">N/A</td><td>$150</td></tr>
               <tr><td>IV Pole</td><td>$20</td><td class="na">N/A</td><td>$30</td></tr>
             </tbody>
           </table>
@@ -486,7 +486,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr><td>Liftchair</td><td>$250</td><td class="na">N/A</td><td>$500</td></tr>
+                <tr data-item="liftchair"><td>Liftchair<span class="eq-eye" aria-hidden="true"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span></td><td>$250</td><td class="na">N/A</td><td>$500</td></tr>
               </tbody>
             </table>
           </div>
@@ -648,7 +648,12 @@
     'power-chair':          { name: 'Power Chair',                         tag: 'Electric Mobility', image: 'website_pics/equipment/power-chair.jpeg',         desc: 'A fully motorized electric wheelchair operated by a joystick controller. Provides maximum independence for patients with limited upper body strength, limited hand mobility, or severe fatigue.' },
     'portable-ramp-6ft':    { name: "Portable Ramp 6'",                    tag: 'Accessibility',   image: 'website_pics/equipment/portable-ramp.webp',         desc: 'A 6-foot lightweight aluminum ramp that creates a gentle slope over stairs or raised curbs for wheelchair and scooter access. Folds in half for easy transport and storage.' },
     'portable-ramp-3ft':    { name: "Portable Ramp 3'",                    tag: 'Accessibility',   image: 'website_pics/equipment/portable-ramp.webp',         desc: 'A 3-foot aluminum ramp for shorter steps and raised door thresholds. Lightweight, non-slip surface, and folds flat for easy transport in a vehicle.' },
-    'drive-duet':           { name: 'Drive Duet',                          tag: 'Electric Mobility', image: 'website_pics/equipment/drive-duet.jpg',           desc: 'A versatile mobility device that works as both a caregiver-pushed transport chair and a self-propelled manual wheelchair. Ideal for patients whose needs vary day to day.' }
+    'drive-duet':           { name: 'Drive Duet',                          tag: 'Electric Mobility', image: 'website_pics/equipment/drive-duet.jpg',           desc: 'A versatile mobility device that works as both a caregiver-pushed transport chair and a self-propelled manual wheelchair. Ideal for patients whose needs vary day to day.' },
+    'liftchair':            { name: 'Liftchair',                           tag: 'Specialty',       image: 'website_pics/equipment/liftchair.jpg',             desc: 'A power lift recliner chair that gently tilts forward to help users stand up from a seated position. Ideal for patients with limited leg strength, arthritis, or post-surgical recovery.' },
+    'trapeze-bars':         { name: 'Trapeze Bars',                        tag: 'Hospital Bed Accessories', image: 'website_pics/equipment/trapeze-bars.jpg',  desc: 'An overhead trapeze bar that attaches to the hospital bed frame, allowing patients to reposition themselves in bed, assist with transfers, and reduce caregiver strain.' },
+    'full-electric-bed':    { name: 'Full Electric Bed',                   tag: 'Hospital Beds',   image: 'website_pics/equipment/full-electric-bed.jpg',     desc: 'A fully motorized hospital bed with electric head and foot adjustments controlled by a hand pendant. Both sections adjust independently for maximum comfort and care positioning.' },
+    'semi-electric-bed':    { name: 'Semi Electric Bed',                   tag: 'Hospital Beds',   image: 'website_pics/equipment/semi-electric-bed.webp',    desc: 'A hospital bed with an electric head section for easy backrest adjustment and a manual crank for height. A cost-effective option for home care with comfortable electric head control.' },
+    'manual-patient-lift':  { name: 'Manual Patient Lift',                 tag: 'Patient Care',    image: 'website_pics/equipment/manual-patient-lift.webp',  desc: 'A hydraulic Hoyer-style lift used to safely transfer patients between a bed, wheelchair, or recliner. Reduces injury risk for both patients and caregivers during transfers.' }
   };
 
   /* Modal (click / tap) */
