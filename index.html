@@ -37,14 +37,14 @@
 
     /* ── Nav ─────────────────────────────────────────── */
     #navbar {
-      background: rgba(255,255,255,0.95);
+      background: #ffffff;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       box-shadow: 0 1px 0 rgba(27,82,38,0.08);
       transition: background 0.3s ease, box-shadow 0.3s ease;
     }
     #navbar.scrolled {
-      background: rgba(248,249,250,0.99) !important;
+      background: #ffffff !important;
       box-shadow: 0 1px 0 rgba(27,82,38,0.11), 0 4px 24px rgba(27,82,38,0.07) !important;
     }
     .nav-link { position: relative; color: var(--blue); font-weight: 500; font-size: 15px; transition: color 0.2s; }
@@ -136,7 +136,7 @@
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
     <div class="flex items-center justify-between h-20 md:h-28">
       <a href="index.html" class="flex-shrink-0">
-        <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-16 md:h-24 w-auto" />
+        <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-16 md:h-24 w-auto" style="mix-blend-mode: multiply;" />
       </a>
       <!-- Desktop -->
       <div class="hidden md:flex items-center gap-8">
@@ -220,7 +220,7 @@
           </div>
           <div class="flex items-center gap-2.5">
             <svg style="color: var(--green); flex-shrink: 0;" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span style="color: rgba(255,255,255,0.6); font-size: 14px;">1050 E Gateway Blvd, Boynton Beach</span>
+            <a href="https://maps.google.com/?q=1050+E+Gateway+Blvd,+Boynton+Beach,+FL" target="_blank" rel="noopener noreferrer" style="color: rgba(255,255,255,0.6); font-size: 14px; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.25); transition: color 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.color='rgba(255,255,255,0.9)';this.style.borderBottomColor='rgba(255,255,255,0.6)';" onmouseout="this.style.color='rgba(255,255,255,0.6)';this.style.borderBottomColor='rgba(255,255,255,0.25)';">1050 E Gateway Blvd, Boynton Beach</a>
           </div>
         </div>
       </div>
@@ -246,7 +246,7 @@
             <!-- Label badge -->
             <div style="position: absolute; bottom: 14px; left: 16px; display: flex; align-items: center; gap: 8px;">
               <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex-shrink: 0; box-shadow: 0 0 8px rgba(106,191,75,0.8);"></span>
-              <span style="color: #fff; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.04em;">Visit Us · 1050 E Gateway Blvd, Boynton Beach</span>
+              <a href="https://maps.google.com/?q=1050+E+Gateway+Blvd,+Boynton+Beach,+FL" target="_blank" rel="noopener noreferrer" style="color: #fff; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4); transition: border-color 0.2s ease, opacity 0.2s ease;" onmouseover="this.style.borderBottomColor='rgba(255,255,255,0.85)';this.style.opacity='0.88';" onmouseout="this.style.borderBottomColor='rgba(255,255,255,0.4)';this.style.opacity='1';">Visit Us · 1050 E Gateway Blvd, Boynton Beach</a>
             </div>
           </div>
         </div>
