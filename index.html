@@ -127,6 +127,54 @@
     /* ── Mobile hero image sizing ─────────────────── */
     .hero-storefront-img { height: 220px; }
     @media (min-width: 768px) { .hero-storefront-img { height: 290px; } }
+
+    /* ══════════════════ MOBILE IMPROVEMENTS ══════════════════════════ */
+    /* Sticky bottom call bar (mobile only) */
+    .mob-call-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      height: 58px; background: var(--green); color: #fff;
+      font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 16px;
+      text-decoration: none; letter-spacing: -0.01em;
+      box-shadow: 0 -2px 0 rgba(255,255,255,0.12), 0 -6px 24px rgba(106,191,75,0.35);
+      transition: background 0.2s;
+    }
+    .mob-call-bar:active { background: var(--green-dk); }
+    @media (min-width: 768px) { .mob-call-bar { display: none !important; } }
+
+    @media (max-width: 767px) {
+      /* Make room for sticky call bar */
+      body { padding-bottom: 58px; }
+
+      /* Section padding reduction */
+      .mob-section { padding-top: 56px !important; padding-bottom: 56px !important; }
+
+      /* Hero inner content area */
+      .hero-inner { padding-top: 96px !important; padding-bottom: 52px !important; }
+
+      /* Hero quick-info bar spacing */
+      .hero-info-bar { margin-top: 32px !important; padding-top: 28px !important; }
+
+      /* CTA button groups → stack full-width */
+      .mob-ctas { flex-direction: column !important; }
+      .mob-ctas > a {
+        justify-content: center !important; text-align: center;
+        width: 100% !important; box-sizing: border-box;
+      }
+
+      /* Contact pill boxes (provider callout) → stack full-width */
+      .mob-pills { flex-direction: column !important; align-items: stretch !important; }
+      .mob-pills > div { min-width: 0 !important; width: 100%; }
+
+      /* Location grid gap */
+      .mob-loc-grid { gap: 2.5rem !important; }
+
+      /* Footer bottom bar → center */
+      .mob-footer-bar { flex-direction: column !important; align-items: center !important; text-align: center; gap: 6px !important; }
+
+      /* Accepted programs gap reduction */
+      .mob-programs { gap: 2rem !important; }
+    }
   </style>
 </head>
 <body>
@@ -184,7 +232,7 @@
   <!-- Bottom gradient -->
   <div class="absolute bottom-0 left-0 right-0" style="height: 120px; background: linear-gradient(to bottom, transparent, rgba(6,26,8,0.35));"></div>
 
-  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 w-full" style="padding-top: 130px; padding-bottom: 80px;">
+  <div class="hero-inner relative z-10 max-w-7xl mx-auto px-6 lg:px-10 w-full" style="padding-top: 130px; padding-bottom: 80px;">
     <div class="grid md:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center">
 
       <!-- LEFT: Text content -->
@@ -204,12 +252,12 @@
           My Best Pharmacy is your neighborhood full-service pharmacy — OTC products, retail prescriptions, custom compounding, and durable medical equipment, all under one roof in Boynton Beach.
         </p>
         <!-- CTAs -->
-        <div class="fu fu-4 flex flex-wrap gap-4">
+        <div class="fu fu-4 mob-ctas flex flex-wrap gap-4">
           <a href="providers.html" class="btn-green">For Providers</a>
           <a href="services.html" class="btn-ghost-white">For Patients</a>
         </div>
         <!-- Quick info bar -->
-        <div class="fu fu-5 flex flex-col gap-3 mt-12 pt-12" style="border-top: 1px solid rgba(255,255,255,0.1);">
+        <div class="hero-info-bar fu fu-5 flex flex-col gap-3 mt-12 pt-12" style="border-top: 1px solid rgba(255,255,255,0.1);">
           <div class="flex items-center gap-2.5">
             <svg style="color: var(--green); flex-shrink: 0;" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.18a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 12.1a16 16 0 006 6l.35-.35a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
             <a href="tel:5612004245" style="color: rgba(255,255,255,0.9); font-size: 18px; font-weight: 700; letter-spacing: -0.01em;">(561) 200-4245</a>
@@ -263,7 +311,7 @@
 </section>
 
 <!-- ══════════════════════════ WHAT WE OFFER ══════════════════════════ -->
-<section style="padding: 100px 0; background: var(--off-white);">
+<section class="mob-section" style="padding: 100px 0; background: var(--off-white);">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
     <div class="text-center reveal" style="margin-bottom: 60px;">
       <span class="tag">Everything Under One Roof</span>
@@ -329,7 +377,7 @@
 
 
 <!-- ══════════════════════════ EQUIPMENT RENTAL BANNER ══════════════════════════ -->
-<section style="padding: 80px 0; background: linear-gradient(135deg, #0A2E14 0%, #1B5226 60%, #1a5c30 100%); position: relative; overflow: hidden;">
+<section class="mob-section" style="padding: 80px 0; background: linear-gradient(135deg, #0A2E14 0%, #1B5226 60%, #1a5c30 100%); position: relative; overflow: hidden;">
   <!-- Subtle pattern overlay -->
   <div class="hex-bg absolute inset-0" style="opacity: 0.4;"></div>
   <!-- Green glow -->
@@ -351,7 +399,7 @@
         <p style="color: rgba(255,255,255,0.72); font-size: 1.05rem; line-height: 1.8; max-width: 480px; margin-bottom: 36px;">
           My Best Pharmacy carries durable medical equipment — wheelchairs, walkers, hospital beds, oxygen concentrators, and scooters. Available for flexible rental or outright purchase.
         </p>
-        <div class="flex flex-wrap gap-4">
+        <div class="mob-ctas flex flex-wrap gap-4">
           <a href="equipment.html" style="display:inline-flex;align-items:center;gap:10px;padding:16px 34px;background:var(--green);color:#fff;font-family:'DM Sans',sans-serif;font-weight:700;font-size:16px;border-radius:12px;box-shadow:0 6px 24px rgba(106,191,75,0.45);transition:background 0.2s,transform 0.15s;"
             onmouseover="this.style.background='#4E9035';this.style.transform='translateY(-2px)'"
             onmouseout="this.style.background='var(--green)';this.style.transform='translateY(0)'">
@@ -429,7 +477,7 @@
     <div class="text-center reveal" style="margin-bottom: 32px;">
       <p style="font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue);">Accepted Benefit Programs</p>
     </div>
-    <div class="flex flex-wrap justify-center items-start gap-12 reveal">
+    <div class="mob-programs flex flex-wrap justify-center items-start gap-12 reveal">
 
       <!-- Nations Benefits -->
       <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 200px; text-align: center;">
@@ -455,7 +503,7 @@
 </section>
 
 <!-- ══════════════════════════ PROVIDER CALLOUT ══════════════════════════ -->
-<section class="relative overflow-hidden" style="padding: 100px 0; background: linear-gradient(140deg, #071A0C 0%, #1B5226 55%, #14421E 100%);">
+<section class="mob-section relative overflow-hidden" style="padding: 100px 0; background: linear-gradient(140deg, #071A0C 0%, #1B5226 55%, #14421E 100%);">
   <div class="hex-bg absolute inset-0" style="opacity: 0.5;"></div>
   <div class="absolute inset-0" style="background: radial-gradient(ellipse 50% 80% at 90% 50%, rgba(106,191,75,0.09) 0%, transparent 60%);"></div>
   <div class="relative z-10 max-w-4xl mx-auto px-6 lg:px-10 text-center">
@@ -463,7 +511,7 @@
     <h2 class="reveal" style="font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 700; color: #fff; letter-spacing: -0.025em; margin-bottom: 16px;">Ready to start prescribing with us?</h2>
     <p class="reveal" style="color: rgba(255,255,255,0.65); font-size: 1.1rem; margin-bottom: 40px;">Call or fax us directly. We accept prescriptions from licensed physicians, NPs, and PAs.</p>
     <!-- Contact boxes -->
-    <div class="reveal flex flex-wrap justify-center gap-4 mb-10">
+    <div class="mob-pills reveal flex flex-wrap justify-center gap-4 mb-10">
       <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); backdrop-filter: blur(8px); border-radius: 14px; padding: 20px 32px; min-width: 180px;">
         <p style="color: rgba(255,255,255,0.5); font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;">Phone</p>
         <p style="color: #fff; font-size: 1.4rem; font-weight: 700; letter-spacing: -0.01em;">(561) 200-4245</p>
@@ -481,9 +529,9 @@
 </section>
 
 <!-- ══════════════════════════ LOCATION & HOURS ══════════════════════════ -->
-<section style="padding: 100px 0; background: var(--off-white);">
+<section class="mob-section" style="padding: 100px 0; background: var(--off-white);">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
-    <div class="grid md:grid-cols-2 gap-16 items-center">
+    <div class="mob-loc-grid grid md:grid-cols-2 gap-16 items-center">
       <!-- Info -->
       <div class="reveal">
         <span class="tag">Find Us</span>
@@ -579,7 +627,7 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-wrap items-center justify-between gap-4" style="padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.09);">
+    <div class="mob-footer-bar flex flex-wrap items-center justify-between gap-4" style="padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.09);">
       <p style="color: rgba(255,255,255,0.35); font-size: 13px;">© 2025 My Best Pharmacy. All rights reserved.</p>
       <p style="color: rgba(255,255,255,0.35); font-size: 13px;">Boynton Beach, Florida</p>
     </div>
@@ -634,5 +682,11 @@
     a.addEventListener('mouseleave', () => a.style.color = 'var(--blue)');
   });
 </script>
+
+<!-- Sticky mobile call button -->
+<a href="tel:5612004245" class="mob-call-bar" aria-label="Call My Best Pharmacy">
+  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.18a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 12.1a16 16 0 006 6l.35-.35a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+  Call&nbsp;(561)&nbsp;200-4245
+</a>
 </body>
 </html>

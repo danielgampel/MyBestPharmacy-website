@@ -98,6 +98,28 @@
     /* ── Mobile hero image sizing ─────────────────── */
     .hero-pharmacist-img { height: 260px; }
     @media (min-width: 768px) { .hero-pharmacist-img { height: 480px; } }
+
+    /* ══════════════════ MOBILE IMPROVEMENTS ══════════════════════════ */
+    .mob-call-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      height: 58px; background: var(--green); color: #fff;
+      font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 16px;
+      text-decoration: none; letter-spacing: -0.01em;
+      box-shadow: 0 -2px 0 rgba(255,255,255,0.12), 0 -6px 24px rgba(106,191,75,0.35);
+      transition: background 0.2s;
+    }
+    .mob-call-bar:active { background: var(--green-dk); }
+    @media (min-width: 768px) { .mob-call-bar { display: none !important; } }
+
+    @media (max-width: 767px) {
+      body { padding-bottom: 58px; }
+      .page-hero-section { padding-top: 100px !important; padding-bottom: 60px !important; }
+      .mob-section { padding-top: 56px !important; padding-bottom: 56px !important; }
+      .mob-ctas { flex-direction: column !important; }
+      .mob-ctas > a { justify-content: center !important; text-align: center; width: 100% !important; }
+      .mob-footer-bar { flex-direction: column !important; align-items: center !important; text-align: center; gap: 6px !important; }
+    }
   </style>
 </head>
 <body>
@@ -142,7 +164,7 @@
 </div>
 
 <!-- ══════════════════════════ PAGE HERO ══════════════════════════ -->
-<section class="relative overflow-hidden" style="padding: 140px 0 100px; background: linear-gradient(150deg, #071A0C 0%, #1B5226 55%, #14421E 100%);">
+<section class="page-hero-section relative overflow-hidden" style="padding: 140px 0 100px; background: linear-gradient(150deg, #071A0C 0%, #1B5226 55%, #14421E 100%);">
   <div class="hex-bg absolute inset-0" style="opacity: 0.7;"></div>
   <div class="absolute inset-0" style="background: radial-gradient(ellipse 55% 70% at 85% 40%, rgba(106,191,75,0.1) 0%, transparent 60%);"></div>
   <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
@@ -182,7 +204,7 @@
 </section>
 
 <!-- ══════════════════════════ HOW IT WORKS ══════════════════════════ -->
-<section style="padding: 100px 0; background: #fff;">
+<section class="mob-section" style="padding: 100px 0; background: #fff;">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
     <div class="grid lg:grid-cols-2 gap-16 items-center">
       <div class="reveal">
@@ -253,7 +275,7 @@
 </section>
 
 <!-- ══════════════════════════ SERVICES GRID ══════════════════════════ -->
-<section style="padding: 80px 0 100px; background: var(--gray-50);">
+<section class="mob-section" style="padding: 80px 0 100px; background: var(--gray-50);">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
     <div class="grid lg:grid-cols-2 gap-12 items-center">
 
@@ -320,7 +342,7 @@
 </section>
 
 <!-- ══════════════════════════ WHAT IS COMPOUNDING ══════════════════════════ -->
-<section style="padding: 80px 0 100px; background: #fff;">
+<section class="mob-section" style="padding: 80px 0 100px; background: #fff;">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
     <div class="grid lg:grid-cols-2 gap-14 items-center">
 
@@ -375,7 +397,7 @@
 </section>
 
 <!-- ══════════════════════════ FAQ ══════════════════════════ -->
-<section style="padding: 80px 0 100px; background: var(--gray-50);">
+<section class="mob-section" style="padding: 80px 0 100px; background: var(--gray-50);">
   <div class="max-w-3xl mx-auto px-6 lg:px-10">
     <div class="text-center reveal" style="margin-bottom: 52px;">
       <span class="tag">Common Questions</span>
@@ -525,7 +547,7 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-wrap items-center justify-between gap-4" style="padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.09);">
+    <div class="mob-footer-bar flex flex-wrap items-center justify-between gap-4" style="padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.09);">
       <p style="color: rgba(255,255,255,0.35); font-size: 13px;">© 2025 My Best Pharmacy. All rights reserved.</p>
       <p style="color: rgba(255,255,255,0.35); font-size: 13px;">Boynton Beach, Florida</p>
     </div>
@@ -573,5 +595,11 @@
     }
   });
 </script>
+
+<!-- Sticky mobile call button -->
+<a href="tel:5612004245" class="mob-call-bar" aria-label="Call My Best Pharmacy">
+  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.18a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 12.1a16 16 0 006 6l.35-.35a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+  Call&nbsp;(561)&nbsp;200-4245
+</a>
 </body>
 </html>
