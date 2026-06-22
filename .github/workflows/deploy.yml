@@ -17,10 +17,21 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /public_html/
+          server-dir: /mybest-pharmacy.com/public_html/
           local-dir: ./
           exclude: |
             **/.git*
             **/.git*/**
             **/node_modules/**
+            **/temporary screenshots/**
             README.md
+            CLAUDE.md
+            CONTEXT.md
+            LEARNINGS.md
+            package.json
+            package-lock.json
+            serve.mjs
+            screenshot.mjs
+            Pharmacy Website.code-workspace
+            .DS_Store
+            **/.DS_Store
