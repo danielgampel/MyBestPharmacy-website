@@ -891,19 +891,31 @@
       updateNextState(q);
     }
 
+    function scrollToQuiz() {
+      const shell = document.getElementById('quiz-shell');
+      const navbar = document.getElementById('navbar');
+      const navH = navbar ? navbar.offsetHeight : 0;
+      const rect = shell.getBoundingClientRect();
+      if (rect.top < navH + 16) {
+        window.scrollTo({ top: shell.getBoundingClientRect().top + window.scrollY - navH - 20, behavior: 'smooth' });
+      }
+    }
+
     function goNext() {
       const q = QUESTIONS[idx];
       if (!isAnswered(q)) return;
       if (idx < QUESTIONS.length - 1) {
         idx++;
         renderQuestion();
+        scrollToQuiz();
       } else {
         showResults();
+        scrollToQuiz();
       }
     }
     function goBack() {
-      if (finished) { finished = false; renderQuestion(); return; }
-      if (idx > 0) { idx--; renderQuestion(); }
+      if (finished) { finished = false; renderQuestion(); scrollToQuiz(); return; }
+      if (idx > 0) { idx--; renderQuestion(); scrollToQuiz(); }
     }
 
     // Event delegation on the stable footer container so dynamically
