@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Best Wellness Program — Personalized Supplements, Delivered Monthly</title>
+  <meta name="description" content="Take a short wellness quiz and get a personalized monthly supplement plan from My Best Pharmacy — pharmacist-reviewed, auto-refilled, and delivered to your door." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blue: #1B5226;
+      --blue-dk: #0B3016;
+      --blue-md: #14421E;
+      --blue-lt: #226E32;
+      --green: #6ABF4B;
+      --green-dk: #4E9035;
+      --off-white: #F8F9FA;
+      --gray-50: #EEF3F9;
+      --gray-100: #D8E4F0;
+      --gray-600: #4A607A;
+      --gray-700: #3D5570;
+      --gray-900: #0B3016;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--gray-900); -webkit-font-smoothing: antialiased; margin: 0; padding: 0; }
+    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; margin: 0; }
+    p { margin: 0; }
+    a { text-decoration: none; }
+
+    /* ── Scrollbar ─────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--off-white); }
+    ::-webkit-scrollbar-thumb { background: var(--gray-100); border-radius: 3px; }
+
+    /* ── Nav ─────────────────────────────────────────── */
+    #navbar {
+      background: #ffffff;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: 0 1px 0 rgba(27,82,38,0.08);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    #navbar.scrolled {
+      background: #ffffff !important;
+      box-shadow: 0 1px 0 rgba(27,82,38,0.11), 0 4px 24px rgba(27,82,38,0.07) !important;
+    }
+    .nav-link { position: relative; color: var(--blue); font-weight: 500; font-size: 15px; transition: color 0.2s; }
+    .nav-link::after { content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 2px; background: var(--green); border-radius: 2px; transition: width 0.2s ease; }
+    .nav-link:hover { color: var(--green); }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    .nav-link.active { color: var(--blue); }
+
+    /* ── Mobile menu ─────────────────────────────────── */
+    .mob-menu { position: fixed; top: 0; right: 0; bottom: 0; width: 280px; background: #fff; z-index: 200; padding: 28px 24px; transform: translateX(100%); transition: transform 0.32s cubic-bezier(0.22,1,0.36,1); display: flex; flex-direction: column; box-shadow: -4px 0 40px rgba(0,0,0,0.14); }
+    .mob-menu.open { transform: translateX(0); }
+    .mob-overlay { position: fixed; inset: 0; background: rgba(7,26,11,0.45); z-index: 199; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .mob-overlay.open { opacity: 1; pointer-events: auto; }
+
+    /* ── Hero pattern ─────────────────────────────── */
+    .hex-bg {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='1' d='M28 66L0 50V16L28 0l28 16v34L28 66zM28 100L0 84V50l28-16 28 16v34L28 100z'/%3E%3C/svg%3E");
+    }
+
+    /* ── Buttons ─────────────────────────────────────── */
+    .btn-green { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 30px; background: var(--green); color: #fff; font-family: 'DM Sans',sans-serif; font-weight: 600; font-size: 15px; border-radius: 10px; border: none; cursor: pointer; transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; box-shadow: 0 4px 16px rgba(106,191,75,0.38); }
+    .btn-green:hover { background: var(--green-dk); transform: translateY(-1px); box-shadow: 0 6px 22px rgba(106,191,75,0.45); }
+    .btn-green:active { transform: translateY(0); }
+    .btn-green:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; border-radius: 10px; }
+    .btn-green:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; transform: none; }
+
+    .btn-ghost-white { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 30px; background: transparent; color: #fff; font-family: 'DM Sans',sans-serif; font-weight: 500; font-size: 15px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.38); cursor: pointer; transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease; }
+    .btn-ghost-white:hover { border-color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.08); transform: translateY(-1px); }
+    .btn-ghost-white:active { transform: translateY(0); }
+    .btn-ghost-white:focus-visible { outline: 3px solid #fff; outline-offset: 3px; border-radius: 10px; }
+
+    .btn-quiet { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 26px; background: transparent; color: var(--gray-700); font-family: 'DM Sans',sans-serif; font-weight: 500; font-size: 14px; border-radius: 10px; border: 2px solid var(--gray-100); cursor: pointer; transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease; }
+    .btn-quiet:hover { border-color: var(--blue); color: var(--blue); }
+    .btn-quiet:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ── Animations ──────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fu { opacity: 0; animation: fadeUp 0.75s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .fu-0 { animation-delay: 0s; }
+    .fu-1 { animation-delay: 0.08s; }
+    .fu-2 { animation-delay: 0.22s; }
+    .fu-3 { animation-delay: 0.38s; }
+    .fu-4 { animation-delay: 0.54s; }
+    .fu-5 { animation-delay: 0.70s; }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ── Cards ───────────────────────────────────────── */
+    .spec-card { transition: transform 0.32s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease; }
+    .spec-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(27,82,38,0.13), 0 6px 18px rgba(27,82,38,0.07) !important; }
+
+    /* ── Section labels ────────────────────────────── */
+    .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+    .underline-g { position: relative; padding-bottom: 18px; }
+    .underline-g::after { content: ''; position: absolute; bottom: 0; left: 0; width: 44px; height: 3px; background: var(--green); border-radius: 2px; }
+    .underline-g-c::after { left: 50%; transform: translateX(-50%); }
+
+    /* ── Footer ──────────────────────────────────────── */
+    footer a { transition: color 0.2s; }
+    footer a:hover { color: var(--green) !important; }
+
+    /* ── Focus ───────────────────────────────────────── */
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; border-radius: 4px; }
+
+    /* ════════════════ QUIZ (signature element) ════════════════ */
+    .quiz-shell {
+      position: relative;
+      max-width: 780px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 26px;
+      box-shadow: 0 32px 90px rgba(27,82,38,0.13), 0 8px 26px rgba(27,82,38,0.07), 0 0 0 1px rgba(27,82,38,0.04);
+      overflow: hidden;
+    }
+    .quiz-topbar { padding: 26px 30px 0; }
+    .quiz-meta { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+    .quiz-step-label { font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); }
+    .quiz-step-count { font-size: 13px; font-weight: 500; color: var(--gray-600); }
+    .quiz-progress-track { height: 6px; background: var(--gray-100); border-radius: 100px; overflow: hidden; }
+    .quiz-progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--blue-lt), var(--green)); border-radius: 100px; transition: width 0.45s cubic-bezier(0.22,1,0.36,1); }
+
+    .quiz-body { padding: 30px; }
+    @keyframes stepIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .quiz-stage { animation: stepIn 0.42s cubic-bezier(0.22,1,0.36,1); }
+
+    .quiz-q-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.02em; line-height: 1.15; }
+    .quiz-q-sub { color: var(--gray-700); font-size: 15px; line-height: 1.6; margin-top: 8px; }
+
+    .opt-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 26px; }
+    @media (min-width: 640px) { .opt-grid { grid-template-columns: 1fr 1fr; } }
+
+    .opt {
+      display: flex; align-items: center; gap: 14px;
+      width: 100%; text-align: left; cursor: pointer;
+      padding: 17px 18px; border-radius: 14px;
+      border: 2px solid var(--gray-100); background: #fff;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    }
+    .opt:hover { border-color: var(--green); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(106,191,75,0.12); }
+    .opt:focus-visible { outline: none; border-color: var(--green); box-shadow: 0 0 0 4px rgba(106,191,75,0.18); }
+    .opt.selected { border-color: var(--green); background: rgba(106,191,75,0.07); }
+    .opt-check {
+      flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+      border: 2px solid var(--gray-100); background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .opt.selected .opt-check { background: var(--green); border-color: var(--green); }
+    .opt-check svg { opacity: 0; transition: opacity 0.2s ease; }
+    .opt.selected .opt-check svg { opacity: 1; }
+    .opt-label { font-size: 15px; font-weight: 600; color: var(--gray-900); line-height: 1.3; }
+
+    .quiz-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 4px 30px 30px; }
+    .quiz-hint { font-size: 13px; color: var(--gray-600); }
+
+    /* Results */
+    .rx-card {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 18px 20px; border-radius: 16px;
+      background: var(--off-white); border: 1px solid var(--gray-100);
+    }
+    .rx-icon {
+      flex-shrink: 0; width: 46px; height: 46px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, rgba(106,191,75,0.16), rgba(27,82,38,0.08));
+    }
+    .formula-toggle { display: inline-flex; padding: 5px; background: var(--gray-50); border-radius: 12px; border: 1px solid var(--gray-100); }
+    .formula-btn {
+      border: none; cursor: pointer; background: transparent;
+      font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 14px; color: var(--gray-700);
+      padding: 9px 18px; border-radius: 9px; transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .formula-btn.active { background: #fff; color: var(--blue); box-shadow: 0 2px 8px rgba(27,82,38,0.1); }
+    .formula-btn:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+
+    /* ── Mobile call bar ─────────────────────────────── */
+    .mob-call-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
+      display: flex; align-items: center;
+      height: 58px; background: var(--green);
+      box-shadow: 0 -2px 0 rgba(255,255,255,0.12), 0 -6px 24px rgba(106,191,75,0.35);
+    }
+    .mob-call-phone {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 10px;
+      height: 100%; color: #fff; text-decoration: none;
+      font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 16px; letter-spacing: -0.01em;
+      transition: background 0.2s;
+    }
+    .mob-call-phone:active { background: rgba(0,0,0,0.15); }
+    .mob-call-divider { width: 1px; height: 30px; background: rgba(255,255,255,0.3); flex-shrink: 0; }
+    .mob-call-map {
+      width: 62px; height: 100%; display: flex; align-items: center; justify-content: center;
+      color: #fff; text-decoration: none; flex-shrink: 0; transition: background 0.2s;
+    }
+    .mob-call-map:active { background: rgba(0,0,0,0.15); }
+    @media (min-width: 768px) { .mob-call-bar { display: none !important; } }
+
+    @media (max-width: 767px) {
+      body { padding-bottom: 58px; }
+      .mob-section { padding-top: 56px !important; padding-bottom: 56px !important; }
+      .hero-inner { padding-top: 96px !important; padding-bottom: 52px !important; }
+      .mob-ctas { flex-direction: column !important; }
+      .mob-ctas > a, .mob-ctas > button { justify-content: center !important; text-align: center; width: 100% !important; box-sizing: border-box; }
+      .quiz-body { padding: 24px 20px; }
+      .quiz-topbar { padding: 22px 22px 0; }
+      .quiz-footer { padding: 4px 20px 24px; }
+      .mob-footer-bar { flex-direction: column !important; align-items: center !important; text-align: center; gap: 6px !important; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+    }
+  </style>
+  <link rel="icon" href="/favicon.ico?v=2" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon.png?v=2">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">
+</head>
+<body>
+
+<!-- ══════════════════════════ NAVIGATION ══════════════════════════ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex items-center justify-between h-20 md:h-28">
+      <a href="/" class="flex-shrink-0">
+        <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-16 md:h-24 w-auto" style="mix-blend-mode: multiply;" />
+      </a>
+      <!-- Desktop -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/services" class="nav-link">For Patients</a>
+        <a href="/wellness" class="nav-link active">Wellness Program</a>
+        <a href="/equipment" class="nav-link">Equipment</a>
+        <a href="/providers" class="nav-link">Providers</a>
+        <a href="/contact" class="nav-link">Contact</a>
+      </div>
+      <!-- Hamburger -->
+      <button id="ham" class="md:hidden p-2" style="color: var(--blue);" aria-label="Open menu">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mob-overlay" class="mob-overlay"></div>
+<div id="mob-menu" class="mob-menu">
+  <button id="mob-close" class="absolute top-5 right-5 p-2" style="color: var(--blue);" aria-label="Close menu">
+    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="mt-10 flex flex-col gap-5">
+    <a href="/" style="color: var(--blue); font-weight: 600; font-size: 20px;">Home</a>
+    <a href="/services" style="color: var(--blue); font-weight: 600; font-size: 20px;">For Patients</a>
+    <a href="/wellness" style="color: var(--green); font-weight: 600; font-size: 20px;">Wellness Program</a>
+    <a href="/equipment" style="color: var(--blue); font-weight: 600; font-size: 20px;">Equipment</a>
+    <a href="/providers" style="color: var(--blue); font-weight: 600; font-size: 20px;">Providers</a>
+    <a href="/contact" style="color: var(--blue); font-weight: 600; font-size: 20px;">Contact</a>
+  </div>
+  <div class="mt-auto pt-6" style="border-top: 1px solid var(--gray-100);">
+    <p style="font-size: 12px; color: var(--gray-600); margin-bottom: 6px;">Call us</p>
+    <a href="tel:5612004245" style="color: var(--blue); font-weight: 600;">(561) 200-4245</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════ HERO ══════════════════════════ -->
+<section class="relative overflow-hidden" style="background: linear-gradient(150deg, #071A0C 0%, #1B5226 55%, #14421E 100%);">
+  <div class="hex-bg absolute inset-0" style="opacity: 0.7;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 60% 60% at 18% 78%, rgba(106,191,75,0.12) 0%, transparent 60%), radial-gradient(ellipse 50% 55% at 85% 18%, rgba(34,110,50,0.2) 0%, transparent 55%);"></div>
+
+  <div class="hero-inner relative z-10 max-w-3xl mx-auto px-6 lg:px-10 text-center" style="padding-top: 150px; padding-bottom: 96px;">
+    <!-- Eyebrow -->
+    <div class="fu fu-1 inline-flex items-center gap-2 mb-7" style="padding: 6px 16px; border-radius: 100px; border: 1px solid rgba(106,191,75,0.4); background: rgba(106,191,75,0.08);">
+      <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--green);"></span>
+      <span style="color: var(--green); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;">Monthly Wellness Subscription</span>
+    </div>
+    <!-- Headline -->
+    <h1 class="fu fu-2" style="font-size: clamp(2.6rem, 6vw, 4.8rem); font-weight: 700; color: #fff; line-height: 1.04; letter-spacing: -0.03em; margin-bottom: 22px;">
+      My Best<br/><em style="font-style: italic; color: var(--green);">Wellness Program</em>
+    </h1>
+    <!-- Subheadline -->
+    <p class="fu fu-3" style="font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: rgba(255,255,255,0.78); line-height: 1.7; max-width: 600px; margin: 0 auto 16px;">
+      Personalized hormone support, delivered monthly. Answer a few questions and our pharmacist builds a supplement plan around exactly what your body needs.
+    </p>
+    <p class="fu fu-3" style="font-size: 0.95rem; color: rgba(255,255,255,0.55); margin-bottom: 38px;">Feel better. Stay balanced. Delivered monthly.</p>
+
+    <!-- CTAs -->
+    <div class="fu fu-4 mob-ctas flex flex-wrap justify-center gap-4 mb-12">
+      <a href="#quiz" class="btn-green">
+        Take the wellness quiz
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#how" class="btn-ghost-white">How it works</a>
+    </div>
+
+    <!-- Enrollment badge -->
+    <div class="fu fu-5 inline-flex items-center gap-3 flex-wrap justify-center" style="padding: 12px 22px; border-radius: 14px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.16); backdrop-filter: blur(8px);">
+      <span style="color: rgba(255,255,255,0.7); font-size: 14px;">Enrollment Fee <span style="text-decoration: line-through; opacity: 0.6;">$29.99</span></span>
+      <span style="width: 1px; height: 16px; background: rgba(255,255,255,0.2);"></span>
+      <span style="color: var(--green); font-weight: 700; font-size: 14px; letter-spacing: 0.02em;">Currently Waived</span>
+    </div>
+
+    <!-- Trust row -->
+    <div class="fu fu-5 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 mt-12">
+      <span style="color: rgba(255,255,255,0.6); font-size: 13px; display: inline-flex; align-items: center; gap: 7px;"><svg width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Pharmacist-reviewed</span>
+      <span style="color: rgba(255,255,255,0.6); font-size: 13px; display: inline-flex; align-items: center; gap: 7px;"><svg width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Auto-refilled monthly</span>
+      <span style="color: rgba(255,255,255,0.6); font-size: 13px; display: inline-flex; align-items: center; gap: 7px;"><svg width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Delivery included</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ HOW IT WORKS ══════════════════════════ -->
+<section id="how" class="mob-section" style="padding: 96px 0; background: var(--off-white);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="text-center reveal" style="margin-bottom: 56px;">
+      <span class="tag">Simple From Start To Doorstep</span>
+      <h2 class="underline-g underline-g-c" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em;">How It Works</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8">
+
+      <!-- Step 01 -->
+      <div class="reveal" style="position: relative;">
+        <div class="bg-white rounded-2xl p-8 h-full" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
+          <span style="font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 700; color: rgba(106,191,75,0.5); line-height: 1;">01</span>
+          <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Take the quiz</h3>
+          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">Answer eight quick questions about your life stage, hormone therapy, symptoms, lifestyle, and goals. It takes about three minutes.</p>
+        </div>
+      </div>
+
+      <!-- Step 02 -->
+      <div class="reveal" style="position: relative;">
+        <div class="bg-white rounded-2xl p-8 h-full" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
+          <span style="font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 700; color: rgba(106,191,75,0.5); line-height: 1;">02</span>
+          <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Get your formula</h3>
+          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">See a personalized supplement plan instantly — then our pharmacist reviews it with your therapy in mind before anything ships.</p>
+        </div>
+      </div>
+
+      <!-- Step 03 -->
+      <div class="reveal" style="position: relative;">
+        <div class="bg-white rounded-2xl p-8 h-full" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
+          <span style="font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 700; color: rgba(106,191,75,0.5); line-height: 1;">03</span>
+          <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Delivered monthly</h3>
+          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">Your supplements arrive each month, billed automatically to your card on file and refilled like a prescription. Cancel anytime with notice.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ QUIZ ══════════════════════════ -->
+<section id="quiz" class="mob-section relative overflow-hidden" style="padding: 96px 0; background: linear-gradient(160deg, #0A2E14 0%, #14421E 100%);">
+  <div class="hex-bg absolute inset-0" style="opacity: 0.45;"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 55% 60% at 50% 0%, rgba(106,191,75,0.12) 0%, transparent 60%);"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="text-center" style="margin-bottom: 44px;">
+      <span class="tag" style="color: var(--green);">Your Wellness Quiz</span>
+      <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #fff; letter-spacing: -0.025em;">Let's find what your body needs</h2>
+      <p style="color: rgba(255,255,255,0.62); font-size: 1.05rem; margin-top: 12px; max-width: 560px; margin-left: auto; margin-right: auto;">No two patients are the same. Your answers shape a plan built for you — not a one-size-fits-all bundle.</p>
+    </div>
+
+    <!-- Quiz card -->
+    <div class="quiz-shell" id="quiz-shell">
+      <!-- Progress -->
+      <div class="quiz-topbar" id="quiz-topbar">
+        <div class="quiz-meta">
+          <span class="quiz-step-label" id="quiz-step-label">Question 1</span>
+          <span class="quiz-step-count" id="quiz-step-count">1 of 5</span>
+        </div>
+        <div class="quiz-progress-track"><div class="quiz-progress-fill" id="quiz-progress-fill"></div></div>
+      </div>
+
+      <!-- Question stage -->
+      <div class="quiz-body">
+        <div class="quiz-stage" id="quiz-stage"><!-- rendered by JS --></div>
+      </div>
+
+      <!-- Footer controls -->
+      <div class="quiz-footer" id="quiz-footer">
+        <button class="btn-quiet" id="quiz-back" disabled>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back
+        </button>
+        <span class="quiz-hint" id="quiz-hint">Select an option to continue</span>
+        <button class="btn-green" id="quiz-next" disabled>
+          Next
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ WHY THE PROGRAM ══════════════════════════ -->
+<section class="mob-section" style="padding: 96px 0; background: #fff;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="text-center reveal" style="margin-bottom: 56px;">
+      <span class="tag">Why Patients Subscribe</span>
+      <h2 class="underline-g underline-g-c" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em;">A Wellness Routine That Runs Itself</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div class="spec-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, rgba(106,191,75,0.14), rgba(27,82,38,0.07));">
+          <svg width="24" height="24" fill="none" stroke="var(--green)" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg>
+        </div>
+        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Personalized monthly formula</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Exactly the supplements you need — chosen from your quiz and confirmed by our pharmacist. Not a fixed, off-the-shelf bundle.</p>
+      </div>
+
+      <div class="spec-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, rgba(106,191,75,0.14), rgba(27,82,38,0.07));">
+          <svg width="24" height="24" fill="none" stroke="var(--green)" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+        </div>
+        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Automatic refills</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Dispensed monthly like a prescription, so you never run out mid-cycle or have to remember to reorder.</p>
+      </div>
+
+      <div class="spec-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, rgba(106,191,75,0.14), rgba(27,82,38,0.07));">
+          <svg width="24" height="24" fill="none" stroke="var(--green)" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/></svg>
+        </div>
+        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Automatic monthly billing</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">One simple charge to your card on file each month. No invoices to chase, no surprises.</p>
+      </div>
+
+      <div class="spec-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, rgba(106,191,75,0.14), rgba(27,82,38,0.07));">
+          <svg width="24" height="24" fill="none" stroke="var(--green)" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
+        </div>
+        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Delivery included</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Your monthly supply is delivered to your door across South Florida — included in your plan, no separate fee.</p>
+      </div>
+
+      <div class="spec-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, rgba(106,191,75,0.14), rgba(27,82,38,0.07));">
+          <svg width="24" height="24" fill="none" stroke="var(--green)" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+        </div>
+        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Trusted quality</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Practitioner-grade brands like Xymogen, with an affordable Essential tier and a 100% premium tier — your choice.</p>
+      </div>
+
+      <div class="spec-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, rgba(106,191,75,0.14), rgba(27,82,38,0.07));">
+          <svg width="24" height="24" fill="none" stroke="var(--green)" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/></svg>
+        </div>
+        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Always pharmacist-led</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Every plan is reviewed against your hormone therapy by a licensed pharmacist before it's dispensed — never automated alone.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ SUPPLEMENT CATALOG ══════════════════════════ -->
+<section class="mob-section" style="padding: 96px 0; background: var(--off-white); border-top: 1px solid var(--gray-100);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="text-center reveal" style="margin-bottom: 52px;">
+      <span class="tag">The Building Blocks</span>
+      <h2 class="underline-g underline-g-c" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em;">What We May Recommend</h2>
+      <p style="color: var(--gray-700); font-size: 1.05rem; margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.7;">Your formula is drawn from a focused set of evidence-based supplements. You'll only ever receive the ones that fit your goals and symptoms.</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <div class="reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
+        <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--blue); margin-bottom: 8px;">Magnesium Glycinate</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Supports restful sleep, calm, muscle relaxation, and stress recovery.</p>
+      </div>
+
+      <div class="reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
+        <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--blue); margin-bottom: 8px;">Vitamin K2 + D3</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Supports bone strength and healthy vitamin D — helpful around menopause and low vitamin D.</p>
+      </div>
+
+      <div class="reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
+        <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--blue); margin-bottom: 8px;">Omega-3 Fish Oil</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Supports heart health, healthy cholesterol, joints, and a balanced inflammatory response.</p>
+      </div>
+
+      <div class="reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
+        <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--blue); margin-bottom: 8px;">B12 / B-Complex</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Supports energy, mental clarity, and helps ease everyday fatigue and brain fog.</p>
+      </div>
+
+      <div class="reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
+        <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--blue); margin-bottom: 8px;">DIM (DIMension 3)</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Supports healthy estrogen metabolism. Recommended selectively — only when it's right for your therapy.</p>
+      </div>
+
+      <div class="reveal rounded-2xl p-7" style="background: linear-gradient(135deg, rgba(27,82,38,0.05), rgba(106,191,75,0.06)); border: 1px dashed var(--gray-100);">
+        <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--blue); margin-bottom: 8px;">More on the way</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">We're continually adding targeted supplements as the program grows. Your pharmacist will keep your plan current.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ FAQ ══════════════════════════ -->
+<section class="mob-section" style="padding: 96px 0; background: #fff;">
+  <div class="max-w-3xl mx-auto px-6 lg:px-10">
+    <div class="text-center reveal" style="margin-bottom: 48px;">
+      <span class="tag">Good To Know</span>
+      <h2 class="underline-g underline-g-c" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em;">Common Questions</h2>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
+        <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">Is this a substitute for talking to my doctor?</summary>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">No. The quiz gives a personalized starting point, and a licensed pharmacist reviews it against your hormone therapy before anything ships. We always recommend keeping your prescribing physician in the loop.</p>
+      </details>
+      <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
+        <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">How does billing work?</summary>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">Your plan is billed automatically each month to the card on file and refilled like a prescription. The $29.99 enrollment fee is currently waived as a launch promotion.</p>
+      </details>
+      <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
+        <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">Can I cancel or change my plan?</summary>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">Yes. You can cancel with advance notice, and your pharmacist can adjust your formula as your needs change over time.</p>
+      </details>
+      <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
+        <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">What's the difference between Essential and Premium?</summary>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">Essential is a high-quality hybrid formula that's cost-conscious, using premium ingredients where they matter most. Premium uses 100% Xymogen, practitioner-grade ingredients throughout.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════ FOOTER ══════════════════════════ -->
+<footer style="background: var(--gray-900); color: #fff;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10" style="padding-top: 72px; padding-bottom: 32px;">
+    <div class="grid md:grid-cols-4 gap-10" style="margin-bottom: 48px;">
+      <!-- Brand col -->
+      <div class="md:col-span-2">
+        <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-14 w-auto mb-4" style="filter: brightness(0) invert(1);" />
+        <p style="color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.75; max-width: 300px;">Full-service pharmacy — OTC products, retail prescriptions, custom compounding, and medical equipment — serving Boynton Beach and South Florida.</p>
+        <p class="mt-4" style="color: var(--green); font-size: 13px; font-weight: 500;">Licensed pharmacy in the State of Florida.</p>
+      </div>
+      <!-- Quick links -->
+      <div>
+        <p style="font-weight: 600; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 18px;">Quick Links</p>
+        <ul style="display: flex; flex-direction: column; gap: 12px; list-style: none; padding: 0; margin: 0;">
+          <li><a href="/" style="color: rgba(255,255,255,0.55); font-size: 14px;">Home</a></li>
+          <li><a href="/services" style="color: rgba(255,255,255,0.55); font-size: 14px;">Services</a></li>
+          <li><a href="/wellness" style="color: rgba(255,255,255,0.55); font-size: 14px;">Wellness Program</a></li>
+          <li><a href="/providers" style="color: rgba(255,255,255,0.55); font-size: 14px;">For Providers</a></li>
+          <li><a href="/contact" style="color: rgba(255,255,255,0.55); font-size: 14px;">Contact</a></li>
+        </ul>
+      </div>
+      <!-- Contact -->
+      <div>
+        <p style="font-weight: 600; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 18px;">Contact</p>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <p style="color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.6;">1050 E Gateway Blvd, Ste 101<br/>Boynton Beach, FL 33426</p>
+          <a href="tel:5612004245" style="color: rgba(255,255,255,0.55); font-size: 14px;">(561) 200-4245</a>
+          <p style="color: rgba(255,255,255,0.55); font-size: 14px;">Fax: 561.200.4236</p>
+          <div style="color: rgba(255,255,255,0.4); font-size: 13px; line-height: 1.7; margin-top: 4px;">
+            <p>Mon–Fri: 9:00 AM – 6:00 PM</p>
+            <p>Sat: 9:00 AM – 2:00 PM</p>
+            <p>Sun: Closed</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mob-footer-bar flex flex-wrap items-center justify-between gap-4" style="padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.09);">
+      <p style="color: rgba(255,255,255,0.35); font-size: 13px;">© 2025 My Best Pharmacy. All rights reserved.</p>
+      <p style="color: rgba(255,255,255,0.35); font-size: 13px;">Boynton Beach, Florida</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Sticky nav
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  // Mobile menu
+  const ham = document.getElementById('ham');
+  const mob = document.getElementById('mob-menu');
+  const overlay = document.getElementById('mob-overlay');
+  const close = document.getElementById('mob-close');
+  const openMenu = () => { mob.classList.add('open'); overlay.classList.add('open'); };
+  const closeMenu = () => { mob.classList.remove('open'); overlay.classList.remove('open'); };
+  ham.addEventListener('click', openMenu);
+  close.addEventListener('click', closeMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  // Instant reveal for headless/screenshot mode
+  if (navigator.webdriver) {
+    document.querySelectorAll('.reveal, .fu').forEach(el => {
+      el.style.transition = 'none';
+      el.style.animation = 'none';
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      el.classList.add('in');
+    });
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => obs.observe(el));
+
+  // Nav phone links hover
+  document.querySelectorAll('a[href^="tel"]').forEach(a => {
+    a.addEventListener('mouseenter', () => a.style.color = 'var(--green)');
+    a.addEventListener('mouseleave', () => a.style.color = 'var(--blue)');
+  });
+
+  /* ════════════════════════ WELLNESS QUIZ ENGINE ════════════════════════ */
+  (function () {
+    // ── Supplement catalog. Pricing intentionally left as placeholders. ──
+    const SUPPS = {
+      magnesium: { name: 'Magnesium Glycinate', supports: 'Sleep, calm & muscle relaxation', essential: "Nature's Truth · Glycinate 200mg", premium: 'Xymogen · OptiMag' },
+      b12:       { name: 'B12 / B-Complex',      supports: 'Energy & mental clarity',         essential: 'B-Complex',                    premium: 'Xymogen · ActiveB' },
+      omega:     { name: 'Omega-3 Fish Oil',     supports: 'Heart, joints & inflammation',    essential: "Nature's Truth · 2400mg",      premium: 'Xymogen · MonoPure 1300 EC' },
+      k2d3:      { name: 'Vitamin K2 + D3',       supports: 'Bone strength & vitamin D',        essential: "Nature's Truth · K2 + D3",     premium: 'Xymogen · K2-D3 5000' },
+      dim:       { name: 'DIM (DIMension 3)',    supports: 'Healthy estrogen metabolism',     essential: 'Xymogen · DIMension 3',        premium: 'Xymogen · DIMension 3' }
+    };
+
+    // ── Questions ──
+    const QUESTIONS = [
+      {
+        id: 'lifestage', type: 'single',
+        title: 'Which best describes you?',
+        sub: 'This helps us tailor recommendations to your biology and life stage.',
+        options: [
+          { value: 'male',      label: 'Male' },
+          { value: 'premeno',   label: 'Female — premenopausal' },
+          { value: 'perimeno',  label: 'Female — perimenopausal' },
+          { value: 'postmeno',  label: 'Female — postmenopausal' }
+        ]
+      },
+      {
+        id: 'therapy', type: 'single',
+        title: 'Are you currently on hormone therapy?',
+        sub: 'This helps us tailor your plan safely around your treatment.',
+        options: [
+          { value: 'testosterone', label: 'Testosterone' },
+          { value: 'progesterone', label: 'Progesterone' },
+          { value: 'estrogen',     label: 'Estrogen / Estradiol' },
+          { value: 'combination',  label: 'Combination therapy' },
+          { value: 'none',         label: 'Not currently' }
+        ]
+      },
+      {
+        id: 'goal', type: 'single',
+        title: "What's your main wellness goal?",
+        sub: 'Pick the one that matters most right now.',
+        options: [
+          { value: 'energy',  label: 'More energy' },
+          { value: 'sleep',   label: 'Better sleep' },
+          { value: 'stress',  label: 'Stress & recovery' },
+          { value: 'mood',    label: 'Better mood' },
+          { value: 'balance', label: 'Hormone balance' },
+          { value: 'bone',    label: 'Bone support' },
+          { value: 'heart',   label: 'Heart health' }
+        ]
+      },
+      {
+        id: 'symptoms', type: 'multi',
+        title: 'Which symptoms have you been experiencing?',
+        sub: 'Select all that apply — or choose "None of the above."',
+        options: [
+          { value: 'fatigue',     label: 'Fatigue' },
+          { value: 'brainfog',    label: 'Brain fog / poor concentration' },
+          { value: 'poorsleep',   label: 'Poor sleep' },
+          { value: 'anxiety',     label: 'Anxiety / stress' },
+          { value: 'moodswings',  label: 'Mood swings' },
+          { value: 'hotflashes',  label: 'Hot flashes' },
+          { value: 'nightsweats', label: 'Night sweats' },
+          { value: 'cramps',      label: 'Muscle cramps or tension' },
+          { value: 'joint',       label: 'Joint discomfort' },
+          { value: 'none',        label: 'None of the above' }
+        ]
+      },
+      {
+        id: 'stress', type: 'single',
+        title: 'How would you describe your daily stress level?',
+        sub: 'Chronic stress depletes key nutrients and disrupts sleep, mood, and hormone balance.',
+        options: [
+          { value: 'low',      label: 'Low — I feel mostly calm' },
+          { value: 'moderate', label: 'Moderate — occasional stress' },
+          { value: 'high',     label: 'High — frequently stressed' },
+          { value: 'veryhigh', label: 'Very high or chronic stress' }
+        ]
+      },
+      {
+        id: 'sun', type: 'single',
+        title: 'How much time do you spend in direct sunlight each week?',
+        sub: 'Sun exposure is the primary natural trigger for vitamin D production.',
+        options: [
+          { value: 'rarely',    label: 'Rarely — mostly indoors' },
+          { value: 'sometimes', label: 'Sometimes — a few hours a week' },
+          { value: 'often',     label: 'Often — outdoors most days' }
+        ]
+      },
+      {
+        id: 'diet', type: 'single',
+        title: 'How often do you eat fatty fish (salmon, tuna, sardines)?',
+        sub: 'Fatty fish are the main dietary source of omega-3 fatty acids.',
+        options: [
+          { value: 'often',    label: '2 or more times per week' },
+          { value: 'sometimes',label: 'Occasionally' },
+          { value: 'rarely',   label: 'Rarely or never' },
+          { value: 'veganveg', label: "I'm vegetarian or vegan" }
+        ]
+      },
+      {
+        id: 'history', type: 'multi',
+        title: 'Any relevant medical history?',
+        sub: 'Select all that apply — or choose "None of the above."',
+        options: [
+          { value: 'lowvitd',      label: 'Low vitamin D' },
+          { value: 'osteopenia',   label: 'Osteopenia' },
+          { value: 'osteoporosis', label: 'Osteoporosis' },
+          { value: 'cholesterol',  label: 'High cholesterol' },
+          { value: 'heartdisease', label: 'Heart disease' },
+          { value: 'diabetes',     label: 'Diabetes or pre-diabetes' },
+          { value: 'none',         label: 'None of the above' }
+        ]
+      }
+    ];
+
+    // ── Recommendation engine ──
+    function recommend(a) {
+      const set = new Set();
+      const sym = a.symptoms || [];
+      const hist = a.history || [];
+      const has = (arr, v) => arr.indexOf(v) !== -1;
+
+      // Magnesium Glycinate — sleep, stress, muscle tension, energy support
+      if (
+        has(sym, 'poorsleep') || has(sym, 'anxiety') || has(sym, 'cramps') ||
+        has(sym, 'fatigue') || has(sym, 'brainfog') || has(sym, 'moodswings') ||
+        a.goal === 'sleep' || a.goal === 'mood' || a.goal === 'stress' ||
+        a.stress === 'high' || a.stress === 'veryhigh'
+      ) set.add('magnesium');
+
+      // B12 / B-Complex — energy, cognition, nerve support
+      if (
+        has(sym, 'fatigue') || has(sym, 'brainfog') ||
+        a.goal === 'energy' || a.goal === 'stress' ||
+        a.diet === 'veganveg' ||
+        has(hist, 'diabetes') ||
+        a.lifestage === 'postmeno'
+      ) set.add('b12');
+
+      // Omega-3 Fish Oil — heart, joints, inflammation, mood
+      if (
+        has(sym, 'joint') || has(sym, 'moodswings') ||
+        has(hist, 'cholesterol') || has(hist, 'heartdisease') ||
+        a.goal === 'heart' ||
+        a.diet === 'rarely' || a.diet === 'veganveg'
+      ) set.add('omega');
+
+      // Vitamin K2 + D3 — bone, vitamin D, menopause support
+      if (
+        has(hist, 'lowvitd') || has(hist, 'osteopenia') || has(hist, 'osteoporosis') ||
+        has(sym, 'hotflashes') || has(sym, 'nightsweats') ||
+        a.goal === 'bone' ||
+        a.lifestage === 'postmeno' || a.lifestage === 'perimeno' ||
+        a.sun === 'rarely'
+      ) set.add('k2d3');
+
+      // DIM — estrogen metabolism. Gated conservatively:
+      // never for estrogen/combination therapy, hot flashes, or males.
+      const dimBlocked =
+        a.therapy === 'estrogen' || a.therapy === 'combination' ||
+        has(sym, 'hotflashes') || a.lifestage === 'male';
+      if (!dimBlocked && (
+        a.goal === 'balance' ||
+        (a.lifestage === 'perimeno' && has(sym, 'moodswings'))
+      )) set.add('dim');
+
+      // Fallback: never return an empty plan.
+      if (set.size === 0) set.add('magnesium');
+
+      const order = ['magnesium', 'b12', 'omega', 'k2d3', 'dim'];
+      return order.filter(k => set.has(k));
+    }
+
+    // ── State ──
+    const answers = {};
+    let idx = 0;
+    let formula = 'essential';
+    let finished = false;
+
+    const stage = document.getElementById('quiz-stage');
+    const fill = document.getElementById('quiz-progress-fill');
+    const stepLabel = document.getElementById('quiz-step-label');
+    const stepCount = document.getElementById('quiz-step-count');
+    const footer = document.getElementById('quiz-footer');
+    const topbar = document.getElementById('quiz-topbar');
+
+    function checkSvg() {
+      return '<svg width="13" height="13" fill="none" stroke="#fff" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+    }
+
+    function isAnswered(q) {
+      const v = answers[q.id];
+      if (q.type === 'multi') return Array.isArray(v) && v.length > 0;
+      return !!v;
+    }
+
+    function renderQuestion() {
+      const q = QUESTIONS[idx];
+      const selected = answers[q.id];
+      const opts = q.options.map(o => {
+        const on = q.type === 'multi'
+          ? (Array.isArray(selected) && selected.indexOf(o.value) !== -1)
+          : selected === o.value;
+        return '<button type="button" class="opt' + (on ? ' selected' : '') + '" role="' +
+          (q.type === 'multi' ? 'checkbox' : 'radio') + '" aria-checked="' + on + '" data-value="' + o.value + '">' +
+          '<span class="opt-check">' + checkSvg() + '</span>' +
+          '<span class="opt-label">' + o.label + '</span></button>';
+      }).join('');
+
+      stage.innerHTML =
+        '<h3 class="quiz-q-title">' + q.title + '</h3>' +
+        '<p class="quiz-q-sub">' + q.sub + '</p>' +
+        '<div class="opt-grid">' + opts + '</div>';
+
+      // attach handlers
+      stage.querySelectorAll('.opt').forEach(btn => {
+        btn.addEventListener('click', () => onSelect(q, btn.getAttribute('data-value')));
+      });
+
+      // progress + meta
+      const pct = (idx / QUESTIONS.length) * 100;
+      fill.style.width = pct + '%';
+      stepLabel.textContent = 'Question ' + (idx + 1);
+      stepCount.textContent = (idx + 1) + ' of ' + QUESTIONS.length;
+
+      // controls
+      const backBtn = document.getElementById('quiz-back');
+      const nextBtn = document.getElementById('quiz-next');
+      if (backBtn) backBtn.disabled = idx === 0;
+      const last = idx === QUESTIONS.length - 1;
+      if (nextBtn) nextBtn.innerHTML = last
+        ? 'See my formula <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>'
+        : 'Next <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      updateNextState(q);
+    }
+
+    function updateNextState(q) {
+      const ok = isAnswered(q);
+      const nextBtn = document.getElementById('quiz-next');
+      const hint = document.getElementById('quiz-hint');
+      if (nextBtn) nextBtn.disabled = !ok;
+      if (hint) hint.textContent = ok ? '' : (q.type === 'multi' ? 'Select one or more to continue' : 'Select an option to continue');
+    }
+
+    function onSelect(q, value) {
+      if (q.type === 'multi') {
+        let arr = Array.isArray(answers[q.id]) ? answers[q.id].slice() : [];
+        if (value === 'none') {
+          arr = ['none'];
+        } else {
+          arr = arr.filter(v => v !== 'none');
+          const i = arr.indexOf(value);
+          if (i === -1) arr.push(value); else arr.splice(i, 1);
+        }
+        answers[q.id] = arr;
+      } else {
+        answers[q.id] = value;
+      }
+      // re-render selection states
+      const sel = answers[q.id];
+      stage.querySelectorAll('.opt').forEach(btn => {
+        const v = btn.getAttribute('data-value');
+        const on = q.type === 'multi' ? (Array.isArray(sel) && sel.indexOf(v) !== -1) : sel === v;
+        btn.classList.toggle('selected', on);
+        btn.setAttribute('aria-checked', on);
+      });
+      updateNextState(q);
+    }
+
+    function goNext() {
+      const q = QUESTIONS[idx];
+      if (!isAnswered(q)) return;
+      if (idx < QUESTIONS.length - 1) {
+        idx++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+    function goBack() {
+      if (finished) { finished = false; renderQuestion(); return; }
+      if (idx > 0) { idx--; renderQuestion(); }
+    }
+
+    // Event delegation on the stable footer container so dynamically
+    // swapped buttons (results / retake) always work.
+    footer.addEventListener('click', (e) => {
+      const t = e.target.closest('button');
+      if (!t) return;
+      if (t.id === 'quiz-next') goNext();
+      else if (t.id === 'quiz-back') goBack();
+      else if (t.id === 'quiz-retake') resetQuiz();
+    });
+
+    // ── Results ──
+    function suppRow(key) {
+      const s = SUPPS[key];
+      const brand = key === 'dim' ? s.essential : s[formula];
+      return '<div class="rx-card">' +
+        '<div class="rx-icon"><svg width="22" height="22" fill="none" stroke="var(--green)" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>' +
+        '<div style="flex:1; min-width:0;">' +
+          '<p style="font-weight:700; color:var(--gray-900); font-size:16px;">' + s.name + '</p>' +
+          '<p style="color:var(--gray-700); font-size:13.5px; margin-top:2px;">' + s.supports + '</p>' +
+          '<p style="color:var(--gray-600); font-size:12px; margin-top:6px;">' + brand + '</p>' +
+        '</div>' +
+        '<span style="flex-shrink:0; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--green); background:rgba(106,191,75,0.1); padding:6px 10px; border-radius:8px;">Included</span>' +
+      '</div>';
+    }
+
+    function renderResultsBody() {
+      const plan = recommend(answers);
+      const count = plan.length;
+      const rows = plan.map(suppRow).join('');
+
+      stage.innerHTML =
+        '<div style="text-align:center; margin-bottom:24px;">' +
+          '<div style="display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:100px; background:rgba(106,191,75,0.1); margin-bottom:14px;">' +
+            '<span style="width:7px;height:7px;border-radius:50%;background:var(--green);"></span>' +
+            '<span style="color:var(--green-dk); font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;">Your personalized plan</span>' +
+          '</div>' +
+          '<h3 class="quiz-q-title">' + count + ' supplement' + (count > 1 ? 's' : '') + ', chosen for you</h3>' +
+          '<p class="quiz-q-sub" style="max-width:520px;margin-left:auto;margin-right:auto;">Based on your answers, here\'s a suggested starting point. Your pharmacist confirms it against your therapy before anything ships.</p>' +
+        '</div>' +
+
+        // Formula toggle
+        '<div style="display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:22px;">' +
+          '<span style="font-size:13px; font-weight:600; color:var(--gray-700);">Formula quality</span>' +
+          '<div class="formula-toggle" role="tablist">' +
+            '<button class="formula-btn' + (formula === 'essential' ? ' active' : '') + '" data-formula="essential">Essential</button>' +
+            '<button class="formula-btn' + (formula === 'premium' ? ' active' : '') + '" data-formula="premium">Premium</button>' +
+          '</div>' +
+        '</div>' +
+
+        // Supplement list
+        '<div style="display:flex; flex-direction:column; gap:12px;">' + rows + '</div>' +
+
+        // Pricing panel (placeholder)
+        '<div style="margin-top:22px; padding:20px; border-radius:16px; background:linear-gradient(135deg, rgba(27,82,38,0.05), rgba(106,191,75,0.06)); border:1px solid var(--gray-100);">' +
+          '<div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">' +
+            '<div>' +
+              '<p style="font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray-600);">Monthly Price</p>' +
+              '<p style="font-family:\'Cormorant Garamond\',serif; font-size:1.6rem; font-weight:700; color:var(--blue); line-height:1.2; margin-top:2px;">Confirmed at your consultation</p>' +
+              '<p style="font-size:13px; color:var(--gray-700); margin-top:4px;">Delivery included · pricing finalized once your pharmacist confirms your formula.</p>' +
+            '</div>' +
+            '<div style="text-align:right;">' +
+              '<p style="font-size:13px; color:var(--gray-700);">Enrollment <span style="text-decoration:line-through; opacity:0.6;">$29.99</span></p>' +
+              '<p style="font-size:14px; font-weight:700; color:var(--green-dk);">Currently Waived</p>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        // Reassurance
+        '<p style="display:flex; align-items:flex-start; gap:8px; margin-top:18px; color:var(--gray-600); font-size:13px; line-height:1.6;">' +
+          '<svg style="flex-shrink:0; margin-top:2px;" width="15" height="15" fill="none" stroke="var(--green)" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>' +
+          'Reviewed by a licensed pharmacist before dispensing. This is a suggestion, not medical advice — we coordinate with your prescriber when needed.' +
+        '</p>';
+
+      // toggle handlers
+      stage.querySelectorAll('.formula-btn').forEach(b => {
+        b.addEventListener('click', () => {
+          formula = b.getAttribute('data-formula');
+          renderResultsBody();
+        });
+      });
+    }
+
+    function showResults() {
+      finished = true;
+      fill.style.width = '100%';
+      stepLabel.textContent = 'Your Results';
+      stepCount.textContent = 'Complete';
+      renderResultsBody();
+
+      // Swap footer to result actions
+      footer.innerHTML =
+        '<button class="btn-quiet" id="quiz-retake">' +
+          '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Retake quiz</button>' +
+        '<div class="mob-ctas" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end;">' +
+          '<a href="/contact" class="btn-quiet">Message us</a>' +
+          '<a href="tel:5612004245" class="btn-green">Enroll — Call (561) 200-4245</a>' +
+        '</div>';
+      footer.style.flexWrap = 'wrap';
+    }
+
+    function resetQuiz() {
+      for (const k in answers) delete answers[k];
+      idx = 0; finished = false; formula = 'essential';
+      footer.innerHTML =
+        '<button class="btn-quiet" id="quiz-back">' +
+          '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back</button>' +
+        '<span class="quiz-hint" id="quiz-hint">Select an option to continue</span>' +
+        '<button class="btn-green" id="quiz-next" disabled>Next <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>';
+      renderQuestion();
+      topbar.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // init
+    renderQuestion();
+  })();
+</script>
+
+<!-- Sticky mobile call button -->
+<div class="mob-call-bar">
+  <a href="tel:5612004245" class="mob-call-phone" aria-label="Call My Best Pharmacy">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.18a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 12.1a16 16 0 006 6l.35-.35a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    Call&nbsp;(561)&nbsp;200-4245
+  </a>
+  <div class="mob-call-divider"></div>
+  <a href="https://maps.google.com/?q=1050+E+Gateway+Blvd+Suite+101+Boynton+Beach+FL+33426" target="_blank" rel="noopener noreferrer" class="mob-call-map" aria-label="Get directions to My Best Pharmacy">
+    <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+  </a>
+</div>
+</body>
+</html>

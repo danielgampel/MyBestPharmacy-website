@@ -23,14 +23,9 @@ const MIME = {
   '.ttf':  'font/ttf',
 };
 
-const server = http.createServer((req, res) => {
-  let urlPath = req.url.split('?')[0];
-  if (urlPath === '/') urlPath = '/index.html';
-
-  const filePath = path.join(__dirname, urlPath);
+function serveFile(filePath, res) {
   const ext = path.extname(filePath).toLowerCase();
   const contentType = MIME[ext] || 'application/octet-stream';
-
   fs.readFile(filePath, (err, data) => {
     if (err) {
       res.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -40,6 +35,25 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': contentType });
     res.end(data);
   });
+}
+
+const server = http.createServer((req, res) => {
+  let urlPath = req.url.split('?')[0];
+  if (urlPath === '/') urlPath = '/index.html';
+
+  const filePath = path.join(__dirname, urlPath);
+
+  // Mirror the production .htaccess clean-URL behavior: if the path has no
+  // extension and doesn't exist as-is, try it with .html appended.
+  if (!path.extname(filePath) && !fs.existsSync(filePath)) {
+    const htmlPath = `${filePath}.html`;
+    if (fs.existsSync(htmlPath)) {
+      serveFile(htmlPath, res);
+      return;
+    }
+  }
+
+  serveFile(filePath, res);
 });
 
 server.listen(PORT, () => {
