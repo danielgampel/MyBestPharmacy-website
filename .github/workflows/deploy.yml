@@ -11,6 +11,13 @@ jobs:
       - name: Get latest code
         uses: actions/checkout@v4
 
+      - name: Clear FTP sync state (force full re-sync)
+        run: |
+          curl --ssl-reqd \
+            --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}" \
+            --quote "DELE /mybest-pharmacy.com/public_html/.ftp-deploy-sync-state.json" \
+            ftp://${{ secrets.FTP_SERVER }}/ || true
+
       - name: Upload files via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
