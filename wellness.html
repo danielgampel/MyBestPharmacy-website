@@ -186,6 +186,53 @@
     .formula-btn.active { background: #fff; color: var(--blue); box-shadow: 0 2px 8px rgba(27,82,38,0.1); }
     .formula-btn:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
 
+    /* WholeScripts buy flow */
+    .rx-card { flex-wrap: wrap; }
+    .ws-buy-row { flex-basis: 100%; margin-left: 62px; }
+    .ws-buy {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 16px;
+      background: var(--green); color: #fff;
+      font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 13px;
+      border: none; border-radius: 9px; cursor: pointer;
+      box-shadow: 0 3px 12px rgba(106,191,75,0.32);
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    }
+    .ws-buy:hover { background: var(--green-dk); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(106,191,75,0.4); }
+    .ws-buy:active { transform: translateY(0); }
+    @media (max-width: 640px) {
+      .ws-buy-row { margin-left: 0; }
+      .ws-buy { width: 100%; justify-content: center; padding: 11px 16px; }
+    }
+
+    .ws-modal { position: fixed; inset: 0; z-index: 400; display: none; align-items: center; justify-content: center; padding: 20px; }
+    .ws-modal.open { display: flex; }
+    @keyframes wsFade { from { opacity: 0; } to { opacity: 1; } }
+    .ws-modal-backdrop { position: absolute; inset: 0; background: rgba(16,34,20,0.55); animation: wsFade 0.25s ease; }
+    .ws-dialog {
+      position: relative; width: 100%; max-width: 470px;
+      max-height: calc(100vh - 40px); overflow-y: auto;
+      background: #fff; border-radius: 22px; padding: 30px 28px 26px;
+      box-shadow: 0 40px 110px rgba(27,82,38,0.3), 0 10px 30px rgba(27,82,38,0.12);
+      animation: stepIn 0.38s cubic-bezier(0.22,1,0.36,1);
+    }
+    .ws-close {
+      position: absolute; top: 16px; right: 16px; width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      border: none; border-radius: 50%; background: var(--gray-50); color: var(--gray-700); cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .ws-close:hover { background: var(--gray-100); color: var(--gray-900); }
+    .ws-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); }
+    .ws-title { font-size: 1.45rem; font-weight: 700; color: var(--gray-900); letter-spacing: -0.02em; margin-top: 6px; line-height: 1.2; padding-right: 34px; }
+    .ws-brand { font-size: 13px; color: var(--gray-600); margin-top: 3px; }
+    .ws-option { margin-top: 16px; padding: 18px; border-radius: 14px; border: 1px solid var(--gray-100); background: var(--off-white); }
+    .ws-option-primary { background: linear-gradient(135deg, rgba(106,191,75,0.09), rgba(27,82,38,0.05)); border-color: rgba(106,191,75,0.35); }
+    .ws-option-title { font-size: 14.5px; font-weight: 700; color: var(--gray-900); }
+    .ws-option-sub { font-size: 13px; color: var(--gray-700); line-height: 1.6; margin-top: 4px; }
+    .ws-option .btn-green, .ws-option .btn-quiet { width: 100%; margin-top: 12px; box-sizing: border-box; font-size: 14px; padding: 12px 20px; text-decoration: none; }
+    .ws-foot { display: flex; gap: 8px; align-items: flex-start; font-size: 12px; color: var(--gray-600); line-height: 1.55; margin-top: 16px; }
+
     /* ── Mobile call bar ─────────────────────────────── */
     .mob-call-bar {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 150;
@@ -632,10 +679,13 @@
   /* ════════════════════════ WELLNESS QUIZ ENGINE ════════════════════════ */
   (function () {
     // ── Supplement catalog. Pricing intentionally left as placeholders. ──
+    // `ws` = verified WholeScripts product page. Patients must register through
+    // WS_REGISTER once for purchases to credit the pharmacy (account-based referral).
+    const WS_REGISTER = 'https://www.wholescripts.com/register/mybestpharmacy';
     const SUPPS = {
-      magnesium: { name: 'Magnesium Glycinate', supports: 'Sleep, calm & muscle relaxation', essential: "Nature's Truth · Glycinate 200mg", premium: 'Xymogen · OptiMag' },
-      b12:       { name: 'B12 / B-Complex',      supports: 'Energy & mental clarity',         essential: 'B-Complex',                    premium: 'Xymogen · ActiveB' },
-      omega:     { name: 'Omega-3 Fish Oil',     supports: 'Heart, joints & inflammation',    essential: "Nature's Truth · 2400mg",      premium: 'Xymogen · MonoPure 1300 EC' },
+      magnesium: { name: 'Magnesium Glycinate', supports: 'Sleep, calm & muscle relaxation', essential: "Nature's Truth · Glycinate 200mg", premium: 'Xymogen · OptiMag 125' },
+      b12:       { name: 'B12 / B-Complex',      supports: 'Energy & mental clarity',         essential: 'B-Complex',                    premium: 'Xymogen · B-Activ' },
+      omega:     { name: 'Omega-3 Fish Oil',     supports: 'Heart, joints & inflammation',    essential: "Nature's Truth · 2400mg",      premium: 'Xymogen · Omega MonoPure 1300 EC' },
       k2d3:      { name: 'Vitamin K2 + D3',       supports: 'Bone strength & vitamin D',        essential: "Nature's Truth · K2 + D3",     premium: 'Xymogen · K2-D3 5000' },
       dim:       { name: 'DIM (DIMension 3)',    supports: 'Healthy estrogen metabolism',     essential: 'Xymogen · DIMension 3',        premium: 'Xymogen · DIMension 3' }
     };
@@ -807,7 +857,7 @@
     // ── State ──
     const answers = {};
     let idx = 0;
-    let formula = 'essential';
+    let formula = 'premium';
     let finished = false;
 
     const stage = document.getElementById('quiz-stage');
@@ -941,6 +991,7 @@
     function suppRow(key) {
       const s = SUPPS[key];
       const brand = key === 'dim' ? s.essential : s[formula];
+      const buyable = formula === 'premium' || key === 'dim'; // DIM is Xymogen in both tiers
       return '<div class="rx-card">' +
         '<div class="rx-icon"><svg width="22" height="22" fill="none" stroke="var(--green)" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>' +
         '<div style="flex:1; min-width:0;">' +
@@ -949,6 +1000,14 @@
           '<p style="color:var(--gray-600); font-size:12px; margin-top:6px;">' + brand + '</p>' +
         '</div>' +
         '<span style="flex-shrink:0; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--green); background:rgba(106,191,75,0.1); padding:6px 10px; border-radius:8px;">Included</span>' +
+        (buyable ?
+          '<div class="ws-buy-row">' +
+            '<button type="button" class="ws-buy" data-key="' + key + '">' +
+              'Buy on WholeScripts' +
+              '<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>' +
+            '</button>' +
+          '</div>'
+        : '') +
       '</div>';
     }
 
@@ -1007,6 +1066,73 @@
           renderResultsBody();
         });
       });
+
+      // buy handlers
+      stage.querySelectorAll('.ws-buy').forEach(b => {
+        b.addEventListener('click', () => openWsModal(b.getAttribute('data-key'), b));
+      });
+    }
+
+    // ── WholeScripts order modal ──
+    let wsModal = null, wsTrigger = null;
+
+    function buildWsModal() {
+      wsModal = document.createElement('div');
+      wsModal.className = 'ws-modal';
+      wsModal.innerHTML =
+        '<div class="ws-modal-backdrop" data-ws-close></div>' +
+        '<div class="ws-dialog" role="dialog" aria-modal="true" aria-labelledby="ws-modal-title">' +
+          '<button type="button" class="ws-close" data-ws-close aria-label="Close">' +
+            '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>' +
+          '</button>' +
+          '<p class="ws-eyebrow">Order on WholeScripts</p>' +
+          '<h4 class="ws-title" id="ws-modal-title"></h4>' +
+          '<p class="ws-brand"></p>' +
+          '<div class="ws-option ws-option-primary">' +
+            '<p class="ws-option-title">Create your free WholeScripts account</p>' +
+            '<p class="ws-option-sub">Registering through our link connects your account to My Best Pharmacy, so our pharmacist can review your formula, flag interactions with anything else you take, and fine-tune your plan when you check in with us. Takes about a minute.</p>' +
+            '<a class="btn-green" href="' + WS_REGISTER + '" target="_blank" rel="noopener noreferrer">Create your free account' +
+              '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>' +
+          '</div>' +
+          '<div class="ws-option">' +
+            '<p class="ws-option-title">Already have a WholeScripts account?</p>' +
+            '<p class="ws-option-sub">Call us and we&rsquo;ll help you place the order directly — no need to search the catalog yourself.</p>' +
+            '<a class="btn-quiet" href="tel:5612004245">' +
+              '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.18a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 12.1a16 16 0 006 6l.35-.35a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>' +
+              'Call (561) 200-4245' +
+            '</a>' +
+          '</div>' +
+          '<p class="ws-foot">' +
+            '<svg style="flex-shrink:0; margin-top:1px;" width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>' +
+            'Ships directly from WholeScripts, at no extra cost to you.' +
+          '</p>' +
+        '</div>';
+      document.body.appendChild(wsModal);
+
+      wsModal.addEventListener('click', e => {
+        if (e.target.closest('[data-ws-close]')) closeWsModal();
+      });
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && wsModal.classList.contains('open')) closeWsModal();
+      });
+    }
+
+    function openWsModal(key, trigger) {
+      if (!wsModal) buildWsModal();
+      const s = SUPPS[key];
+      wsTrigger = trigger || null;
+      wsModal.querySelector('.ws-title').textContent = s.name;
+      wsModal.querySelector('.ws-brand').textContent = key === 'dim' ? s.essential : s.premium;
+      wsModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      wsModal.querySelector('.ws-close').focus();
+    }
+
+    function closeWsModal() {
+      wsModal.classList.remove('open');
+      document.body.style.overflow = '';
+      if (wsTrigger && document.contains(wsTrigger)) wsTrigger.focus();
+      wsTrigger = null;
     }
 
     function showResults() {
@@ -1029,7 +1155,7 @@
 
     function resetQuiz() {
       for (const k in answers) delete answers[k];
-      idx = 0; finished = false; formula = 'essential';
+      idx = 0; finished = false; formula = 'premium';
       footer.innerHTML =
         '<button class="btn-quiet" id="quiz-back">' +
           '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back</button>' +
