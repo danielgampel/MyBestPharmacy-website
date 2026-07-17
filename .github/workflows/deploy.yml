@@ -30,6 +30,7 @@ jobs:
             **/.git*
             **/.git*/**
             **/node_modules/**
+            fable/**
             **/temporary screenshots/**
             README.md
             CLAUDE.md

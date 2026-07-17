@@ -1,5 +1,11 @@
 # CLAUDE.md — Frontend Website Rules
 
+## The `fable/` Folder — Isolated, Off-Limits by Default
+- `fable/` contains a separate concept/alternative design of this website. It is its own self-contained project (own CSS, own copies of pages) and must be treated as fully isolated from the main site.
+- **Never read, open, edit, reference, or otherwise touch anything inside `fable/`** while working on the main website — not for context, not for consistency checks, not "just to see." Changes to the main site (index.html, services.html, providers.html, contact.html, equipment.html, wellness.html, root CSS, etc.) must never be ported into `fable/`, and vice versa.
+- Only work inside `fable/` when the user explicitly says so in that message (e.g. names "fable" or "the alternative site" directly). A prior conversation about fable does not carry forward permission — the user will speak up each time they want that project touched.
+- If a task's instructions are ambiguous about which project they apply to, assume the main site and do not touch `fable/`.
+
 ## Always Do First
 - **Invoke the `frontend-design` skill** before writing any frontend code, every session, no exceptions.
 

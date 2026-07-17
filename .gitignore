@@ -12,3 +12,6 @@ temporary screenshots/
 # Environment
 .env
 .env.local
+
+# Fable alternative design — local concept only, never tracked/deployed
+fable/

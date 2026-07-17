@@ -1,6 +1,9 @@
 # CONTEXT.md — My Best Pharmacy Website
 *Last updated: 2026-05-17. Allows a fresh Claude Code session to resume with zero context loss.*
 
+> **Business facts** (address, hours, phone, business rules, brand palette) are canonical in
+> [`../BUSINESS.md`](../BUSINESS.md). If anything below conflicts with that file, `BUSINESS.md` wins.
+
 ---
 
 ## Project Overview
