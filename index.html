@@ -41,7 +41,7 @@
       { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "14:00" }
     ],
     "areaServed": "South Florida",
-    "sameAs": ["https://www.google.com/maps/search/?api=1&query=My+Best+Pharmacy+1050+E+Gateway+Blvd+Suite+101+Boynton+Beach+FL+33426"]
+    "sameAs": ["https://maps.google.com/?cid=7264967224468690852"]
   }
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -150,6 +150,26 @@
 
     .svc-pill { transition: transform 0.2s ease; }
     .svc-pill:hover { transform: translateY(-3px); }
+
+    /* ── Review cards ───────────────────────────────── */
+    .review-card { display: flex; flex-direction: column; }
+    .review-card blockquote { margin: 0; }
+    .review-card.is-hidden { display: none; }
+    .review-stars { display: flex; gap: 3px; margin-bottom: 14px; }
+    .review-quote { font-size: 16px; line-height: 1.7; color: var(--gray-900); }
+    .review-attribution { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--gray-100); }
+    .review-name { font-weight: 600; color: var(--gray-900); font-size: 14.5px; }
+    .review-source { display: inline-flex; align-items: center; gap: 6px; color: var(--gray-700); font-size: 12.5px; }
+    .review-rating-line { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 14px; }
+    .review-dots { display: none; }
+    @media (max-width: 767px) {
+      .review-dots { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 20px; }
+      .review-dots button { width: 28px; height: 28px; padding: 0; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+      .review-dots button::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--gray-100); transition: transform 0.2s ease, background-color 0.2s ease; }
+      .review-dots button.is-active::after { background: var(--green-dk); transform: scale(1.3); }
+      .review-dots button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 50%; }
+    }
+    @media (max-width: 767px) { .hide-mobile { display: none !important; } }
 
     /* ── Section labels ────────────────────────────── */
     .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
@@ -515,7 +535,7 @@
 </section>
 
 <!-- ══════════════════════════ SERVICES STRIP ══════════════════════════ -->
-<section style="padding: 60px 0; background: #fff; border-top: 1px solid var(--gray-100); border-bottom: 1px solid var(--gray-100);">
+<section class="hide-mobile" style="padding: 60px 0; background: #fff; border-top: 1px solid var(--gray-100); border-bottom: 1px solid var(--gray-100);">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
       <div class="svc-pill reveal flex flex-col items-center gap-3">
@@ -616,6 +636,97 @@
       Provider Information
       <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
+  </div>
+</section>
+
+<!-- ══════════════════════════ PATIENT REVIEWS ══════════════════════════ -->
+<section class="mob-section" style="padding: 72px 0; background: #fff; border-top: 1px solid var(--gray-100);">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="text-center reveal" style="margin-bottom: 40px;">
+      <span class="tag">Patient Reviews</span>
+      <h2 class="underline-g underline-g-c" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em;">What Our Patients Say</h2>
+      <div class="review-rating-line" role="img" aria-label="Rated 4.7 out of 5 stars on Google from 73 reviews">
+        <span style="display: inline-flex; gap: 3px;" aria-hidden="true">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="var(--green-dk)"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="var(--green-dk)"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="var(--green-dk)"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="var(--green-dk)"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="19" height="19" viewBox="0 0 24 24"><defs><linearGradient id="star47"><stop offset="70%" stop-color="#4E9035"/><stop offset="70%" stop-color="#D8E4F0"/></linearGradient></defs><path fill="url(#star47)" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        </span>
+        <span style="color: var(--gray-700); font-size: 15px; font-weight: 500;">4.7 out of 5 &middot; 73 Google reviews</span>
+      </div>
+    </div>
+    <div class="review-track grid md:grid-cols-3 gap-6">
+
+      <!-- Review — Kris M. -->
+      <div class="spec-card review-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
+        <div class="review-stars" role="img" aria-label="Rated 5 out of 5 stars">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--green-dk)" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--green-dk)" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--green-dk)" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--green-dk)" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--green-dk)" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        </div>
+        <blockquote class="review-quote"><p>&ldquo;The staff was very helpful. The pharmacist called the doctor to clarify refills details&hellip; In today&rsquo;s world of giant corporations, finding a place where you are treated as an individual and not a number is hard.&rdquo;</p></blockquote>
+        <div class="review-attribution">
+          <span class="review-name">Kris M.</span>
+          <span class="review-source">
+            <svg width="15" height="15" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
+            Google review
+          </span>
+        </div>
+      </div>
+
+      <!-- Review — Deborah J. -->
+      <div class="spec-card review-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
+        <div class="review-stars" role="img" aria-label="Rated 5 out of 5 stars">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--green-dk)" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--green-dk)" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--green-dk)" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--green-dk)" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--green-dk)" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        </div>
+        <blockquote class="review-quote"><p>&ldquo;After calling My Best Pharmacy with questions about a prescription I was surprised that customer service DOES exist! Not only were the &lsquo;phone&rsquo; staff professional and courteous, my in-person visit to the pharmacy was amazing. Yanna took the time to explain the options regarding bio-identical hormones etc. Highly recommend My Best Pharmacy!&rdquo;</p></blockquote>
+        <div class="review-attribution">
+          <span class="review-name">Deborah J.</span>
+          <span class="review-source">
+            <svg width="15" height="15" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
+            Google review
+          </span>
+        </div>
+      </div>
+
+      <!-- Review — Helen H. -->
+      <div class="spec-card review-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
+        <div class="review-stars" role="img" aria-label="Rated 5 out of 5 stars">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--green-dk)" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--green-dk)" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--green-dk)" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--green-dk)" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--green-dk)" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        </div>
+        <blockquote class="review-quote"><p>&ldquo;I am a grandparent of a child needing specialized medications. Every time I go into My Best Pharmacy I get treated with such care. The meds are always ready the same day they&rsquo;re requested! The staff is personable, professional, and willing to answer any of my concerns. I can not say enough good things about the pharmacy and the service.&rdquo;</p></blockquote>
+        <div class="review-attribution">
+          <span class="review-name">Helen H.</span>
+          <span class="review-source">
+            <svg width="15" height="15" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
+            Google review
+          </span>
+        </div>
+      </div>
+
+    </div>
+    <div class="review-dots" role="group" aria-label="Select review">
+      <button type="button" aria-label="Show review 1 of 3" aria-pressed="true"></button>
+      <button type="button" aria-label="Show review 2 of 3" aria-pressed="false"></button>
+      <button type="button" aria-label="Show review 3 of 3" aria-pressed="false"></button>
+    </div>
+    <div class="text-center reveal" style="margin-top: 32px;">
+      <a href="https://maps.google.com/?cid=7264967224468690852" target="_blank" rel="noopener noreferrer" class="btn-outline-blue">
+        Read Our Reviews on Google
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -773,6 +884,46 @@
     a.addEventListener('mouseenter', () => a.style.color = 'var(--green)');
     a.addEventListener('mouseleave', () => a.style.color = 'var(--blue)');
   });
+
+  // Mobile review carousel — one card at a time, auto-rotating
+  (() => {
+    const track = document.querySelector('.review-track');
+    if (!track) return;
+    const cards = Array.from(track.querySelectorAll('.review-card'));
+    const dotsWrap = document.querySelector('.review-dots');
+    const dots = dotsWrap ? Array.from(dotsWrap.querySelectorAll('button')) : [];
+    const mq = window.matchMedia('(max-width: 767px)');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let idx = 0, timer = null;
+
+    const show = (i) => {
+      idx = (i + cards.length) % cards.length;
+      cards.forEach((c, ci) => c.classList.toggle('is-hidden', ci !== idx));
+      dots.forEach((d, di) => {
+        const active = di === idx;
+        d.classList.toggle('is-active', active);
+        d.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+    };
+    const stop = () => { if (timer) clearInterval(timer); timer = null; };
+    const start = () => {
+      stop();
+      if (reduceMotion) return;
+      timer = setInterval(() => show(idx + 1), 7000);
+    };
+    const enableCarousel = () => { show(0); start(); };
+    const disableCarousel = () => {
+      stop();
+      cards.forEach(c => c.classList.remove('is-hidden'));
+      dots.forEach(d => { d.classList.remove('is-active'); d.setAttribute('aria-pressed', 'false'); });
+    };
+    const sync = () => mq.matches ? enableCarousel() : disableCarousel();
+
+    dots.forEach((d, di) => d.addEventListener('click', () => { show(di); start(); }));
+
+    sync();
+    mq.addEventListener ? mq.addEventListener('change', sync) : mq.addListener(sync);
+  })();
 </script>
 
 <!-- Sticky mobile call button -->
