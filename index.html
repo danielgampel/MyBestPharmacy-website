@@ -168,6 +168,7 @@
       .review-dots button::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--gray-100); transition: transform 0.2s ease, background-color 0.2s ease; }
       .review-dots button.is-active::after { background: var(--green-dk); transform: scale(1.3); }
       .review-dots button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 50%; }
+      .review-track { touch-action: pan-y; }
     }
     @media (max-width: 767px) { .hide-mobile { display: none !important; } }
 
@@ -920,6 +921,24 @@
     const sync = () => mq.matches ? enableCarousel() : disableCarousel();
 
     dots.forEach((d, di) => d.addEventListener('click', () => { show(di); start(); }));
+
+    // Swipe left/right to change review (mobile only)
+    let touchX = 0, touchY = 0, touching = false;
+    track.addEventListener('touchstart', (e) => {
+      if (!mq.matches) return;
+      touching = true;
+      touchX = e.touches[0].clientX;
+      touchY = e.touches[0].clientY;
+    }, { passive: true });
+    track.addEventListener('touchend', (e) => {
+      if (!touching) return;
+      touching = false;
+      const dx = e.changedTouches[0].clientX - touchX;
+      const dy = e.changedTouches[0].clientY - touchY;
+      if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+      show(idx + (dx < 0 ? 1 : -1));
+      start();
+    }, { passive: true });
 
     sync();
     mq.addEventListener ? mq.addEventListener('change', sync) : mq.addListener(sync);
