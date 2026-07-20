@@ -215,6 +215,34 @@
       .ws-buy { width: 100%; justify-content: center; padding: 11px 16px; }
     }
 
+    /* "Join the pharmacy on WholeScripts" callout */
+    .ws-join {
+      margin-top: 22px; padding: 24px; border-radius: 18px;
+      background: #fff; border: 1px solid rgba(106,191,75,0.45);
+      box-shadow: 0 6px 22px rgba(27,82,38,0.07), 0 1px 3px rgba(27,82,38,0.05);
+    }
+    .ws-join-eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 11.5px; font-weight: 700; letter-spacing: 0.13em;
+      text-transform: uppercase; color: var(--green-dk);
+    }
+    .ws-join-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.35rem, 2.4vw, 1.65rem); font-weight: 700;
+      color: var(--gray-900); line-height: 1.25; letter-spacing: -0.01em;
+      margin: 10px 0 8px;
+    }
+    .ws-join-body { color: var(--gray-700); font-size: 14.5px; line-height: 1.7; }
+    .ws-join-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 18px; }
+    .ws-join-note { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
+    .ws-join-note a { color: var(--green-dk); font-weight: 600; text-decoration: none; }
+    .ws-join-note a:hover { text-decoration: underline; }
+    .ws-join-note a:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; border-radius: 3px; }
+    @media (max-width: 640px) {
+      .ws-join { padding: 20px 18px; }
+      .ws-join-actions .btn-green { width: 100%; justify-content: center; }
+    }
+
     .ws-modal { position: fixed; inset: 0; z-index: 400; display: none; align-items: center; justify-content: center; padding: 20px; }
     .ws-modal.open { display: flex; }
     @keyframes wsFade { from { opacity: 0; } to { opacity: 1; } }
@@ -409,7 +437,7 @@
         <div class="bg-white rounded-2xl p-8 h-full" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
           <span style="font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 700; color: rgba(106,191,75,0.5); line-height: 1;">01</span>
           <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Take the quiz</h3>
-          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">Answer eight quick questions about your life stage, hormone therapy, symptoms, lifestyle, and goals. It takes about three minutes.</p>
+          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">Answer nine quick questions about your life stage, age, hormone therapy, symptoms, lifestyle, and goals. It takes about three minutes.</p>
         </div>
       </div>
 
@@ -718,6 +746,17 @@
         ]
       },
       {
+        id: 'age', type: 'single',
+        title: "What's your age range?",
+        sub: 'Nutrient needs shift with age — this helps us tailor your plan.',
+        options: [
+          { value: 'under30', label: 'Under 30' },
+          { value: '30to44',  label: '30 – 44' },
+          { value: '45to59',  label: '45 – 59' },
+          { value: '60plus',  label: '60 or older' }
+        ]
+      },
+      {
         id: 'therapy', type: 'single',
         title: 'Are you currently on hormone therapy?',
         sub: 'This helps us tailor your plan safely around your treatment.',
@@ -740,7 +779,8 @@
           { value: 'mood',    label: 'Better mood' },
           { value: 'balance', label: 'Hormone balance' },
           { value: 'bone',    label: 'Bone support' },
-          { value: 'heart',   label: 'Heart health' }
+          { value: 'heart',   label: 'Heart health' },
+          { value: 'libido',  label: 'Libido support' }
         ]
       },
       {
@@ -757,6 +797,7 @@
           { value: 'nightsweats', label: 'Night sweats' },
           { value: 'cramps',      label: 'Muscle cramps or tension' },
           { value: 'joint',       label: 'Joint discomfort' },
+          { value: 'lowlibido',   label: 'Decreased sexual desire' },
           { value: 'none',        label: 'None of the above' }
         ]
       },
@@ -1051,6 +1092,21 @@
 
         // Supplement list
         '<div style="display:flex; flex-direction:column; gap:12px;">' + rows + '</div>' +
+
+        // Join the pharmacy on WholeScripts
+        '<div class="ws-join">' +
+          '<p class="ws-join-eyebrow">' +
+            '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>' +
+            'Your pharmacy on WholeScripts' +
+          '</p>' +
+          '<h4 class="ws-join-title">Join our pharmacy on WholeScripts and we\'ll recommend exactly what you need</h4>' +
+          '<p class="ws-join-body">Registering through My Best Pharmacy links your free WholeScripts account to our pharmacists. That connection is what takes you past this quiz: we build your plan on your account, check it against your prescriptions and hormone therapy, set your doses, and adjust it as your symptoms and labs change — instead of leaving you to work out the catalog on your own.</p>' +
+          '<div class="ws-join-actions">' +
+            '<a class="btn-green" href="' + WS_REGISTER + '" target="_blank" rel="noopener noreferrer">Create your free account' +
+              '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>' +
+            '<span class="ws-join-note">Already have an account? <a href="tel:5612004245">Call (561) 200-4245</a> and we&rsquo;ll link it to the pharmacy.</span>' +
+          '</div>' +
+        '</div>' +
 
         // Pricing panel (placeholder)
         '<div style="margin-top:22px; padding:20px; border-radius:16px; background:linear-gradient(135deg, rgba(27,82,38,0.05), rgba(106,191,75,0.06)); border:1px solid var(--gray-100);">' +
