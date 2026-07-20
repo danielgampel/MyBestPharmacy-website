@@ -308,6 +308,14 @@
       .mob-footer-bar { flex-direction: column !important; align-items: center !important; text-align: center; gap: 6px !important; }
     }
 
+    /* Below ~560px the Back / hint / Next row runs out of room and the hint
+       collapses to one word per line. Give it its own row above the buttons. */
+    @media (max-width: 560px) {
+      .quiz-footer { flex-wrap: wrap; row-gap: 14px; }
+      .quiz-hint { order: -1; flex: 1 0 100%; text-align: center; }
+      .quiz-hint:empty { display: none; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
     }
