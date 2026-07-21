@@ -1,5 +1,5 @@
 # CONTEXT.md — My Best Pharmacy Website
-*Last updated: 2026-07-17. Allows a fresh Claude Code session to resume with zero context loss.*
+*Last updated: 2026-07-21. Allows a fresh Claude Code session to resume with zero context loss.*
 
 > **Business facts** (address, hours, phone, business rules, brand palette) are canonical in
 > [`../BUSINESS.md`](../BUSINESS.md). If anything below conflicts with that file, `BUSINESS.md` wins.
@@ -46,8 +46,9 @@ A **6-page static informational website** for **My Best Pharmacy**, a full-servi
 
 | File | Purpose |
 |------|---------|
-| `serve.mjs` | Static file server → `http://localhost:3000` |
+| `serve.mjs` | Static file server → `http://localhost:3000`. Also stubs `POST /quiz-lead.php` (there's no PHP locally) — it applies the same validation and prints the payload instead of mailing it. Deploy-excluded. |
 | `screenshot.mjs` | Puppeteer full-page screenshot → `temporary screenshots/screenshot-{N}-{label}.png` (1440×900) |
+| `quiz-lead.php` | **Deploys to production.** Wellness-quiz handoff endpoint — see below. |
 
 ---
 
@@ -57,9 +58,80 @@ A **6-page static informational website** for **My Best Pharmacy**, a full-servi
 - Excluded from deploy: `.git*`, `node_modules/`, `fable/`, `temporary screenshots/`, `README.md`, `CLAUDE.md`, `CONTEXT.md`, `LEARNINGS.md`, `package*.json`, `serve.mjs`, `screenshot.mjs`, the `.code-workspace` file, `.DS_Store`.
 - `robots.txt` + `sitemap.xml` are in place and list all 6 pages.
 - **SEO package deployed** (Jul 16, 2026): meta descriptions, Open Graph tags, `schema.org` Pharmacy/LocalBusiness structured data, Google Business Profile CID link.
-- **Contact form still not built** — pages are informational only. Options if needed: Netlify Forms, Formspree, EmailJS.
+- **The wellness quiz has a form; no other page does** — the rest are informational only.
 
 ---
+
+## Wellness Quiz → WholeScripts Handoff (`wellness.html` + `quiz-lead.php`)
+
+Added Jul 2026. The quiz used to end by sending patients to register at WholeScripts cold, which
+dropped them on an unfamiliar catalog with an empty cart. It now hands the pharmacy a ready-to-send
+intake instead.
+
+**Why this shape:** WholeScripts lets a practitioner account send a recommendation to a patient's
+email *even when that patient has no account yet* — the products arrive attached and the account is
+created during checkout. There is no public WholeScripts API (automation runs only through paid EHR
+partnerships: Practice Better, CharmHealth, OptiMantra), so the pharmacist sends it manually. The
+website's job is to make that a ~90-second task.
+
+**Flow:** quiz → plan shown (never gated) → **patient picks which supplements they actually want** →
+handoff form → `POST /quiz-lead.php` → two emails → pharmacist opens WholeScripts and sends the
+recommendation → patient registers and checks out.
+
+**Why selection happens on the results page, not in the cart:** the engine returns up to 5 items and
+often 4. Deleting them at checkout would be too late — the pharmacist would already have spent time
+recommending things the patient never wanted, and "we curated this for you" breaks the moment the
+cart is being emptied. Choosing up front means the recommendation that gets sent is already correct.
+
+**There is deliberately no way to add a supplement the quiz didn't recommend.** DIM is safety-gated
+in `RULES.dim.blocked` (never for males, estrogen or combination therapy, or alongside hot flashes);
+an "add anything" control would route around that gate. Unchecking is the only edit offered.
+
+**`quiz-lead.php` notes:**
+- `PHARMACY_INBOX` is `admin@mybest-pharmacy.com`. If it is ever blanked the endpoint returns a 500
+  rather than silently dropping submissions.
+- `FROM_ADDRESS` (`wellness@mybest-pharmacy.com`) must exist as a real SiteGround mailbox or both
+  messages get treated as forged.
+- `plan[]` is **what the patient kept**, `declined[]` is what they turned down. Both go through the
+  same `parsePlanArray()` whitelist; a key appearing in both is dropped from `declined`. The plan code
+  and the WholeScripts checklist derive from the kept items only — the declined names appear once, as
+  a muted "Also suggested, patient skipped: …" line for the pharmacist. The patient copy never
+  mentions them.
+- The `Reply-To` display name goes through `displayName()`. Without it a name containing `<` would
+  leave a mail client reading the wrong string as the reply address.
+- Self-hosted on purpose: quiz answers are health information, so no third-party form vendor is in
+  the path. Nothing is persisted except a per-IP rate-limit counter in the temp dir.
+- The browser sends **human-readable answer labels**, so PHP never maps quiz values to text and can't
+  drift from `QUESTIONS`. In exchange PHP treats every field as hostile (length caps, CRLF stripping,
+  `htmlspecialchars` on output) and whitelists plan keys via `PLAN_KEYS`.
+- Anti-spam is a honeypot field plus a 3-second minimum between results rendering and submit. No captcha.
+- `mail()` on SiteGround is often spam-foldered by Gmail. If deliverability is poor, switch to
+  authenticated SMTP via PHPMailer — still self-hosted, still no third party.
+
+**`wellness.html` notes:**
+- **Reasons engine.** `RULES` is a table of `[predicate, reason]` pairs per supplement, plus an
+  optional `blocked` gate. `evaluate()` returns `{ key: [reasons] }`; `recommend()` is just the keys
+  of that in `ORDER`. One source means a supplement can never appear without a reason drawn from the
+  patient's own answers. **Changing a predicate changes who gets recommended what** — re-run the
+  equivalence check against a snapshot of the old function before shipping any edit here. Reason
+  strings must contain no commas; three of them get joined into one sentence by `reasonSentence()`.
+- `SUPPS[key].about` is the plain-English "What is this?" copy. Supports phrasing only, no disease
+  claims — same posture as the disclaimer at the bottom of the results.
+- **Selection state** is a `Set` of keys in `selected`, initialized to everything in `showResults()`.
+  The formula toggle re-renders the whole results body, so `selected`, `expanded` (open disclosure
+  panels), and `captureDraft()` (typed form input) all exist to survive that round trip. `resetQuiz()`
+  clears all three.
+- Each card is a real `<input type="checkbox">` styled as the quiz's circular check, so keyboard and
+  screen readers work. The whole card toggles it, with the label and the disclosure carved out of the
+  card-level handler — reacting to those would toggle twice.
+- Heading, submit label, and the empty-selection hint all read from `selected.size` in
+  `updateSelectionUI()`, so they cannot disagree. Zero selected disables submit; `quiz-lead.php`
+  rejects an empty plan as well.
+- The handoff lives in the `.ws-join` card, built by `handoffMarkup()` / `handoffDoneMarkup()`.
+- Once submitted, `handoffSent` switches the cards to a static list of what was actually sent.
+- **Removed Jul 2026:** the per-supplement "Buy on WholeScripts" buttons and the `ws-modal` popup.
+  They fought with tap-to-select on the same card, and the handoff form plus the "head start" button
+  already cover both signing up and calling.
 
 ## Brand Assets (`brand_assets/`)
 
@@ -68,6 +140,7 @@ A **6-page static informational website** for **My Best Pharmacy**, a full-servi
 | `newpharmacylogo.PNG` | **Current logo** — all-green palette. Footer: `filter: brightness(0) invert(1)`. |
 | `newbrandguidelines.png` | **Current brand guidelines** (all-green palette). |
 | `og-image.png` | Open Graph share-preview image, referenced from every page's `<meta property="og:image">`. |
+| `email-logo.png` | 440×238, 23 KB, white-flattened logo for the `quiz-lead.php` emails. Generated from `newpharmacylogo.PNG` with sharp. Must stay reachable at `https://mybest-pharmacy.com/brand_assets/email-logo.png` — email clients can't use relative paths, and CSS filters (how the footer whitens the logo) don't work in email, so it sits on a white band above the green header. |
 
 Equipment hero/banner photos and the storefront photo live in `website_pics/` (root), **not** `brand_assets/`:
 - `website_pics/equipment-banner.jpg` — home page equipment banner
@@ -116,6 +189,13 @@ Equipment hero/banner photos and the storefront photo live in `website_pics/` (r
 
 ## Known Issues / Todo
 
+- **Before the wellness handoff can go live (blocking):**
+  1. Create `wellness@mybest-pharmacy.com` as a real mailbox in SiteGround cPanel. If the From address
+     isn't a real mailbox on the domain, Gmail and Outlook treat both emails as forged.
+  2. Confirm with Dad that WholeScripts can send a recommendation to an email address that has no
+     account yet. That is still an assumption taken from CharmHealth/Practice Better documentation
+     rather than his own dashboard. If it's wrong, the "head start" registration button becomes the
+     primary path and step 2 of the patient email needs rewriting.
 - **Accessibility/typography debt (open):** body and pricing-table text is set at 14px (13px on mobile) sitewide — below the 15–16px recommended for the pharmacy's older patient demographic. The lime accent `--green: #6ABF4B` is also used for body text/links on white backgrounds in places, which is roughly 2:1 contrast — below WCAG AA's 4.5:1 for text. `--green-dk: #4E9035` already exists as a darker, higher-contrast alternative but is barely used. Fix: reserve lime for buttons/badges on dark backgrounds; use `--green-dk` (or `--gray-900`) for any green text on light backgrounds; bump body/table text to 15–16px.
 - **Suction Pump Aspirator photo missing** — see Equipment Catalog section above; the sourced file is 0 bytes.
 - **CSS variable drift** — `--blue-md` only defined on 3 of 6 pages (see Design System above).
