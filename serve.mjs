@@ -56,7 +56,60 @@ function handleQuizLead(req, res) {
     }
 
     // Same rejections quiz-lead.php applies, so the UI's error paths are testable.
-    const digits = String(payload.phone || '').replace(/\D/g, '');
+    // ⚠️ Field rules mirrored from quiz-lead.php and wellness.html — keep all three in step.
+    const LINK_RE = /(https?:\/\/|www\.)/i;
+    const DOMAIN_TYPOS = {
+      'gmial.com': 'gmail.com', 'gmai.com': 'gmail.com', 'gnail.com': 'gmail.com',
+      'gmail.co': 'gmail.com', 'hotmial.com': 'hotmail.com', 'hotmai.com': 'hotmail.com',
+      'yaho.com': 'yahoo.com', 'yahooo.com': 'yahoo.com', 'outlok.com': 'outlook.com',
+      'iclould.com': 'icloud.com', 'icoud.com': 'icloud.com',
+    };
+    const TLD_TYPOS = { con: 'com', cmo: 'com', ocm: 'com', comm: 'com', xom: 'com', vom: 'com', met: 'net', ner: 'net', ogr: 'org' };
+
+    const nameError = (raw) => {
+      const v = String(raw || '').replace(/\s+/g, ' ').trim();
+      if (!v) return 'Please enter your first and last name.';
+      if (v.length > 60) return 'Please use 60 characters or fewer.';
+      if (/\d/.test(v)) return "Names can't contain numbers.";
+      if (LINK_RE.test(v)) return 'Please enter your name, not a web address.';
+      if (!/^[\p{L}][\p{L}'’.\-\s]*$/u.test(v)) return 'Letters, hyphens and apostrophes only.';
+      if (v.split(' ').filter(w => /\p{L}/u.test(w)).length < 2) return 'Please enter your first and last name.';
+      return null;
+    };
+    const phoneError = (raw) => {
+      let d = String(raw || '').replace(/\D/g, '');
+      if (d.length === 11 && d[0] === '1') d = d.slice(1);
+      d = d.slice(0, 10);
+      if (!d) return 'Please enter your phone number.';
+      if (d.length < 10) return 'We need all 10 digits.';
+      if (!/^[2-9]\d{2}[2-9]\d{6}$/.test(d)) return "Check the area code — that isn't a US number.";
+      return null;
+    };
+    const emailError = (raw) => {
+      const v = String(raw || '').trim();
+      if (!v) return 'Please enter your email address.';
+      if (v.length > 180) return 'That email address is too long.';
+      if (v.includes('..') || !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,24}$/.test(v)) {
+        return 'Please enter a valid email, like name@example.com.';
+      }
+      const at = v.lastIndexOf('@');
+      const local = v.slice(0, at);
+      const domain = v.slice(at + 1).toLowerCase();
+      if (local.startsWith('.') || local.endsWith('.')) return 'Please enter a valid email, like name@example.com.';
+      if (DOMAIN_TYPOS[domain]) return `Did you mean ${local}@${DOMAIN_TYPOS[domain]}?`;
+      const dot = domain.lastIndexOf('.');
+      const tld = domain.slice(dot + 1);
+      if (TLD_TYPOS[tld]) return `Did you mean ${local}@${domain.slice(0, dot + 1)}${TLD_TYPOS[tld]}?`;
+      return null;
+    };
+    const noteError = (raw) => {
+      const v = String(raw || '').trim();
+      if (!v) return null;
+      if (v.length > 2000) return 'Please keep this under 2,000 characters.';
+      if (LINK_RE.test(v)) return 'Please leave web links out of your note.';
+      return null;
+    };
+
     let error = null;
     if (String(payload.company || '').trim() !== '') {
       console.log('\n[quiz-lead] honeypot tripped — no mail sent');
@@ -65,11 +118,9 @@ function handleQuizLead(req, res) {
       return;
     }
     if (Number(payload.elapsedMs || 0) < 3000) error = 'That went through a little too fast. Please try again.';
-    else if (String(payload.name || '').trim().length < 2) error = 'Please enter your full name.';
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(payload.email || ''))) error = 'Please enter a valid email address.';
-    else if (digits.length < 10) error = 'Please enter a valid phone number.';
-    else if (payload.consent !== true) error = 'Please agree to share your answers so our pharmacist can prepare your plan.';
-    else if (!Array.isArray(payload.plan) || payload.plan.length === 0) error = 'Your plan did not come through. Please retake the quiz.';
+    else error = nameError(payload.name) || emailError(payload.email) || phoneError(payload.phone) || noteError(payload.note);
+    if (!error && payload.consent !== true) error = 'Please agree to share your answers so our pharmacist can prepare your plan.';
+    if (!error && (!Array.isArray(payload.plan) || payload.plan.length === 0)) error = 'Your plan did not come through. Please retake the quiz.';
 
     if (error) {
       console.log(`\n[quiz-lead] rejected: ${error}`);

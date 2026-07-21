@@ -278,7 +278,7 @@
 
     /* ── Pharmacist handoff form (lives inside .ws-join) ────────────── */
     .ws-form { margin-top: 20px; }
-    .ws-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    .ws-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
     @media (min-width: 620px) { .ws-grid { grid-template-columns: 1fr 1fr; } }
     .ws-field-wide { grid-column: 1 / -1; }
 
@@ -301,6 +301,22 @@
       box-shadow: 0 0 0 4px rgba(106,191,75,0.18);
     }
     .ws-input[aria-invalid="true"], .ws-textarea[aria-invalid="true"] { border-color: #C0392B; }
+    .ws-input[aria-invalid="true"]:focus, .ws-textarea[aria-invalid="true"]:focus {
+      border-color: #C0392B; box-shadow: 0 0 0 4px rgba(192,57,43,0.15);
+    }
+
+    /* One message per field, directly under it. The status line beneath the
+       button stays for whole-form problems.
+
+       The line is reserved whether or not there is a message. Hiding it when
+       empty made the form grow the moment a field lost focus — and a message
+       appearing between mousedown and mouseup slid the consent checkbox out from
+       under the pointer, so the click never landed. Messages are kept short
+       enough to sit on one line at 390px for the same reason. */
+    .ws-error {
+      margin-top: 5px; min-height: 17px;
+      font-size: 12.5px; line-height: 17px; color: #A5321F;
+    }
 
     /* Honeypot — off-screen rather than display:none so bots still see it. */
     .ws-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
@@ -1365,6 +1381,91 @@
       ));
     }
 
+    /* ── Field rules ─────────────────────────────────────────────────────────
+       ⚠️ Mirrored in quiz-lead.php (checkName / checkEmail / checkPhone /
+       checkNote) and in serve.mjs's dev shim. The browser copy exists so people
+       get told about a typo while they can still see the field; the PHP copy is
+       the one that actually decides. Change a rule in one place, change all three.
+
+       Each check returns { ok, value, error } — `value` is the normalized form
+       that gets sent, so the pharmacist reads "(561) 200-4245" no matter how it
+       was typed or autofilled. */
+    const NAME_MAX = 60, EMAIL_MAX = 180, NOTE_MAX = 2000;
+    const LINK_RE = /(https?:\/\/|www\.)/i;
+    const ok = (value) => ({ ok: true, value: value, error: '' });
+    const bad = (error) => ({ ok: false, value: '', error: error });
+
+    function checkName(raw) {
+      const v = String(raw).replace(/\s+/g, ' ').trim();
+      if (!v) return bad('Please enter your first and last name.');
+      if (v.length > NAME_MAX) return bad('Please use 60 characters or fewer.');
+      if (/\d/.test(v)) return bad("Names can't contain numbers.");
+      if (LINK_RE.test(v)) return bad('Please enter your name, not a web address.');
+      if (!/^[\p{L}][\p{L}'’.\-\s]*$/u.test(v)) return bad('Letters, hyphens and apostrophes only.');
+      if (v.split(' ').filter(w => /\p{L}/u.test(w)).length < 2) return bad('Please enter your first and last name.');
+      return ok(v);
+    }
+
+    // Autofill hands us anything from "+1 (561) 200-4245" to "15612004245".
+    function phoneDigits(raw) {
+      let d = String(raw).replace(/\D/g, '');
+      if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);   // country code
+      return d.slice(0, 10);
+    }
+    function phoneFormat(d) {
+      if (d.length <= 3) return d;
+      if (d.length <= 6) return '(' + d.slice(0, 3) + ') ' + d.slice(3);
+      return '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6);
+    }
+    function checkPhone(raw) {
+      const d = phoneDigits(raw);
+      if (!d) return bad('Please enter your phone number.');
+      if (d.length < 10) return bad('We need all 10 digits.');
+      // North American numbering: area code and exchange both start 2–9.
+      if (!/^[2-9]\d{2}[2-9]\d{6}$/.test(d)) return bad("Check the area code — that isn't a US number.");
+      return ok(phoneFormat(d));
+    }
+
+    const EMAIL_RE = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,24}$/;
+    // Only unambiguous misspellings of the big providers — a real domain must
+    // never land in here, because we block on a match rather than just nudging.
+    const DOMAIN_TYPOS = {
+      'gmial.com': 'gmail.com', 'gmai.com': 'gmail.com', 'gnail.com': 'gmail.com',
+      'gmail.co': 'gmail.com', 'hotmial.com': 'hotmail.com', 'hotmai.com': 'hotmail.com',
+      'yaho.com': 'yahoo.com', 'yahooo.com': 'yahoo.com', 'outlok.com': 'outlook.com',
+      'iclould.com': 'icloud.com', 'icoud.com': 'icloud.com'
+    };
+    const TLD_TYPOS = { con: 'com', cmo: 'com', ocm: 'com', comm: 'com', xom: 'com', vom: 'com', met: 'net', ner: 'net', ogr: 'org' };
+
+    function checkEmail(raw) {
+      const v = String(raw).trim();
+      if (!v) return bad('Please enter your email address.');
+      if (v.length > EMAIL_MAX) return bad('That email address is too long.');
+      if (v.indexOf('..') !== -1 || !EMAIL_RE.test(v)) return bad('Please enter a valid email, like name@example.com.');
+      const at = v.lastIndexOf('@');
+      const local = v.slice(0, at);
+      const domain = v.slice(at + 1).toLowerCase();
+      if (local.charAt(0) === '.' || local.charAt(local.length - 1) === '.') {
+        return bad('Please enter a valid email, like name@example.com.');
+      }
+      if (DOMAIN_TYPOS[domain]) return bad('Did you mean ' + local + '@' + DOMAIN_TYPOS[domain] + '?');
+      const dot = domain.lastIndexOf('.');
+      const tld = domain.slice(dot + 1);
+      if (TLD_TYPOS[tld]) return bad('Did you mean ' + local + '@' + domain.slice(0, dot + 1) + TLD_TYPOS[tld] + '?');
+      // The domain is lowercased; the local part is left alone, since technically
+      // it is case-sensitive and not ours to rewrite.
+      return ok(local + '@' + domain);
+    }
+
+    function checkNote(raw) {
+      const v = String(raw).replace(/[ \t]+/g, ' ').trim();
+      if (v.length > NOTE_MAX) return bad('Please keep this under 2,000 characters.');
+      if (LINK_RE.test(v)) return bad('Please leave web links out of your note.');
+      return ok(v);
+    }
+
+    const FIELD_CHECKS = { name: checkName, phone: checkPhone, email: checkEmail, note: checkNote };
+
     function handoffMarkup() {
       if (handoffSent) return handoffDoneMarkup(handoffSent.name, handoffSent.email);
       const d = handoffDraft;
@@ -1377,19 +1478,25 @@
           '<div class="ws-grid">' +
             '<div>' +
               '<label class="ws-label" for="ws-name">Full name</label>' +
-              '<input class="ws-input" id="ws-name" type="text" autocomplete="name" value="' + esc(d.name) + '" required>' +
+              '<input class="ws-input" id="ws-name" type="text" autocomplete="name" autocapitalize="words" spellcheck="false" maxlength="60" aria-describedby="ws-err-name" value="' + esc(d.name) + '" required>' +
+              '<p class="ws-error" id="ws-err-name" role="alert"></p>' +
             '</div>' +
             '<div>' +
               '<label class="ws-label" for="ws-phone">Phone</label>' +
-              '<input class="ws-input" id="ws-phone" type="tel" autocomplete="tel" value="' + esc(d.phone) + '" required>' +
+              // maxlength has to leave room for "+1 (561) 200-4245" as typed or pasted;
+              // the country code is only strippable once all 11 digits are there.
+              '<input class="ws-input" id="ws-phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="(561) 200-4245" aria-describedby="ws-err-phone" value="' + esc(d.phone) + '" required>' +
+              '<p class="ws-error" id="ws-err-phone" role="alert"></p>' +
             '</div>' +
             '<div class="ws-field-wide">' +
               '<label class="ws-label" for="ws-email">Email</label>' +
-              '<input class="ws-input" id="ws-email" type="email" autocomplete="email" value="' + esc(d.email) + '" required>' +
+              '<input class="ws-input" id="ws-email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="180" aria-describedby="ws-err-email" value="' + esc(d.email) + '" required>' +
+              '<p class="ws-error" id="ws-err-email" role="alert"></p>' +
             '</div>' +
             '<div class="ws-field-wide">' +
               '<label class="ws-label" for="ws-note">Anything else we should know? <span style="font-weight:500;color:var(--gray-600);">(optional)</span></label>' +
-              '<textarea class="ws-textarea" id="ws-note" placeholder="Medications, allergies, or a question">' + esc(d.note) + '</textarea>' +
+              '<textarea class="ws-textarea" id="ws-note" maxlength="2000" aria-describedby="ws-err-note" placeholder="Medications, allergies, or a question">' + esc(d.note) + '</textarea>' +
+              '<p class="ws-error" id="ws-err-note" role="alert"></p>' +
             '</div>' +
           '</div>' +
 
@@ -1505,23 +1612,73 @@
         company: form.querySelector('#ws-company')
       };
 
+      // Field-level messages sit under the field they belong to; the status line
+      // under the button is for whole-form problems (nothing selected, send failed).
+      const errorSlots = {
+        name: form.querySelector('#ws-err-name'),
+        phone: form.querySelector('#ws-err-phone'),
+        email: form.querySelector('#ws-err-email'),
+        note: form.querySelector('#ws-err-note')
+      };
+
+      function setFieldError(key, message) {
+        const input = fields[key];
+        errorSlots[key].textContent = message;
+        if (message) input.setAttribute('aria-invalid', 'true');
+        else input.removeAttribute('aria-invalid');
+      }
+
+      /** Validate one field and normalize it in place. Returns the check result. */
+      function validateField(key, { normalize = true } = {}) {
+        const input = fields[key];
+        // The note is optional: an empty one is fine, a filled-in one still has rules.
+        if (key === 'note' && input.value.trim() === '') { setFieldError('note', ''); return ok(''); }
+        const result = FIELD_CHECKS[key](input.value);
+        setFieldError(key, result.error);
+        if (result.ok && normalize && result.value !== input.value) {
+          input.value = result.value;
+          captureDraft();
+        }
+        return result;
+      }
+
       ['name', 'phone', 'email', 'note'].forEach(k => {
         fields[k].addEventListener('input', () => {
-          fields[k].removeAttribute('aria-invalid');
+          setFieldError(k, '');          // stop scolding while they are fixing it
           captureDraft();
         });
+        // Checked on the way out of the field, not on every keystroke — nobody
+        // wants "that isn't a valid email" after typing the first letter.
+        fields[k].addEventListener('blur', () => {
+          if (fields[k].value.trim() !== '') validateField(k);
+        });
       });
-      fields.consent.addEventListener('change', captureDraft);
+
+      // Reformat as they type, so what they see is what the pharmacist will read.
+      fields.phone.addEventListener('input', () => {
+        const digits = phoneDigits(fields.phone.value);
+        const cursorAtEnd = fields.phone.selectionStart === fields.phone.value.length;
+        const formatted = phoneFormat(digits);
+        if (formatted !== fields.phone.value) {
+          fields.phone.value = formatted;
+          if (cursorAtEnd) fields.phone.setSelectionRange(formatted.length, formatted.length);
+          captureDraft();
+        }
+      });
+
+      fields.consent.addEventListener('change', () => {
+        captureDraft();
+        if (fields.consent.checked && status.getAttribute('data-tone') === 'error') {
+          status.removeAttribute('data-tone');
+          status.textContent = '';
+        }
+      });
 
       function showError(message, focusField) {
         status.removeAttribute('data-hint');
         status.setAttribute('data-tone', 'error');
         status.textContent = message;
-        if (focusField) {
-          focusField.setAttribute('aria-invalid', 'true');
-          focusField.setAttribute('aria-describedby', 'ws-status');
-          focusField.focus();
-        }
+        if (focusField) focusField.focus();
       }
 
       form.addEventListener('submit', async (e) => {
@@ -1530,15 +1687,22 @@
         status.removeAttribute('data-hint');
         status.textContent = '';
 
-        const name = fields.name.value.trim();
-        const phone = fields.phone.value.trim();
-        const email = fields.email.value.trim();
-
         if (selected.size === 0) return showError('Choose at least one supplement to send.');
-        if (name.length < 2) return showError('Please enter your full name.', fields.name);
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return showError('Please enter a valid email address.', fields.email);
-        if (phone.replace(/\D/g, '').length < 10) return showError('Please enter a 10-digit phone number.', fields.phone);
+
+        // Validate every field before reporting, so one pass surfaces every problem.
+        const results = {};
+        ['name', 'phone', 'email', 'note'].forEach(k => { results[k] = validateField(k); });
+        const firstBad = ['name', 'phone', 'email', 'note'].find(k => !results[k].ok);
+        if (firstBad) {
+          fields[firstBad].focus();
+          return showError('Please fix the highlighted field' +
+            (Object.keys(results).filter(k => !results[k].ok).length > 1 ? 's' : '') + ' above.');
+        }
         if (!fields.consent.checked) return showError('Please agree to share your answers so our pharmacist can prepare your plan.', fields.consent);
+
+        const name = results.name.value;
+        const phone = results.phone.value;
+        const email = results.email.value;
 
         const label = submit.innerHTML;
         sending = true;
@@ -1553,7 +1717,7 @@
               name: name,
               phone: phone,
               email: email,
-              note: fields.note.value.trim(),
+              note: results.note.value,
               company: fields.company.value,
               consent: true,
               tier: formula,

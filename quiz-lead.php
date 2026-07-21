@@ -63,6 +63,27 @@ const PLAN_KEYS = [
 
 const MAX_FIELD_LEN   = 400;
 const MAX_NOTE_LEN    = 2000;
+const NAME_MAX        = 60;
+const EMAIL_MAX       = 180;
+
+/** Anything that looks like a link. Spam is the only thing that puts one in a name. */
+const LINK_RE = '/(https?:\/\/|www\.)/i';
+
+/** Unambiguous misspellings of the big providers only — a real domain must never
+ *  land in here, because a match is rejected rather than merely flagged. */
+const DOMAIN_TYPOS = [
+    'gmial.com'   => 'gmail.com',   'gmai.com'    => 'gmail.com',
+    'gnail.com'   => 'gmail.com',   'gmail.co'    => 'gmail.com',
+    'hotmial.com' => 'hotmail.com', 'hotmai.com'  => 'hotmail.com',
+    'yaho.com'    => 'yahoo.com',   'yahooo.com'  => 'yahoo.com',
+    'outlok.com'  => 'outlook.com', 'iclould.com' => 'icloud.com',
+    'icoud.com'   => 'icloud.com',
+];
+const TLD_TYPOS = [
+    'con' => 'com', 'cmo' => 'com', 'ocm' => 'com', 'comm' => 'com',
+    'xom' => 'com', 'vom' => 'com', 'met' => 'net', 'ner'  => 'net',
+    'ogr' => 'org',
+];
 const MAX_ANSWERS     = 40;
 const MAX_PLAN_ITEMS  = 10;
 const MIN_ELAPSED_MS  = 3000;   // Results rendered less than 3s ago == not a human.
@@ -176,6 +197,114 @@ function rateLimited(string $ip): bool
     fclose($handle);
 
     return $limited;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Field rules
+ *
+ * ⚠️ Mirrored in wellness.html (checkName / checkPhone / checkEmail / checkNote)
+ * and in serve.mjs's dev shim. The browser copy exists so people get told about a
+ * typo while they can still see the field; this copy is the one that decides.
+ * Change a rule in one place, change all three.
+ *
+ * Each returns the normalized value or ends the request with a message the
+ * patient can act on. Normalizing here means the pharmacist reads
+ * "(561) 200-4245" no matter how it was typed, pasted, or autofilled.
+ * ────────────────────────────────────────────────────────────────────────────*/
+
+function requireName(string $raw): string
+{
+    $v = trim(preg_replace('/\s+/', ' ', $raw));
+    if ($v === '') {
+        fail('Please enter your first and last name.');
+    }
+    if (mb_strlen($v) > NAME_MAX) {
+        fail('Please use 60 characters or fewer.');
+    }
+    if (preg_match('/\d/', $v)) {
+        fail("Names can't contain numbers.");
+    }
+    if (preg_match(LINK_RE, $v)) {
+        fail('Please enter your name, not a web address.');
+    }
+    if (!preg_match('/^[\p{L}][\p{L}\'’.\-\s]*$/u', $v)) {
+        fail('Letters, hyphens and apostrophes only.');
+    }
+    $words = array_filter(explode(' ', $v), static fn($w) => preg_match('/\p{L}/u', $w) === 1);
+    if (count($words) < 2) {
+        fail('Please enter your first and last name.');
+    }
+    return $v;
+}
+
+function requirePhone(string $raw): string
+{
+    $d = preg_replace('/\D/', '', $raw);
+    if (strlen($d) === 11 && $d[0] === '1') {
+        $d = substr($d, 1);          // country code from autofill
+    }
+    $d = substr($d, 0, 10);
+    if ($d === '') {
+        fail('Please enter your phone number.');
+    }
+    if (strlen($d) < 10) {
+        fail('We need all 10 digits.');
+    }
+    // North American numbering: area code and exchange both start 2–9.
+    if (!preg_match('/^[2-9]\d{2}[2-9]\d{6}$/', $d)) {
+        fail("Check the area code — that isn't a US number.");
+    }
+    return '(' . substr($d, 0, 3) . ') ' . substr($d, 3, 3) . '-' . substr($d, 6, 4);
+}
+
+function requireEmail(string $raw): string
+{
+    $v = trim($raw);
+    if ($v === '') {
+        fail('Please enter your email address.');
+    }
+    if (strlen($v) > EMAIL_MAX) {
+        fail('That email address is too long.');
+    }
+    $shape = '/^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,24}$/';
+    if (strpos($v, '..') !== false || !preg_match($shape, $v) || !filter_var($v, FILTER_VALIDATE_EMAIL)) {
+        fail('Please enter a valid email, like name@example.com.');
+    }
+    // Past the shape check the local part is known to be [A-Za-z0-9._%+-] only,
+    // so echoing it back in a suggestion is safe.
+    $at     = strrpos($v, '@');
+    $local  = substr($v, 0, $at);
+    $domain = strtolower(substr($v, $at + 1));
+    if ($local[0] === '.' || substr($local, -1) === '.') {
+        fail('Please enter a valid email, like name@example.com.');
+    }
+    if (array_key_exists($domain, DOMAIN_TYPOS)) {
+        fail('Did you mean ' . $local . '@' . DOMAIN_TYPOS[$domain] . '?');
+    }
+    $dot = strrpos($domain, '.');
+    $tld = substr($domain, $dot + 1);
+    if (array_key_exists($tld, TLD_TYPOS)) {
+        fail('Did you mean ' . $local . '@' . substr($domain, 0, $dot + 1) . TLD_TYPOS[$tld] . '?');
+    }
+    // Domain lowercased; the local part is left alone — technically it is
+    // case-sensitive and not ours to rewrite.
+    return $local . '@' . $domain;
+}
+
+/** Optional. Empty is fine; filled in still has rules. */
+function cleanNote(string $raw): string
+{
+    $v = trim($raw);
+    if ($v === '') {
+        return '';
+    }
+    if (mb_strlen($v) > MAX_NOTE_LEN) {
+        fail('Please keep this under 2,000 characters.');
+    }
+    if (preg_match(LINK_RE, $v)) {
+        fail('Please leave web links out of your note.');
+    }
+    return $v;
 }
 
 /**
@@ -462,20 +591,14 @@ if ((int) ($payload['elapsedMs'] ?? 0) < MIN_ELAPSED_MS) {
     fail('That went through a little too fast. Please try again.');
 }
 
-$name  = clean($payload['name'] ?? '', 120);
-$email = clean($payload['email'] ?? '', 180);
-$phone = clean($payload['phone'] ?? '', 40);
-$note  = clean($payload['note'] ?? '', MAX_NOTE_LEN);
+// clean() first (CRLF, control characters, absurd lengths), then the field rules.
+// The note gets a roomier cap so an over-long one is reported rather than
+// silently truncated mid-sentence.
+$name  = requireName(clean($payload['name'] ?? '', 200));
+$email = requireEmail(clean($payload['email'] ?? '', 300));
+$phone = requirePhone(clean($payload['phone'] ?? '', 40));
+$note  = cleanNote(clean($payload['note'] ?? '', MAX_NOTE_LEN * 2));
 
-if (mb_strlen($name) < 2) {
-    fail('Please enter your full name.');
-}
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    fail('Please enter a valid email address.');
-}
-if (strlen(preg_replace('/\D/', '', $phone)) < 10) {
-    fail('Please enter a valid phone number.');
-}
 if (($payload['consent'] ?? false) !== true) {
     fail('Please agree to share your answers so our pharmacist can prepare your plan.');
 }
