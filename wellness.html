@@ -308,12 +308,12 @@
       .mob-footer-bar { flex-direction: column !important; align-items: center !important; text-align: center; gap: 6px !important; }
     }
 
-    /* Below ~560px the Back / hint / Next row runs out of room and the hint
-       collapses to one word per line. Give it its own row above the buttons. */
+    /* Phones: the hint made the Back / hint / Next row run out of room (it
+       collapsed to one word per line, then stacked awkwardly on its own line).
+       Drop the standalone hint here and keep Back / Next on one clean row — the
+       greyed-out disabled Next already signals that an answer is required. */
     @media (max-width: 560px) {
-      .quiz-footer { flex-wrap: wrap; row-gap: 14px; }
-      .quiz-hint { order: -1; flex: 1 0 100%; text-align: center; }
-      .quiz-hint:empty { display: none; }
+      .quiz-hint { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
