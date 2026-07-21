@@ -189,13 +189,17 @@ Equipment hero/banner photos and the storefront photo live in `website_pics/` (r
 
 ## Known Issues / Todo
 
-- **Before the wellness handoff can go live (blocking):**
-  1. Create `wellness@mybest-pharmacy.com` as a real mailbox in SiteGround cPanel. If the From address
-     isn't a real mailbox on the domain, Gmail and Outlook treat both emails as forged.
-  2. Confirm with Dad that WholeScripts can send a recommendation to an email address that has no
-     account yet. That is still an assumption taken from CharmHealth/Practice Better documentation
-     rather than his own dashboard. If it's wrong, the "head start" registration button becomes the
-     primary path and step 2 of the patient email needs rewriting.
+- **Wellness handoff, still open:**
+  - ✅ `wellness@mybest-pharmacy.com` exists as a real mailbox (created Jul 21, 2026).
+  - **Confirm with Dad that WholeScripts can send a recommendation to an email address that has no
+    account yet.** Still an assumption taken from CharmHealth/Practice Better documentation rather
+    than his own dashboard. If it's wrong, the "head start" registration button becomes the primary
+    path and step 2 of the patient email needs rewriting.
+  - **Monthly refills are not wired to anything.** The page sells "auto-refilled monthly, billed
+    automatically", but a WholeScripts recommendation is a one-time cart. Someone has to set up
+    autoship, or the core promise of the program silently does not happen.
+  - **Delivery wording conflicts.** The page says delivery is included across South Florida;
+    WholeScripts ships direct and charges its own shipping. Both cannot be true.
 - **Accessibility/typography debt (open):** body and pricing-table text is set at 14px (13px on mobile) sitewide — below the 15–16px recommended for the pharmacy's older patient demographic. The lime accent `--green: #6ABF4B` is also used for body text/links on white backgrounds in places, which is roughly 2:1 contrast — below WCAG AA's 4.5:1 for text. `--green-dk: #4E9035` already exists as a darker, higher-contrast alternative but is barely used. Fix: reserve lime for buttons/badges on dark backgrounds; use `--green-dk` (or `--gray-900`) for any green text on light backgrounds; bump body/table text to 15–16px.
 - **Suction Pump Aspirator photo missing** — see Equipment Catalog section above; the sourced file is 0 bytes.
 - **CSS variable drift** — `--blue-md` only defined on 3 of 6 pages (see Design System above).
