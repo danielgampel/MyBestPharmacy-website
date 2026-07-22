@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Best Wellness Program — Personalized Supplements, Delivered Monthly</title>
-  <meta name="description" content="Take a short wellness quiz and get a personalized monthly supplement plan from My Best Pharmacy — expert-curated, auto-refilled, and delivered to your door." />
+  <title>My Best Wellness Program — Personalized, Practitioner-Grade Supplements. No Subscription.</title>
+  <meta name="description" content="Take a short wellness quiz and get a personalized, practitioner-grade supplement plan from My Best Pharmacy — order what you need on WholeScripts, a month at a time. No subscription, no bulk buys." />
   <link rel="canonical" href="https://mybest-pharmacy.com/wellness" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="My Best Pharmacy" />
-  <meta property="og:title" content="My Best Wellness Program — Personalized Supplements, Delivered Monthly" />
-  <meta property="og:description" content="Take a short wellness quiz and get a personalized monthly supplement plan from My Best Pharmacy — expert-curated, auto-refilled, and delivered to your door." />
+  <meta property="og:title" content="My Best Wellness Program — Personalized, Practitioner-Grade Supplements. No Subscription." />
+  <meta property="og:description" content="Take a short wellness quiz and get a personalized, practitioner-grade supplement plan from My Best Pharmacy — order what you need on WholeScripts, a month at a time. No subscription, no bulk buys." />
   <meta property="og:url" content="https://mybest-pharmacy.com/wellness" />
   <meta property="og:image" content="https://mybest-pharmacy.com/brand_assets/og-image.png" />
   <meta property="og:image:width" content="1200" />
@@ -239,14 +239,55 @@
       display: flex; align-items: center; justify-content: center;
       background: linear-gradient(135deg, rgba(106,191,75,0.16), rgba(27,82,38,0.08));
     }
-    .formula-toggle { display: inline-flex; padding: 5px; background: var(--gray-50); border-radius: 12px; border: 1px solid var(--gray-100); }
-    .formula-btn {
-      border: none; cursor: pointer; background: transparent;
-      font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 14px; color: var(--gray-700);
-      padding: 9px 18px; border-radius: 9px; transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+    /* Display-only plan card: same look as the quiz's circular check, but static —
+       the patient orders these themselves on WholeScripts, so nothing toggles. */
+    .rx-static { cursor: default; }
+    .rx-static:hover { border-color: rgba(106,191,75,0.45); box-shadow: none; }
+    .rx-mark {
+      flex-shrink: 0; width: 24px; height: 24px; margin: 1px 0 0;
+      border-radius: 50%; background: var(--green);
+      display: flex; align-items: center; justify-content: center;
     }
-    .formula-btn.active { background: #fff; color: var(--blue); box-shadow: 0 2px 8px rgba(27,82,38,0.1); }
-    .formula-btn:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+
+    /* Per-card buy path: the exact WholeScripts product to search, plus a shortcut. */
+    .rx-buy {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      margin: 14px 0 0 38px; padding-top: 13px; border-top: 1px dashed var(--gray-100);
+    }
+    .rx-buy-label { font-size: 12.5px; font-weight: 600; color: var(--gray-600); }
+    .rx-buy-term {
+      font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: var(--blue);
+      background: rgba(27,82,38,0.06); padding: 3px 9px; border-radius: 7px;
+    }
+    .rx-buy-btn {
+      margin-left: auto; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700;
+      color: var(--green-dk); background: #fff; text-decoration: none; cursor: pointer;
+      padding: 7px 13px; border: 1.5px solid rgba(106,191,75,0.5); border-radius: 9px;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .rx-buy-btn:hover { background: rgba(106,191,75,0.1); border-color: var(--green); }
+    .rx-buy-btn:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+    .rx-copy.is-copied { background: var(--green); border-color: var(--green); color: #fff; }
+    @media (max-width: 480px) { .rx-buy-btn { margin-left: 0; width: 100%; } }
+
+    /* Value chips at the top of the results — the promise, scannable at a glance. */
+    .rx-vals { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
+    .rx-val {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12.5px; font-weight: 600; color: var(--green-dk);
+      background: rgba(106,191,75,0.1); padding: 6px 13px; border-radius: 100px;
+    }
+    .rx-val svg { flex-shrink: 0; }
+
+    /* Compact catalog list — one tidy card instead of six big tiles. */
+    .supp-row {
+      display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 16px;
+      padding: 16px 0; border-bottom: 1px solid var(--gray-100);
+    }
+    .supp-row:last-child { border-bottom: none; }
+    .supp-name { flex-shrink: 0; min-width: 158px; font-weight: 700; color: var(--blue); font-size: 15.5px; }
+    .supp-desc { flex: 1; min-width: 200px; color: var(--gray-700); font-size: 14px; line-height: 1.55; }
 
     /* "Join the pharmacy on WholeScripts" callout */
     .ws-join {
@@ -363,6 +404,24 @@
     }
     .ws-step-title { font-size: 15.5px; font-weight: 700; color: var(--gray-900); line-height: 1.4; }
     .ws-step-body { font-size: 14.5px; color: var(--gray-700); line-height: 1.65; margin-top: 3px; }
+    .ws-step-body strong { color: var(--gray-900); font-weight: 700; }
+    /* Walk-me-through-it steps: each is its own colored tile so they read one at a
+       time. The number badge + left bar carry a green that deepens step to step
+       (light → dark = progress toward checkout). Accent + tint are set inline. */
+    .ws-steps-lg { margin-top: 22px; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+    .ws-steps-lg .ws-step {
+      padding: 17px 18px; border-radius: 14px;
+      background: #fff; border: 1px solid var(--gray-100); border-left: 4px solid var(--green);
+    }
+    .ws-steps-lg .ws-step:last-child { padding-bottom: 17px; }
+    .ws-steps-lg .ws-step-num {
+      width: 34px; height: 34px; font-size: 15px;
+      box-shadow: 0 2px 8px rgba(11,48,22,0.18);
+    }
+    .ws-steps-lg .ws-step-title { font-size: 16px; }
+    .ws-step-main { display: flex; flex-direction: column; min-width: 0; }
+    .ws-step-cta { align-self: flex-start; margin-top: 13px; }
+    @media (max-width: 640px) { .ws-step-cta { width: 100%; justify-content: center; } }
 
     /* Optional head start — quieter than the numbered steps above it on purpose. */
     .ws-headstart {
@@ -507,17 +566,16 @@
     <!-- Eyebrow -->
     <div class="fu fu-1 inline-flex items-center gap-2 mb-7" style="padding: 6px 16px; border-radius: 100px; border: 1px solid rgba(106,191,75,0.4); background: rgba(106,191,75,0.08);">
       <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--green);"></span>
-      <span style="color: var(--green); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;">Monthly Wellness Subscription</span>
+      <span style="color: var(--green); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;">My Best Wellness Program</span>
     </div>
     <!-- Headline -->
     <h1 class="fu fu-2" style="font-size: clamp(2.6rem, 6vw, 4.8rem); font-weight: 700; color: #fff; line-height: 1.04; letter-spacing: -0.03em; margin-bottom: 22px;">
-      My Best<br/><em style="font-style: italic; color: var(--green);">Wellness Program</em>
+      Supplements made<br/><em style="font-style: italic; color: var(--green);">for your body</em>
     </h1>
     <!-- Subheadline -->
-    <p class="fu fu-3" style="font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: rgba(255,255,255,0.78); line-height: 1.7; max-width: 600px; margin: 0 auto 16px;">
-      Personalized hormone support, delivered monthly. Answer a few questions and get a supplement plan built around exactly what your body needs.
+    <p class="fu fu-3" style="font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: rgba(255,255,255,0.82); line-height: 1.7; max-width: 588px; margin: 0 auto 38px;">
+      Take a 3-minute quiz and get a personalized plan of practitioner-grade supplements, reviewed by our pharmacists. Order just what you need, a month at a time — no subscription, no bulk buys.
     </p>
-    <p class="fu fu-3" style="font-size: 0.95rem; color: rgba(255,255,255,0.55); margin-bottom: 38px;">Feel better. Stay balanced. Delivered monthly.</p>
 
     <!-- CTAs -->
     <div class="fu fu-4 mob-ctas flex flex-wrap justify-center gap-4 mb-12">
@@ -530,9 +588,9 @@
 
     <!-- Trust row -->
     <div class="fu fu-5 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
-      <span style="color: rgba(255,255,255,0.6); font-size: 13px; display: inline-flex; align-items: center; gap: 7px;"><svg width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Personally matched to you</span>
-      <span style="color: rgba(255,255,255,0.6); font-size: 13px; display: inline-flex; align-items: center; gap: 7px;"><svg width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Auto-refilled monthly</span>
-      <span style="color: rgba(255,255,255,0.6); font-size: 13px; display: inline-flex; align-items: center; gap: 7px;"><svg width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Delivery included</span>
+      <span style="color: rgba(255,255,255,0.6); font-size: 13px; display: inline-flex; align-items: center; gap: 7px;"><svg width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Personalized to you</span>
+      <span style="color: rgba(255,255,255,0.6); font-size: 13px; display: inline-flex; align-items: center; gap: 7px;"><svg width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Pharmacist-reviewed</span>
+      <span style="color: rgba(255,255,255,0.6); font-size: 13px; display: inline-flex; align-items: center; gap: 7px;"><svg width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>No subscription</span>
     </div>
   </div>
 </section>
@@ -541,7 +599,7 @@
 <section id="how" class="mob-section" style="padding: 96px 0; background: var(--off-white);">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
     <div class="text-center reveal" style="margin-bottom: 56px;">
-      <span class="tag">Simple From Start To Doorstep</span>
+      <span class="tag">Simple From Quiz To Cart</span>
       <h2 class="underline-g underline-g-c" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em;">How It Works</h2>
     </div>
     <div class="grid md:grid-cols-3 gap-8">
@@ -550,8 +608,8 @@
       <div class="reveal" style="position: relative;">
         <div class="bg-white rounded-2xl p-8 h-full" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
           <span style="font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 700; color: rgba(106,191,75,0.5); line-height: 1;">01</span>
-          <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Take the quiz</h3>
-          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">Answer nine quick questions about your life stage, age, hormone therapy, symptoms, lifestyle, and goals. It takes about three minutes.</p>
+          <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Take the 3-minute quiz</h3>
+          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">Answer a few questions about your body, symptoms, and goals. No account to make, no pressure.</p>
         </div>
       </div>
 
@@ -559,8 +617,8 @@
       <div class="reveal" style="position: relative;">
         <div class="bg-white rounded-2xl p-8 h-full" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
           <span style="font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 700; color: rgba(106,191,75,0.5); line-height: 1;">02</span>
-          <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Get your formula</h3>
-          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">See a personalized supplement plan instantly — built from your answers and tailored to your life stage, symptoms, and goals.</p>
+          <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Get your pharmacist-reviewed plan</h3>
+          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">See your personalized plan right away — practitioner-grade supplements matched to you, and reviewed by our pharmacists against what you already take.</p>
         </div>
       </div>
 
@@ -568,8 +626,8 @@
       <div class="reveal" style="position: relative;">
         <div class="bg-white rounded-2xl p-8 h-full" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
           <span style="font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 700; color: rgba(106,191,75,0.5); line-height: 1;">03</span>
-          <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Delivered monthly</h3>
-          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">Your supplements arrive each month, billed automatically to your card on file. Cancel anytime with 30 days' notice.</p>
+          <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Order it on WholeScripts</h3>
+          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">Set up a free account under our pharmacy, add your supplements, and check out. Reorder anytime — no subscription. We show you exactly how, or set it up with you by phone.</p>
         </div>
       </div>
 
@@ -625,49 +683,33 @@
 <section class="mob-section" style="padding: 96px 0; background: #fff;">
   <div class="max-w-7xl mx-auto px-6 lg:px-10">
     <div class="text-center reveal" style="margin-bottom: 56px;">
-      <span class="tag">Why Patients Subscribe</span>
-      <h2 class="underline-g underline-g-c" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em;">A Wellness Routine That Runs Itself</h2>
+      <span class="tag">Why Patients Choose Us</span>
+      <h2 class="underline-g underline-g-c" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em;">Practitioner-Grade Supplements, On Your Terms</h2>
     </div>
-    <div class="why-grid">
+    <div class="grid md:grid-cols-3 gap-6">
 
       <div class="spec-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
         <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, rgba(106,191,75,0.14), rgba(27,82,38,0.07));">
           <svg width="24" height="24" fill="none" stroke="var(--green)" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg>
         </div>
-        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Personalized monthly formula</h3>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Exactly the supplements your answers point to — matched to your life stage, symptoms, and goals. Not a fixed, off-the-shelf bundle.</p>
-      </div>
-
-      <div class="spec-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
-        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, rgba(106,191,75,0.14), rgba(27,82,38,0.07));">
-          <svg width="24" height="24" fill="none" stroke="var(--green)" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
-        </div>
-        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Automatic refills</h3>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Shipped automatically every month, so you never run out mid-cycle or have to remember to reorder.</p>
-      </div>
-
-      <div class="spec-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
-        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, rgba(106,191,75,0.14), rgba(27,82,38,0.07));">
-          <svg width="24" height="24" fill="none" stroke="var(--green)" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/></svg>
-        </div>
-        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Automatic monthly billing</h3>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">One simple charge to your card on file each month. No invoices to chase, no surprises.</p>
-      </div>
-
-      <div class="spec-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
-        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, rgba(106,191,75,0.14), rgba(27,82,38,0.07));">
-          <svg width="24" height="24" fill="none" stroke="var(--green)" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
-        </div>
-        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Delivery included</h3>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Your monthly supply is delivered to your door across South Florida — included in your plan, no separate fee.</p>
+        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Personalized to you</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Your plan comes from your own answers — matched to your body, symptoms, and goals. Never a one-size-fits-all bundle.</p>
       </div>
 
       <div class="spec-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
         <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, rgba(106,191,75,0.14), rgba(27,82,38,0.07));">
           <svg width="24" height="24" fill="none" stroke="var(--green)" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
         </div>
-        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Uncompromising quality</h3>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Our Premium tier is 100% Xymogen — practitioner-exclusive formulas with superior bioavailability, not sold in retail stores. Our Essential tier maintains quality standards while keeping your plan accessible.</p>
+        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Pharmacist-reviewed, practitioner-grade</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">100% Xymogen — professional-grade supplements you can't buy in stores — and a pharmacist checks your plan against your prescriptions and hormone therapy.</p>
+      </div>
+
+      <div class="spec-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
+        <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, rgba(106,191,75,0.14), rgba(27,82,38,0.07));">
+          <svg width="24" height="24" fill="none" stroke="var(--green)" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+        </div>
+        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">No subscription</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Order a month at a time and reorder only when you run low. No auto-charges, no big bulk buys, and nothing to cancel.</p>
       </div>
 
     </div>
@@ -680,41 +722,16 @@
     <div class="text-center reveal" style="margin-bottom: 52px;">
       <span class="tag">The Building Blocks</span>
       <h2 class="underline-g underline-g-c" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em;">What We May Recommend</h2>
-      <p style="color: var(--gray-700); font-size: 1.05rem; margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.7;">Your formula is drawn from a focused set of evidence-based supplements. You'll only ever receive the ones that fit your goals and symptoms.</p>
+      <p style="color: var(--gray-700); font-size: 1.05rem; margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto; line-height: 1.7;">Your formula is drawn from a focused set of evidence-based supplements. Your plan only ever includes the ones that fit your goals and symptoms.</p>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-      <div class="reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
-        <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--blue); margin-bottom: 8px;">Magnesium Glycinate</h3>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Supports restful sleep, calm, muscle relaxation, and stress recovery.</p>
-      </div>
-
-      <div class="reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
-        <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--blue); margin-bottom: 8px;">Vitamin K2 + D3</h3>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Supports bone strength and healthy vitamin D — helpful around menopause and low vitamin D.</p>
-      </div>
-
-      <div class="reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
-        <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--blue); margin-bottom: 8px;">Omega-3 Fish Oil</h3>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Supports heart health, healthy cholesterol, joints, and a balanced inflammatory response.</p>
-      </div>
-
-      <div class="reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
-        <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--blue); margin-bottom: 8px;">B12 / B-Complex</h3>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Supports energy, mental clarity, and helps ease everyday fatigue and brain fog.</p>
-      </div>
-
-      <div class="reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
-        <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--blue); margin-bottom: 8px;">DIM (DIMension 3)</h3>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Supports healthy estrogen metabolism. Recommended selectively — only when it's right for your therapy.</p>
-      </div>
-
-      <div class="reveal rounded-2xl p-7" style="background: linear-gradient(135deg, rgba(27,82,38,0.05), rgba(106,191,75,0.06)); border: 1px dashed var(--gray-100);">
-        <h3 style="font-size: 1.35rem; font-weight: 700; color: var(--blue); margin-bottom: 8px;">More on the way</h3>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">We're continually expanding the catalog as the program grows. Your formula can be updated anytime as your needs evolve.</p>
-      </div>
-
+    <div class="reveal supp-list" style="max-width: 660px; margin: 0 auto; background: #fff; border: 1px solid var(--gray-100); border-radius: 18px; box-shadow: 0 4px 20px rgba(27,82,38,0.06), 0 1px 3px rgba(27,82,38,0.04); padding: 4px 26px;">
+      <div class="supp-row"><span class="supp-name">Magnesium Glycinate</span><span class="supp-desc">Restful sleep, calm, and muscle relaxation.</span></div>
+      <div class="supp-row"><span class="supp-name">Vitamin K2 + D3</span><span class="supp-desc">Bone strength and healthy vitamin D.</span></div>
+      <div class="supp-row"><span class="supp-name">Omega-3 Fish Oil</span><span class="supp-desc">Heart, cholesterol, joints, and a balanced inflammatory response.</span></div>
+      <div class="supp-row"><span class="supp-name">B12 / B-Complex</span><span class="supp-desc">Everyday energy and mental clarity.</span></div>
+      <div class="supp-row"><span class="supp-name">DIM (DIMension 3)</span><span class="supp-desc">Healthy estrogen metabolism — added only when it fits your therapy.</span></div>
     </div>
+    <p style="text-align: center; color: var(--gray-600); font-size: 13.5px; margin-top: 20px;">You only ever get the ones that fit you. We add more as the program grows.</p>
   </div>
 </section>
 
@@ -731,16 +748,20 @@
         <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">No. The quiz gives a personalized starting point based on your answers. These are supplement suggestions, not medical advice — we always recommend keeping your prescribing physician in the loop.</p>
       </details>
       <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
-        <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">How does billing work?</summary>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">Your plan is billed automatically each month to the card on file and shipped to your door.</p>
+        <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">Do I have to subscribe?</summary>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">No. There's no subscription. You order your supplements on WholeScripts a month at a time and pay there — nothing auto-charges, and you're never locked in.</p>
       </details>
       <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
-        <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">Can I cancel or change my plan?</summary>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">Yes. You can cancel with 30 days' notice, and your formula can be adjusted anytime as your needs change over time.</p>
+        <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">How do I order after the quiz?</summary>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">Three steps: <strong>1)</strong> create a free account under our pharmacy on WholeScripts, <strong>2)</strong> search each product from your plan (we show you the exact name and a Copy button) and add it to your cart, <strong>3)</strong> check out. Your results page walks you through it — or call us and a pharmacist will set it up with you.</p>
       </details>
       <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
-        <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">What's the difference between Essential and Premium?</summary>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">Essential is a high-quality hybrid formula that's cost-conscious, using premium ingredients where they matter most. Premium uses 100% Xymogen, practitioner-grade ingredients throughout.</p>
+        <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">What will it cost?</summary>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">You pay WholeScripts directly for the supplements you order, and prices show once you're signed in. There's no membership fee and no subscription — you only pay for what you add to your cart.</p>
+      </details>
+      <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
+        <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">Why WholeScripts and Xymogen?</summary>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">Xymogen is a practitioner-grade supplement line sold through the WholeScripts dispensary, not in retail stores. Registering under our pharmacy links your WholeScripts account to our pharmacists, who set your plan and check it against your therapy.</p>
       </details>
     </div>
   </div>
@@ -835,35 +856,42 @@
   /* ════════════════════════ WELLNESS QUIZ ENGINE ════════════════════════ */
   (function () {
     // ── Supplement catalog. Pricing intentionally left as placeholders. ──
-    // `ws` = verified WholeScripts product page. Patients must register through
-    // WS_REGISTER once for purchases to credit the pharmacy (account-based referral).
+    // Every formula is 100% Xymogen (practitioner-grade, sold through WholeScripts).
+    // Patients register once through WS_REGISTER so their account links to the
+    // pharmacy (account-based referral), then search each `product` and order it
+    // themselves — no cart is built for them on our side.
+    // The one and only WholeScripts entry point: registering through this referral
+    // link is what credits the pharmacy and connects the account to our pharmacists.
+    // We never send a patient to WholeScripts any other way (a cold search link would
+    // let them register without the referral and lose that connection).
     const WS_REGISTER = 'https://www.wholescripts.com/register/mybestpharmacy';
-    // `about` is the plain-English answer to "what is this?" — supports phrasing
-    // only, no disease claims, same posture as the disclaimer at the bottom.
+    // `brand` = how the product reads on the card. `product` = the bare term the
+    // patient searches on WholeScripts once signed in. `about` is the plain-English
+    // "what is this?" — supports phrasing only, no disease claims.
     const SUPPS = {
       magnesium: {
         name: 'Magnesium Glycinate', supports: 'Sleep, calm & muscle relaxation',
-        essential: "Nature's Truth · Glycinate 200mg", premium: 'Xymogen · OptiMag 125',
+        brand: 'Xymogen · OptiMag 125', product: 'OptiMag 125',
         about: 'A mineral many people fall short on. The glycinate form is gentle on the stomach and is usually taken in the evening to support winding down and restful sleep.'
       },
       b12: {
         name: 'B12 / B-Complex', supports: 'Energy & mental clarity',
-        essential: 'B-Complex', premium: 'Xymogen · B-Activ',
+        brand: 'Xymogen · B-Activ', product: 'B-Activ',
         about: 'The B vitamins your body uses to turn food into energy and to support normal nerve and brain function. B12 comes mostly from animal foods, so intake can run low.'
       },
       omega: {
         name: 'Omega-3 Fish Oil', supports: 'Heart, joints & inflammation',
-        essential: "Nature's Truth · 2400mg", premium: 'Xymogen · Omega MonoPure 1300 EC',
+        brand: 'Xymogen · Omega MonoPure 1300 EC', product: 'Omega MonoPure 1300 EC',
         about: 'The fats found in oily fish like salmon and sardines, taken to support heart, joint, and brain health when fish is not a regular part of your week.'
       },
       k2d3: {
         name: 'Vitamin K2 + D3', supports: 'Bone strength & vitamin D',
-        essential: "Nature's Truth · K2 + D3", premium: 'Xymogen · K2-D3 5000',
+        brand: 'Xymogen · K2-D3 5000', product: 'K2-D3 5000',
         about: 'Vitamin D supports how much calcium you absorb and K2 supports where that calcium ends up, which is why the two are taken together for bone health.'
       },
       dim: {
         name: 'DIM (DIMension 3)', supports: 'Healthy estrogen metabolism',
-        essential: 'Xymogen · DIMension 3', premium: 'Xymogen · DIMension 3',
+        brand: 'Xymogen · DIMension 3', product: 'DIMension 3',
         about: 'A compound found in broccoli and other cruciferous vegetables, taken to support the way the body processes estrogen.'
       }
     };
@@ -1103,7 +1131,6 @@
     // ── State ──
     const answers = {};
     let idx = 0;
-    let formula = 'premium';
     let finished = false;
 
     const stage = document.getElementById('quiz-stage');
@@ -1234,54 +1261,39 @@
     });
 
     /* ── Results ─────────────────────────────────────────────────────────────
-       The patient chooses which of these they actually want, here rather than in
-       the WholeScripts cart: deleting items at checkout would mean the pharmacist
-       already spent time recommending things nobody wanted. Everything starts
-       selected; unchecking is how they say "not this one". There is deliberately
-       no way to add a supplement the quiz did not recommend — that would route
-       around the DIM safety gate in RULES. */
+       The plan is display-only: the patient registers on WholeScripts under our
+       pharmacy and orders each product themselves, so there is nothing to submit
+       here. The quiz never lists a supplement it did not recommend — that would
+       route around the DIM safety gate in RULES. */
     let recommended = [];          // keys the engine returned, in ORDER
     let reasons = {};              // key → matched reason strings
-    let selected = new Set();      // keys the patient is keeping
     const expanded = new Set();    // keys whose "What is this?" panel is open
-    let sending = false;
 
     const CHEVRON = '<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>';
+    const CHECK_ICON = '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+    // Arrow-out-of-box: marks links that leave the site for WholeScripts.
+    const EXT_ICON = '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>';
+    const CHECK_SM = '<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+    const COPY_ICON = '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25"/></svg>';
+    function valChip(t) { return '<span class="rx-val">' + CHECK_SM + t + '</span>'; }
 
-    // DIM is Xymogen in both tiers, so the tier toggle doesn't move it.
+    // Single Xymogen formula — the card brand is just the catalog brand.
     function brandFor(key) {
-      const s = SUPPS[key];
-      return key === 'dim' ? s.essential : s[formula];
+      return SUPPS[key].brand;
     }
 
     function suppRow(key) {
       const s = SUPPS[key];
       const why = reasonSentence(reasons[key] || [FALLBACK_REASON]);
-
-      // Once the handoff is sent the choice is made: the cards go static and only
-      // what was actually sent is listed.
-      if (handoffSent) {
-        return '<div class="rx-card is-on rx-sent" style="cursor:default;">' +
-          '<span class="rx-icon"><svg width="17" height="17" fill="none" stroke="var(--green-dk)" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></span>' +
-          '<span style="flex:1; min-width:0;">' +
-            '<span class="rx-name">' + s.name + '</span>' +
-            '<span class="rx-brand">' + brandFor(key) + '</span>' +
-            '<span class="rx-why" style="display:block; margin-left:0;">' + why + '</span>' +
-          '</span>' +
-        '</div>';
-      }
-
-      const on = selected.has(key);
       const open = expanded.has(key);
-      return '<div class="rx-card ' + (on ? 'is-on' : 'is-off') + '" data-key="' + key + '">' +
+      return '<div class="rx-card is-on rx-static" data-key="' + key + '">' +
         '<div class="rx-head">' +
-          '<input type="checkbox" class="rx-check" id="rx-' + key + '"' + (on ? ' checked' : '') +
-            ' aria-describedby="rx-why-' + key + '">' +
-          '<label class="rx-main" for="rx-' + key + '">' +
+          '<span class="rx-mark">' + checkSvg() + '</span>' +
+          '<span class="rx-main">' +
             '<span class="rx-name">' + s.name + '</span>' +
             '<span class="rx-brand">' + brandFor(key) + '</span>' +
-          '</label>' +
-          '<span class="rx-state">' + (on ? 'Included' : 'Skipped') + '</span>' +
+          '</span>' +
+          '<span class="rx-state">In your plan</span>' +
         '</div>' +
         '<p class="rx-why" id="rx-why-' + key + '">' + why + '</p>' +
         '<div class="rx-about">' +
@@ -1290,460 +1302,84 @@
           '</button>' +
           '<div class="rx-about-panel" id="rx-about-' + key + '"' + (open ? '' : ' hidden') + '>' + s.about + '</div>' +
         '</div>' +
-      '</div>';
-    }
-
-    function submitLabel() {
-      const n = selected.size;
-      return n === 0
-        ? 'Send my plan to the pharmacist'
-        : 'Send my ' + n + ' supplement' + (n === 1 ? '' : 's') + ' to the pharmacist';
-    }
-
-    function applySelection(key, card, on) {
-      if (on) selected.add(key); else selected.delete(key);
-      card.classList.toggle('is-on', on);
-      card.classList.toggle('is-off', !on);
-      const state = card.querySelector('.rx-state');
-      if (state) state.textContent = on ? 'Included' : 'Skipped';
-      updateSelectionUI();
-    }
-
-    // Heading, submit button, and the empty-selection hint all read off the same
-    // count, so they can never disagree.
-    function updateSelectionUI() {
-      const n = selected.size;
-      const total = recommended.length;
-
-      const title = document.getElementById('rx-title');
-      if (title) {
-        title.textContent = n === 0 ? 'Nothing selected yet'
-          : n === total ? total + ' supplement' + (total === 1 ? '' : 's') + ', chosen for you'
-          : n + ' of ' + total + ' supplements in your plan';
-      }
-
-      if (sending) return;
-      const submit = document.getElementById('ws-submit');
-      if (submit) {
-        submit.disabled = n === 0;
-        submit.textContent = submitLabel();
-      }
-      const status = document.getElementById('ws-status');
-      if (status) {
-        if (n === 0) {
-          status.removeAttribute('data-tone');
-          status.setAttribute('data-hint', '1');
-          status.textContent = 'Choose at least one to continue.';
-        } else if (status.hasAttribute('data-hint')) {
-          status.removeAttribute('data-hint');
-          status.textContent = '';
-        }
-      }
-    }
-
-    /* ── Pharmacist handoff ──────────────────────────────────────────────
-       WholeScripts lets the pharmacy send a recommendation straight to a
-       patient's email even when that patient has no account yet — the products
-       arrive already attached and the account gets created during checkout.
-       So the job here is to hand the pharmacist a ready-to-send intake, not to
-       push the patient at a registration page they'd land on cold. */
-
-    const CHECK_ICON = '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
-
-    let resultsRenderedAt = 0;
-    let handoffSent = null;   // { name, email } once submitted
-    let handoffDraft = { name: '', phone: '', email: '', note: '', consent: false };
-
-    // The formula toggle re-renders the whole results body, so anything already
-    // typed has to survive the round trip.
-    function captureDraft() {
-      const form = document.getElementById('ws-form');
-      if (!form) return;
-      handoffDraft = {
-        name: form.querySelector('#ws-name').value,
-        phone: form.querySelector('#ws-phone').value,
-        email: form.querySelector('#ws-email').value,
-        note: form.querySelector('#ws-note').value,
-        consent: form.querySelector('#ws-consent').checked
-      };
-    }
-
-    function esc(str) {
-      return String(str).replace(/[&<>"']/g, c => (
-        { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
-      ));
-    }
-
-    /* ── Field rules ─────────────────────────────────────────────────────────
-       ⚠️ Mirrored in quiz-lead.php (checkName / checkEmail / checkPhone /
-       checkNote) and in serve.mjs's dev shim. The browser copy exists so people
-       get told about a typo while they can still see the field; the PHP copy is
-       the one that actually decides. Change a rule in one place, change all three.
-
-       Each check returns { ok, value, error } — `value` is the normalized form
-       that gets sent, so the pharmacist reads "(561) 200-4245" no matter how it
-       was typed or autofilled. */
-    const NAME_MAX = 60, EMAIL_MAX = 180, NOTE_MAX = 2000;
-    const LINK_RE = /(https?:\/\/|www\.)/i;
-    const ok = (value) => ({ ok: true, value: value, error: '' });
-    const bad = (error) => ({ ok: false, value: '', error: error });
-
-    function checkName(raw) {
-      const v = String(raw).replace(/\s+/g, ' ').trim();
-      if (!v) return bad('Please enter your first and last name.');
-      if (v.length > NAME_MAX) return bad('Please use 60 characters or fewer.');
-      if (/\d/.test(v)) return bad("Names can't contain numbers.");
-      if (LINK_RE.test(v)) return bad('Please enter your name, not a web address.');
-      if (!/^[\p{L}][\p{L}'’.\-\s]*$/u.test(v)) return bad('Letters, hyphens and apostrophes only.');
-      if (v.split(' ').filter(w => /\p{L}/u.test(w)).length < 2) return bad('Please enter your first and last name.');
-      return ok(v);
-    }
-
-    // Autofill hands us anything from "+1 (561) 200-4245" to "15612004245".
-    function phoneDigits(raw) {
-      let d = String(raw).replace(/\D/g, '');
-      if (d.length === 11 && d.charAt(0) === '1') d = d.slice(1);   // country code
-      return d.slice(0, 10);
-    }
-    function phoneFormat(d) {
-      if (d.length <= 3) return d;
-      if (d.length <= 6) return '(' + d.slice(0, 3) + ') ' + d.slice(3);
-      return '(' + d.slice(0, 3) + ') ' + d.slice(3, 6) + '-' + d.slice(6);
-    }
-    function checkPhone(raw) {
-      const d = phoneDigits(raw);
-      if (!d) return bad('Please enter your phone number.');
-      if (d.length < 10) return bad('We need all 10 digits.');
-      // North American numbering: area code and exchange both start 2–9.
-      if (!/^[2-9]\d{2}[2-9]\d{6}$/.test(d)) return bad("Check the area code — that isn't a US number.");
-      return ok(phoneFormat(d));
-    }
-
-    const EMAIL_RE = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,24}$/;
-    // Only unambiguous misspellings of the big providers — a real domain must
-    // never land in here, because we block on a match rather than just nudging.
-    const DOMAIN_TYPOS = {
-      'gmial.com': 'gmail.com', 'gmai.com': 'gmail.com', 'gnail.com': 'gmail.com',
-      'gmail.co': 'gmail.com', 'hotmial.com': 'hotmail.com', 'hotmai.com': 'hotmail.com',
-      'yaho.com': 'yahoo.com', 'yahooo.com': 'yahoo.com', 'outlok.com': 'outlook.com',
-      'iclould.com': 'icloud.com', 'icoud.com': 'icloud.com'
-    };
-    const TLD_TYPOS = { con: 'com', cmo: 'com', ocm: 'com', comm: 'com', xom: 'com', vom: 'com', met: 'net', ner: 'net', ogr: 'org' };
-
-    function checkEmail(raw) {
-      const v = String(raw).trim();
-      if (!v) return bad('Please enter your email address.');
-      if (v.length > EMAIL_MAX) return bad('That email address is too long.');
-      if (v.indexOf('..') !== -1 || !EMAIL_RE.test(v)) return bad('Please enter a valid email, like name@example.com.');
-      const at = v.lastIndexOf('@');
-      const local = v.slice(0, at);
-      const domain = v.slice(at + 1).toLowerCase();
-      if (local.charAt(0) === '.' || local.charAt(local.length - 1) === '.') {
-        return bad('Please enter a valid email, like name@example.com.');
-      }
-      if (DOMAIN_TYPOS[domain]) return bad('Did you mean ' + local + '@' + DOMAIN_TYPOS[domain] + '?');
-      const dot = domain.lastIndexOf('.');
-      const tld = domain.slice(dot + 1);
-      if (TLD_TYPOS[tld]) return bad('Did you mean ' + local + '@' + domain.slice(0, dot + 1) + TLD_TYPOS[tld] + '?');
-      // The domain is lowercased; the local part is left alone, since technically
-      // it is case-sensitive and not ours to rewrite.
-      return ok(local + '@' + domain);
-    }
-
-    function checkNote(raw) {
-      const v = String(raw).replace(/[ \t]+/g, ' ').trim();
-      if (v.length > NOTE_MAX) return bad('Please keep this under 2,000 characters.');
-      if (LINK_RE.test(v)) return bad('Please leave web links out of your note.');
-      return ok(v);
-    }
-
-    const FIELD_CHECKS = { name: checkName, phone: checkPhone, email: checkEmail, note: checkNote };
-
-    function handoffMarkup() {
-      if (handoffSent) return handoffDoneMarkup(handoffSent.name, handoffSent.email);
-      const d = handoffDraft;
-      return '<div class="ws-join" id="ws-handoff">' +
-        '<p class="ws-join-eyebrow">' + CHECK_ICON + 'Free with your plan</p>' +
-        '<h4 class="ws-join-title">Let our pharmacist set this up for you</h4>' +
-        '<p class="ws-join-body">Send us your plan and a pharmacist reviews it against your hormone therapy and prescriptions, sets your doses, and loads it into your WholeScripts cart. You get one email &mdash; open it, create your free account, and check out. Nothing to search for.</p>' +
-
-        '<form class="ws-form" id="ws-form" novalidate>' +
-          '<div class="ws-grid">' +
-            '<div>' +
-              '<label class="ws-label" for="ws-name">Full name</label>' +
-              '<input class="ws-input" id="ws-name" type="text" autocomplete="name" autocapitalize="words" spellcheck="false" maxlength="60" aria-describedby="ws-err-name" value="' + esc(d.name) + '" required>' +
-              '<p class="ws-error" id="ws-err-name" role="alert"></p>' +
-            '</div>' +
-            '<div>' +
-              '<label class="ws-label" for="ws-phone">Phone</label>' +
-              // maxlength has to leave room for "+1 (561) 200-4245" as typed or pasted;
-              // the country code is only strippable once all 11 digits are there.
-              '<input class="ws-input" id="ws-phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" placeholder="(561) 200-4245" aria-describedby="ws-err-phone" value="' + esc(d.phone) + '" required>' +
-              '<p class="ws-error" id="ws-err-phone" role="alert"></p>' +
-            '</div>' +
-            '<div class="ws-field-wide">' +
-              '<label class="ws-label" for="ws-email">Email</label>' +
-              '<input class="ws-input" id="ws-email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" maxlength="180" aria-describedby="ws-err-email" value="' + esc(d.email) + '" required>' +
-              '<p class="ws-error" id="ws-err-email" role="alert"></p>' +
-            '</div>' +
-            '<div class="ws-field-wide">' +
-              '<label class="ws-label" for="ws-note">Anything else we should know? <span style="font-weight:500;color:var(--gray-600);">(optional)</span></label>' +
-              '<textarea class="ws-textarea" id="ws-note" maxlength="2000" aria-describedby="ws-err-note" placeholder="Medications, allergies, or a question">' + esc(d.note) + '</textarea>' +
-              '<p class="ws-error" id="ws-err-note" role="alert"></p>' +
-            '</div>' +
-          '</div>' +
-
-          // Honeypot. Real people leave this empty.
-          '<div class="ws-hp" aria-hidden="true">' +
-            '<label for="ws-company">Company</label>' +
-            '<input id="ws-company" type="text" tabindex="-1" autocomplete="off">' +
-          '</div>' +
-
-          '<label class="ws-consent" for="ws-consent">' +
-            '<input type="checkbox" id="ws-consent"' + (d.consent ? ' checked' : '') + '>' +
-            '<span>I agree to share my quiz answers with My Best Pharmacy so a pharmacist can prepare my plan.</span>' +
-          '</label>' +
-
-          '<div class="ws-submit-row">' +
-            '<button type="submit" class="btn-green" id="ws-submit"' + (selected.size ? '' : ' disabled') + '>' + submitLabel() + '</button>' +
-            '<span class="ws-join-note">Or call <a href="tel:5612004245">(561) 200-4245</a></span>' +
-          '</div>' +
-          '<p class="ws-status" id="ws-status" role="status" aria-live="polite"></p>' +
-        '</form>' +
-
-        '<p class="ws-alt">Prefer to do it yourself? <a href="' + WS_REGISTER + '" target="_blank" rel="noopener noreferrer">Create a WholeScripts account</a>. Already have one? <a href="tel:5612004245">Call us</a> and we&rsquo;ll link it to the pharmacy.</p>' +
-      '</div>';
-    }
-
-    // Answers as the patient read them, so the intake email needs no decoding.
-    function answersForSubmission() {
-      const out = [];
-      QUESTIONS.forEach(q => {
-        const raw = answers[q.id];
-        if (raw === undefined || raw === null) return;
-        const picked = Array.isArray(raw) ? raw : [raw];
-        const labels = picked
-          .map(v => (q.options.find(o => o.value === v) || {}).label)
-          .filter(Boolean);
-        if (labels.length) out.push({ question: q.title, answer: labels.join(', ') });
-      });
-      return out;
-    }
-
-    // Same brand-resolution rule as suppRow, so the email matches what was on screen.
-    function planItem(key) {
-      const s = SUPPS[key];
-      return { key: key, name: s.name, supports: s.supports, brand: brandFor(key) };
-    }
-
-    function planForSubmission() {
-      return recommended.filter(k => selected.has(k)).map(planItem);
-    }
-
-    // What we suggested and they passed on. Useful clinical context for the
-    // pharmacist, and a natural thing to ask about on the call.
-    function declinedForSubmission() {
-      return recommended.filter(k => !selected.has(k)).map(planItem);
-    }
-
-    function handoffDoneMarkup(name, email) {
-      const first = esc(String(name).trim().split(' ')[0] || 'you');
-      const steps = [
-        ['A pharmacist reviews your plan', 'We check it against your hormone therapy, prescriptions, and anything else you take, then set your doses.'],
-        ['WholeScripts emails you', 'The subject line reads <strong>My Best Pharmacy sent you a recommendation</strong>. That one is from us.'],
-        ['Open it and check out', 'Your supplements are already in the cart. Create your free account right there and order.']
-      ];
-      return '<div class="ws-join" id="ws-handoff">' +
-        '<p class="ws-join-eyebrow">' + CHECK_ICON + 'Sent</p>' +
-        '<h4 class="ws-join-title">You&rsquo;re set, ' + first + '. Watch your inbox.</h4>' +
-        '<p class="ws-join-body">Your plan is on its way to <strong>' + esc(email) + '</strong>, and our pharmacist has your answers. Here&rsquo;s what happens from here.</p>' +
-        '<ol class="ws-steps">' +
-          steps.map((s, i) =>
-            '<li class="ws-step">' +
-              '<span class="ws-step-num">' + (i + 1) + '</span>' +
-              '<span><span class="ws-step-title">' + s[0] + '</span>' +
-              '<span class="ws-step-body" style="display:block;">' + s[1] + '</span></span>' +
-            '</li>'
-          ).join('') +
-        '</ol>' +
-        // Same optional head start the email offers — kept identical so the patient
-        // isn't told two different things.
-        '<div class="ws-headstart">' +
-          '<p class="ws-headstart-title">Want to get a head start?</p>' +
-          '<p class="ws-headstart-body">Create your free WholeScripts account through our pharmacy now &mdash; it takes about a minute, and your recommendation will be waiting in it. You don&rsquo;t have to do this first; the email works on its own.</p>' +
-          '<a class="btn-green" href="' + WS_REGISTER + '" target="_blank" rel="noopener noreferrer">Create my free account' +
-            '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg></a>' +
+        '<div class="rx-buy">' +
+          '<span class="rx-buy-label">Search WholeScripts for</span>' +
+          '<span class="rx-buy-term">' + s.product + '</span>' +
+          '<button type="button" class="rx-buy-btn rx-copy" data-copy="' + s.product + '">' + COPY_ICON + '<span class="rx-copy-label">Copy name</span></button>' +
         '</div>' +
-        '<p class="ws-alt">Questions, or want to order over the phone instead? Call <a href="tel:5612004245">(561) 200-4245</a>.</p>' +
       '</div>';
     }
 
-    // Full re-render, not just the card: the per-supplement buy buttons have to
-    // come out too, and handoffMarkup() already switches to the confirmation.
-    function renderHandoffDone() {
-      renderResultsBody();
-      const heading = document.querySelector('#ws-handoff .ws-join-title');
-      if (heading) {
-        heading.setAttribute('tabindex', '-1');
-        heading.focus({ preventScroll: true });
-        heading.scrollIntoView({ block: 'center' });
-      }
+    // Display-only plan -> self-serve purchase. The patient registers under our
+    // pharmacy on WholeScripts, then orders each product themselves; no cart is
+    // built on our end.
+    function wsCalloutMarkup() {
+      const steps = [
+        ['Create your free account',
+         'Click the green button below. It opens <strong>WholeScripts</strong> already linked to My Best Pharmacy &mdash; just enter your name, email, and a password. It&rsquo;s free, and there&rsquo;s no membership fee.'],
+        ['Add your supplements to the cart',
+         'Once you&rsquo;re signed in, type a product name from your plan above into the WholeScripts search box &mdash; tap <strong>Copy name</strong> on any card to grab it. Open the product and click <strong>Add to Cart</strong>. Do that for each one on your list.'],
+        ['Check out &mdash; then reorder anytime',
+         'Click the cart in the top corner and press <strong>Check Out</strong>. You pay WholeScripts directly, only for what you added. Running low next month? Sign back in and reorder &mdash; nothing charges you automatically.']
+      ];
+      return '<div class="ws-join" id="ws-callout">' +
+        '<p class="ws-join-eyebrow">' + CHECK_ICON + 'How to order &middot; about 5 minutes</p>' +
+        '<h4 class="ws-join-title">Get your plan in 3 simple steps</h4>' +
+        '<p class="ws-join-body">WholeScripts is the online dispensary we order practitioner-grade supplements through &mdash; the kind not sold in stores. You buy through it under our pharmacy, so our pharmacists can review your plan. No subscription: order a month at a time and pay only for what you add.</p>' +
+        '<ol class="ws-steps ws-steps-lg">' +
+          steps.map(function (s, i) {
+            // Green deepens step to step; each tile gets a matching soft wash.
+            var accent = ['var(--green)', 'var(--green-dk)', 'var(--blue-lt)'][i];
+            var tint = ['rgba(106,191,75,0.09)', 'rgba(78,144,53,0.10)', 'rgba(34,110,50,0.09)'][i];
+            return '<li class="ws-step" style="border-left-color:' + accent + '; background:' + tint + ';">' +
+              '<span class="ws-step-num" style="background:' + accent + ';">' + (i + 1) + '</span>' +
+              '<span class="ws-step-main"><span class="ws-step-title">' + s[0] + '</span>' +
+              '<span class="ws-step-body">' + s[1] + '</span>' +
+              (i === 0
+                ? '<a class="btn-green ws-step-cta" href="' + WS_REGISTER + '" target="_blank" rel="noopener noreferrer">Create my free account' + EXT_ICON + '</a>' +
+                  '<span class="ws-join-note">Opens WholeScripts &middot; free &middot; about a minute</span>'
+                : '') +
+              '</span>' +
+            '</li>';
+          }).join('') +
+        '</ol>' +
+        '<p class="ws-alt"><strong>Want us to do it with you?</strong> Call <a href="tel:5612004245">(561) 200-4245</a> and a pharmacist will set it up over the phone, step by step. Already have a WholeScripts account? We&rsquo;ll link it to the pharmacy.</p>' +
+      '</div>';
     }
 
-    function wireHandoff() {
-      const form = document.getElementById('ws-form');
-      if (!form) return;
-
-      const status = form.querySelector('#ws-status');
-      const submit = form.querySelector('#ws-submit');
-      const fields = {
-        name: form.querySelector('#ws-name'),
-        phone: form.querySelector('#ws-phone'),
-        email: form.querySelector('#ws-email'),
-        note: form.querySelector('#ws-note'),
-        consent: form.querySelector('#ws-consent'),
-        company: form.querySelector('#ws-company')
+    // "Copy name" puts the exact product term on the clipboard so the patient can
+    // paste it straight into the WholeScripts search box after signing up.
+    function copyProduct(btn) {
+      const text = btn.getAttribute('data-copy');
+      const label = btn.querySelector('.rx-copy-label');
+      const done = () => {
+        btn.classList.add('is-copied');
+        if (label) label.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('is-copied');
+          if (label) label.textContent = 'Copy name';
+        }, 1600);
       };
-
-      // Field-level messages sit under the field they belong to; the status line
-      // under the button is for whole-form problems (nothing selected, send failed).
-      const errorSlots = {
-        name: form.querySelector('#ws-err-name'),
-        phone: form.querySelector('#ws-err-phone'),
-        email: form.querySelector('#ws-err-email'),
-        note: form.querySelector('#ws-err-note')
-      };
-
-      function setFieldError(key, message) {
-        const input = fields[key];
-        errorSlots[key].textContent = message;
-        if (message) input.setAttribute('aria-invalid', 'true');
-        else input.removeAttribute('aria-invalid');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+      } else {
+        fallbackCopy(text, done);
       }
-
-      /** Validate one field and normalize it in place. Returns the check result. */
-      function validateField(key, { normalize = true } = {}) {
-        const input = fields[key];
-        // The note is optional: an empty one is fine, a filled-in one still has rules.
-        if (key === 'note' && input.value.trim() === '') { setFieldError('note', ''); return ok(''); }
-        const result = FIELD_CHECKS[key](input.value);
-        setFieldError(key, result.error);
-        if (result.ok && normalize && result.value !== input.value) {
-          input.value = result.value;
-          captureDraft();
-        }
-        return result;
-      }
-
-      ['name', 'phone', 'email', 'note'].forEach(k => {
-        fields[k].addEventListener('input', () => {
-          setFieldError(k, '');          // stop scolding while they are fixing it
-          captureDraft();
-        });
-        // Checked on the way out of the field, not on every keystroke — nobody
-        // wants "that isn't a valid email" after typing the first letter.
-        fields[k].addEventListener('blur', () => {
-          if (fields[k].value.trim() !== '') validateField(k);
-        });
-      });
-
-      // Reformat as they type, so what they see is what the pharmacist will read.
-      fields.phone.addEventListener('input', () => {
-        const digits = phoneDigits(fields.phone.value);
-        const cursorAtEnd = fields.phone.selectionStart === fields.phone.value.length;
-        const formatted = phoneFormat(digits);
-        if (formatted !== fields.phone.value) {
-          fields.phone.value = formatted;
-          if (cursorAtEnd) fields.phone.setSelectionRange(formatted.length, formatted.length);
-          captureDraft();
-        }
-      });
-
-      fields.consent.addEventListener('change', () => {
-        captureDraft();
-        if (fields.consent.checked && status.getAttribute('data-tone') === 'error') {
-          status.removeAttribute('data-tone');
-          status.textContent = '';
-        }
-      });
-
-      function showError(message, focusField) {
-        status.removeAttribute('data-hint');
-        status.setAttribute('data-tone', 'error');
-        status.textContent = message;
-        if (focusField) focusField.focus();
-      }
-
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        status.removeAttribute('data-tone');
-        status.removeAttribute('data-hint');
-        status.textContent = '';
-
-        if (selected.size === 0) return showError('Choose at least one supplement to send.');
-
-        // Validate every field before reporting, so one pass surfaces every problem.
-        const results = {};
-        ['name', 'phone', 'email', 'note'].forEach(k => { results[k] = validateField(k); });
-        const firstBad = ['name', 'phone', 'email', 'note'].find(k => !results[k].ok);
-        if (firstBad) {
-          fields[firstBad].focus();
-          return showError('Please fix the highlighted field' +
-            (Object.keys(results).filter(k => !results[k].ok).length > 1 ? 's' : '') + ' above.');
-        }
-        if (!fields.consent.checked) return showError('Please agree to share your answers so our pharmacist can prepare your plan.', fields.consent);
-
-        const name = results.name.value;
-        const phone = results.phone.value;
-        const email = results.email.value;
-
-        const label = submit.innerHTML;
-        sending = true;
-        submit.disabled = true;
-        submit.innerHTML = '<span class="ws-spin"></span>Sending';
-
-        try {
-          const res = await fetch('/quiz-lead.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              name: name,
-              phone: phone,
-              email: email,
-              note: results.note.value,
-              company: fields.company.value,
-              consent: true,
-              tier: formula,
-              plan: planForSubmission(),
-              declined: declinedForSubmission(),
-              answers: answersForSubmission(),
-              elapsedMs: Date.now() - resultsRenderedAt
-            })
-          });
-          const data = await res.json().catch(() => ({}));
-          if (!res.ok || !data.ok) throw new Error(data.error || 'We could not send that through. Please call us at (561) 200-4245.');
-
-          sending = false;
-          handoffSent = { name: name, email: email };
-          renderHandoffDone();
-        } catch (err) {
-          sending = false;
-          submit.disabled = false;
-          submit.innerHTML = label;
-          showError(err.message || 'We could not send that through. Please call us at (561) 200-4245.');
-        }
-      });
+    }
+    function fallbackCopy(text, done) {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', '');
+      ta.style.position = 'absolute'; ta.style.left = '-9999px';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); } catch (e) {}
+      document.body.removeChild(ta);
     }
 
     function renderResultsBody() {
       recommended = recommend(answers);
       reasons = evaluate(answers);
-      // Drop anything no longer recommended (they went back and changed an answer).
-      selected = new Set(recommended.filter(k => selected.has(k)));
-
-      const shown = handoffSent ? recommended.filter(k => selected.has(k)) : recommended;
       const count = recommended.length;
-      const rows = shown.map(suppRow).join('');
+      const rows = recommended.map(suppRow).join('');
 
       stage.innerHTML =
         '<div style="text-align:center; margin-bottom:24px;">' +
@@ -1752,33 +1388,20 @@
             '<span style="color:var(--green-dk); font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;">Your personalized plan</span>' +
           '</div>' +
           '<h3 class="quiz-q-title" id="rx-title">' + count + ' supplement' + (count === 1 ? '' : 's') + ', chosen for you</h3>' +
-          '<p class="quiz-q-sub rx-lede">' + (handoffSent
-            ? 'This is what went to our pharmacist.'
-            : 'Each one is here for a reason from your own answers. Uncheck anything you&rsquo;d rather skip &mdash; we only send what you keep, and you can still change your mind at checkout.') +
-          '</p>' +
+          '<p class="quiz-q-sub rx-lede">Every one was chosen from your own answers &mdash; practitioner-grade, and reviewed by our pharmacists. Below your plan, we&rsquo;ll show you exactly how to order it &mdash; a month at a time, no subscription.</p>' +
         '</div>' +
 
-        // Formula toggle
-        '<div style="display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:22px;">' +
-          '<span style="font-size:13px; font-weight:600; color:var(--gray-700);">Formula quality</span>' +
-          '<div class="formula-toggle" role="tablist">' +
-            '<button class="formula-btn' + (formula === 'essential' ? ' active' : '') + '" data-formula="essential">Essential</button>' +
-            '<button class="formula-btn' + (formula === 'premium' ? ' active' : '') + '" data-formula="premium">Premium</button>' +
-          '</div>' +
+        // Value chips — the promise, scannable before the details.
+        '<div class="rx-vals">' +
+          valChip('Practitioner-grade') + valChip('Pharmacist-reviewed') +
+          valChip('No subscription') + valChip('Free to set up') +
         '</div>' +
 
         // Supplement list
         '<div style="display:flex; flex-direction:column; gap:12px;">' + rows + '</div>' +
 
-        // Pharmacist handoff — the primary path from plan to purchase.
-        handoffMarkup() +
-
-        // Pricing panel (placeholder)
-        '<div style="margin-top:22px; padding:20px; border-radius:16px; background:linear-gradient(135deg, rgba(27,82,38,0.05), rgba(106,191,75,0.06)); border:1px solid var(--gray-100);">' +
-          '<p style="font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray-600);">Monthly Price</p>' +
-          '<p style="font-family:\'Cormorant Garamond\',serif; font-size:1.6rem; font-weight:700; color:var(--blue); line-height:1.2; margin-top:2px;">Confirmed at your consultation</p>' +
-          '<p style="font-size:13px; color:var(--gray-700); margin-top:4px;">Delivery included · pricing finalized when you enroll.</p>' +
-        '</div>' +
+        // How to order — the path from plan to purchase.
+        wsCalloutMarkup() +
 
         // Reassurance
         '<p style="display:flex; align-items:flex-start; gap:8px; margin-top:18px; color:var(--gray-600); font-size:13px; line-height:1.6;">' +
@@ -1786,60 +1409,33 @@
           'These are supplement suggestions based on your answers, not medical advice. Always consult your physician for guidance specific to your health needs.' +
         '</p>';
 
-      if (!resultsRenderedAt) resultsRenderedAt = Date.now();
-
-      // toggle handlers
-      stage.querySelectorAll('.formula-btn').forEach(b => {
-        b.addEventListener('click', () => {
-          captureDraft();                 // survive the re-render
-          formula = b.getAttribute('data-formula');
-          renderResultsBody();
-        });
-      });
-
-      // Selection. The whole card is a target, but the real checkbox and its
-      // label handle their own clicks natively — reacting to those again would
-      // toggle twice. The disclosure is carved out entirely.
+      // Cards are display-only: the "What is this?" disclosure and a "Copy name"
+      // helper that puts the exact search term on the clipboard.
       stage.querySelectorAll('.rx-card[data-key]').forEach(card => {
         const key = card.getAttribute('data-key');
-        const input = card.querySelector('.rx-check');
-        if (!input) return;
-
-        card.addEventListener('click', (e) => {
-          if (e.target.closest('.rx-about')) return;
-          if (e.target === input || e.target.closest('.rx-main')) return;
-          input.checked = !input.checked;
-          applySelection(key, card, input.checked);
-        });
-        input.addEventListener('change', () => applySelection(key, card, input.checked));
-
         const btn = card.querySelector('.rx-about-btn');
         const panel = card.querySelector('.rx-about-panel');
-        btn.addEventListener('click', () => {
-          const open = btn.getAttribute('aria-expanded') === 'true';
-          btn.setAttribute('aria-expanded', String(!open));
-          panel.hidden = open;
-          if (open) expanded.delete(key); else expanded.add(key);
-        });
+        if (btn && panel) {
+          btn.addEventListener('click', () => {
+            const open = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', String(!open));
+            panel.hidden = open;
+            if (open) expanded.delete(key); else expanded.add(key);
+          });
+        }
+        const copyBtn = card.querySelector('.rx-copy');
+        if (copyBtn) copyBtn.addEventListener('click', () => copyProduct(copyBtn));
       });
-
-      wireHandoff();
-      updateSelectionUI();
     }
-
-    /* REMOVED: the per-supplement "Buy on WholeScripts" buttons and their modal.
-       They fought with tap-to-select on the same card, and the handoff form plus
-       the "head start" button already cover both signing up and calling. */
 
     function showResults() {
       finished = true;
       fill.style.width = '100%';
       stepLabel.textContent = 'Your Results';
       stepCount.textContent = 'Complete';
-      // Entering the results starts everything selected. Re-entering after an
-      // edited answer starts fresh too, so a stale skip can't carry over.
+      // Recompute from the current answers, so a re-entry after an edited answer
+      // reflects the latest plan.
       recommended = recommend(answers);
-      selected = new Set(recommended);
       expanded.clear();
       renderResultsBody();
 
@@ -1849,17 +1445,15 @@
           '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Retake quiz</button>' +
         '<div class="mob-ctas" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end;">' +
           '<a href="/contact" class="btn-quiet">Message us</a>' +
-          '<a href="tel:5612004245" class="btn-green">Enroll — Call (561) 200-4245</a>' +
+          '<a href="tel:5612004245" class="btn-green">Questions? Call (561) 200-4245</a>' +
         '</div>';
       footer.style.flexWrap = 'wrap';
     }
 
     function resetQuiz() {
       for (const k in answers) delete answers[k];
-      idx = 0; finished = false; formula = 'premium';
-      resultsRenderedAt = 0; handoffSent = null; sending = false;
-      recommended = []; reasons = {}; selected = new Set(); expanded.clear();
-      handoffDraft = { name: '', phone: '', email: '', note: '', consent: false };
+      idx = 0; finished = false;
+      recommended = []; reasons = {}; expanded.clear();
       footer.innerHTML =
         '<button class="btn-quiet" id="quiz-back">' +
           '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back</button>' +

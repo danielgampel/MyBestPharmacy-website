@@ -64,6 +64,17 @@ A **6-page static informational website** for **My Best Pharmacy**, a full-servi
 
 ## Wellness Quiz → WholeScripts Handoff (`wellness.html` + `quiz-lead.php`)
 
+> **Status (Jul 21 2026): the email handoff is DORMANT — reverted off the live page.** Dad found the
+> pharmacist-emails-a-cart flow too manual, so `wellness.html` was reverted to the earlier **self-serve
+> WholeScripts** experience: the results page shows a display-only plan (single Xymogen formula, no
+> Essential tier, no checkboxes), each card names the exact WholeScripts product to search + a "Search
+> on WholeScripts" button, and a "Join our pharmacy on WholeScripts" callout gives the register-then-
+> order-it-yourself steps. The whole page also pivoted to a **no-subscription** message (order a month
+> at a time; no auto-refill/auto-billing/"delivery included"). **The email code is intentionally kept,
+> not deleted:** `quiz-lead.php`, the `serve.mjs` shim, and `email previews/` are untouched and the
+> full form implementation is in git history (commit `cc63293`) if we ever re-enable it. Everything
+> below describes that dormant email flow.
+
 Added Jul 2026. The quiz used to end by sending patients to register at WholeScripts cold, which
 dropped them on an unfamiliar catalog with an empty cart. It now hands the pharmacy a ready-to-send
 intake instead.
@@ -189,17 +200,23 @@ Equipment hero/banner photos and the storefront photo live in `website_pics/` (r
 
 ## Known Issues / Todo
 
-- **Wellness handoff, still open:**
-  - ✅ `wellness@mybest-pharmacy.com` exists as a real mailbox (created Jul 21, 2026).
-  - **Confirm with Dad that WholeScripts can send a recommendation to an email address that has no
-    account yet.** Still an assumption taken from CharmHealth/Practice Better documentation rather
-    than his own dashboard. If it's wrong, the "head start" registration button becomes the primary
-    path and step 2 of the patient email needs rewriting.
-  - **Monthly refills are not wired to anything.** The page sells "auto-refilled monthly, billed
-    automatically", but a WholeScripts recommendation is a one-time cart. Someone has to set up
-    autoship, or the core promise of the program silently does not happen.
-  - **Delivery wording conflicts.** The page says delivery is included across South Florida;
-    WholeScripts ships direct and charges its own shipping. Both cannot be true.
+- **Wellness handoff — reverted to self-serve (Jul 21, 2026):** the email handoff is off the live page
+  (see the Status banner in the WholeScripts Handoff section). The three items below are **resolved or
+  moot** now that the site is self-serve, but kept for history:
+  - ✅ `wellness@mybest-pharmacy.com` exists as a real mailbox (created Jul 21, 2026). Now unused by the
+    live page (the email flow is dormant).
+  - ~~Confirm WholeScripts can email a recommendation to an account-less address~~ — **moot on the live
+    page**: patients now register first, then order themselves. Still relevant only if the email flow is
+    ever re-enabled.
+  - ~~Monthly refills / autoship not wired~~ — **resolved by messaging**: the page no longer sells
+    auto-refill; it explicitly says no subscription, order a month at a time.
+  - ~~Delivery-included wording conflict~~ — **fixed**: "delivery included" copy removed; the page now
+    says supplements ship direct from WholeScripts.
+  - **Referral link is the sole WholeScripts entry point.** The only external WholeScripts link on the
+    page is the sign-up button → `WS_REGISTER` (`.../register/mybestpharmacy`). Per-card buttons now
+    **Copy the product name** to the clipboard (no cold search deep-link), so a patient can't register
+    outside the referral and lose the pharmacy connection. The results page spells out sign up → search
+    → add to cart → check out in 3 plain steps, with a "call us and we'll do it with you" fallback.
 - **Accessibility/typography debt (open):** body and pricing-table text is set at 14px (13px on mobile) sitewide — below the 15–16px recommended for the pharmacy's older patient demographic. The lime accent `--green: #6ABF4B` is also used for body text/links on white backgrounds in places, which is roughly 2:1 contrast — below WCAG AA's 4.5:1 for text. `--green-dk: #4E9035` already exists as a darker, higher-contrast alternative but is barely used. Fix: reserve lime for buttons/badges on dark backgrounds; use `--green-dk` (or `--gray-900`) for any green text on light backgrounds; bump body/table text to 15–16px.
 - **Suction Pump Aspirator photo missing** — see Equipment Catalog section above; the sourced file is 0 bytes.
 - **CSS variable drift** — `--blue-md` only defined on 3 of 6 pages (see Design System above).
