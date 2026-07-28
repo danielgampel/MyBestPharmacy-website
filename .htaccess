@@ -7,3 +7,26 @@ RewriteRule ^(.*)$ https://mybest-pharmacy.com/$1 [R=301,L]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.+?)/?$ $1.html [L]
+
+# Caching: pages must never go stale, assets can cache hard.
+# The host defaults every file to max-age=15552000 (180 days). That's right for
+# images but wrong for HTML — it left returning visitors on an old build for
+# months after a deploy, because their browser never re-requested the page.
+<IfModule mod_headers.c>
+  # HTML: always revalidate. The browser still gets a fast 304 when unchanged,
+  # so this costs a round trip, not a re-download.
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+    Header unset Expires
+  </FilesMatch>
+
+  # Assets: keep the long cache. Rename the file when the content changes.
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|woff|woff2|ttf|eot|css|js)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
