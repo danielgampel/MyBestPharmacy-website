@@ -86,6 +86,11 @@
     .btn-ghost-white:hover { border-color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.08); transform: translateY(-1px); }
     .btn-ghost-white:active { transform: translateY(0); }
     .btn-ghost-white:focus-visible { outline: 3px solid #fff; outline-offset: 3px; border-radius: 10px; }
+    /* Secondary action on light ground — the returning-patient path. */
+    .btn-ghost-green { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 30px; background: #fff; color: var(--green-dk); font-family: 'DM Sans',sans-serif; font-weight: 700; font-size: 15px; border-radius: 10px; border: 2px solid rgba(78,144,53,0.45); cursor: pointer; text-decoration: none; transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease; }
+    .btn-ghost-green:hover { border-color: var(--green-dk); background: rgba(106,191,75,0.08); transform: translateY(-1px); }
+    .btn-ghost-green:active { transform: translateY(0); }
+    .btn-ghost-green:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 
     .btn-quiet { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 26px; background: transparent; color: var(--gray-700); font-family: 'DM Sans',sans-serif; font-weight: 500; font-size: 14px; border-radius: 10px; border: 2px solid var(--gray-100); cursor: pointer; transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease; }
     .btn-quiet:hover { border-color: var(--blue); color: var(--blue); }
@@ -118,6 +123,11 @@
     .underline-g-c::after { left: 50%; transform: translateX(-50%); }
 
     /* ── Footer ──────────────────────────────────────── */
+    .footer-logo-card {
+      display: inline-block; background: #fff; padding: 11px 15px;
+      border-radius: 14px; margin-bottom: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.28), 0 2px 6px rgba(0,0,0,0.18);
+    }
     footer a { transition: color 0.2s; }
     footer a:hover { color: var(--green) !important; }
 
@@ -173,8 +183,29 @@
     .opt.selected .opt-check svg { opacity: 1; }
     .opt-label { font-size: 15px; font-weight: 600; color: var(--gray-900); line-height: 1.3; }
 
+    /* Write-in panel for an "Other" option — revealed only once Other is picked. */
+    .opt-other { margin-top: 14px; }
+    .opt-other[hidden] { display: none; }
+    .opt-other-label { display: block; font-size: 13.5px; font-weight: 600; color: var(--gray-700); margin-bottom: 8px; }
+    .opt-other-input {
+      width: 100%; box-sizing: border-box;
+      padding: 15px 17px; border-radius: 14px;
+      border: 2px solid var(--gray-100); background: #fff;
+      font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: var(--gray-900);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .opt-other-input::placeholder { color: var(--gray-600); font-weight: 400; }
+    .opt-other-input:hover { border-color: rgba(106,191,75,0.6); }
+    .opt-other-input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 4px rgba(106,191,75,0.18); }
+
     .quiz-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 4px 30px 30px; }
     .quiz-hint { font-size: 13px; color: var(--gray-600); }
+    .quiz-disclaimer {
+      display: flex; align-items: flex-start; justify-content: center; gap: 9px;
+      max-width: 620px; margin: 22px auto 0; text-align: left;
+      color: rgba(255,255,255,0.66); font-size: 13.5px; line-height: 1.6;
+    }
+    .quiz-disclaimer svg { flex-shrink: 0; margin-top: 3px; color: var(--green); }
 
     /* ── Results: selectable supplement cards ──────────────────────────────
        Same circular-check-plus-card idiom as the quiz's .opt buttons, because
@@ -259,6 +290,13 @@
       font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: var(--blue);
       background: rgba(27,82,38,0.06); padding: 3px 9px; border-radius: 7px;
     }
+    /* A SKU is a long digit string, not a name — tabular figures and a touch of
+       tracking keep it legible, and it wraps rather than blowing out the row. */
+    .rx-buy-term.is-sku {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12.5px; letter-spacing: 0.04em;
+      word-break: break-all; overflow-wrap: anywhere;
+    }
     .rx-buy-btn {
       margin-left: auto; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
       font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700;
@@ -272,6 +310,66 @@
     @media (max-width: 480px) { .rx-buy-btn { margin-left: 0; width: 100%; } }
 
     /* Value chips at the top of the results — the promise, scannable at a glance. */
+    /* ── Results: the protocol headline ──────────────────────────────────────
+       The patient is handed one named thing, so the name leads and its contents
+       sit directly under it. */
+    .rx-proto-head {
+      text-align: center; padding: 26px 22px 24px; margin-bottom: 26px;
+      border-radius: 18px; border: 1px solid rgba(106,191,75,0.32);
+      background: linear-gradient(165deg, rgba(106,191,75,0.10) 0%, rgba(27,82,38,0.05) 100%);
+    }
+    .rx-proto-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px;
+      padding: 6px 14px; border-radius: 100px; background: rgba(255,255,255,0.72);
+      color: var(--green-dk); font-size: 11.5px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .rx-proto-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+    .rx-proto-kicker {
+      margin: 0 0 2px; color: var(--gray-600); font-size: 14.5px; font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+    /* The number is the answer the patient came for — it carries the page. */
+    .rx-proto-num {
+      font-family: 'Cormorant Garamond', serif; font-weight: 700;
+      font-size: clamp(2.7rem, 8.5vw, 4.9rem); line-height: 1.02; letter-spacing: -0.035em;
+      color: var(--gray-900); margin: 0; text-wrap: balance;
+    }
+    .rx-proto-hash { color: var(--green-dk); white-space: nowrap; }
+    .rx-proto-name {
+      font-family: 'DM Sans', sans-serif; font-weight: 700;
+      font-size: clamp(1.05rem, 2.4vw, 1.35rem); line-height: 1.3; letter-spacing: -0.01em;
+      color: var(--gray-900); margin: 12px 0 0;
+    }
+    .rx-proto-sub { color: var(--gray-700); font-size: 14.5px; line-height: 1.6; margin: 9px auto 0; max-width: 470px; }
+    .rx-proto-includes { margin-top: 20px; padding-top: 18px; border-top: 1px dashed rgba(27,82,38,0.18); }
+    .rx-proto-includes-label {
+      display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.13em;
+      text-transform: uppercase; color: var(--gray-600); margin-bottom: 11px;
+    }
+    .rx-proto-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+    .rx-proto-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 13px; border-radius: 100px; background: #fff;
+      border: 1px solid rgba(27,82,38,0.14); box-shadow: 0 1px 3px rgba(27,82,38,0.06);
+      font-size: 13.5px; font-weight: 600; color: var(--gray-900);
+    }
+    .rx-proto-chip svg { color: var(--green); flex-shrink: 0; }
+    .rx-why-heading {
+      font-size: 11.5px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase;
+      color: var(--gray-600); margin: 0 0 13px;
+    }
+
+    /* Not-medical-advice notice — deliberately not a footnote. */
+    .rx-notice {
+      display: flex; align-items: flex-start; gap: 12px; margin-top: 22px;
+      padding: 16px 18px; border-radius: 14px;
+      background: var(--off-white); border: 1px solid var(--gray-100);
+    }
+    .rx-notice-icon { flex-shrink: 0; color: var(--green-dk); margin-top: 1px; }
+    .rx-notice-title { margin: 0 0 4px; font-size: 14px; font-weight: 700; color: var(--gray-900); }
+    .rx-notice-body { margin: 0; font-size: 13px; line-height: 1.65; color: var(--gray-700); }
+
     .rx-vals { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
     .rx-val {
       display: inline-flex; align-items: center; gap: 6px;
@@ -308,6 +406,25 @@
     }
     .ws-join-body { color: var(--gray-700); font-size: 14.5px; line-height: 1.7; }
     .ws-join-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 18px; }
+    /* Protocol path: one prominent action, not a numbered walkthrough. */
+    .ws-protocol-cta { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-top: 20px; }
+    .ws-protocol-cta .btn-green { font-size: 15.5px; padding: 15px 26px; }
+    @media (max-width: 560px) { .ws-protocol-cta { align-self: stretch; } .ws-protocol-cta .btn-green { width: 100%; justify-content: center; } }
+    /* The single action, sitting after the full walkthrough. */
+    .ws-final-cta {
+      display: flex; flex-direction: column; align-items: center; gap: 11px;
+      margin-top: 22px; padding: 22px 20px;
+      border-radius: 16px; border: 1px solid rgba(106,191,75,0.34);
+      background: linear-gradient(165deg, rgba(106,191,75,0.10) 0%, rgba(27,82,38,0.05) 100%);
+      text-align: center;
+    }
+    .ws-final-label {
+      margin: 0; font-size: 11.5px; font-weight: 700; letter-spacing: 0.13em;
+      text-transform: uppercase; color: var(--gray-600);
+    }
+    .ws-final-btn { font-size: 16px; padding: 16px 30px; }
+    .ws-final-divider { width: 100%; max-width: 260px; height: 1px; background: rgba(27,82,38,0.16); margin: 6px 0; }
+    @media (max-width: 560px) { .ws-final-btn { width: 100%; justify-content: center; } }
     .ws-join-note { font-size: 13px; color: var(--gray-600); line-height: 1.6; }
     .ws-join-note a { color: var(--green-dk); font-weight: 600; text-decoration: none; }
     .ws-join-note a:hover { text-decoration: underline; }
@@ -574,7 +691,7 @@
     </h1>
     <!-- Subheadline -->
     <p class="fu fu-3" style="font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: rgba(255,255,255,0.82); line-height: 1.7; max-width: 588px; margin: 0 auto 38px;">
-      Take a 3-minute quiz and get a personalized plan of practitioner-grade supplements, reviewed by our pharmacists. Order just what you need, a month at a time — no subscription, no bulk buys.
+      Take a 1-minute quiz and get a personalized plan of practitioner-grade supplements. Order just what you need, a month at a time — no subscription, no bulk buys.
     </p>
 
     <!-- CTAs -->
@@ -589,7 +706,7 @@
     <!-- Trust row -->
     <div class="fu fu-5 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
       <span style="color: rgba(255,255,255,0.6); font-size: 13px; display: inline-flex; align-items: center; gap: 7px;"><svg width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Personalized to you</span>
-      <span style="color: rgba(255,255,255,0.6); font-size: 13px; display: inline-flex; align-items: center; gap: 7px;"><svg width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Pharmacist-reviewed</span>
+      <span style="color: rgba(255,255,255,0.6); font-size: 13px; display: inline-flex; align-items: center; gap: 7px;"><svg width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Practitioner-grade</span>
       <span style="color: rgba(255,255,255,0.6); font-size: 13px; display: inline-flex; align-items: center; gap: 7px;"><svg width="14" height="14" fill="none" stroke="var(--green)" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>No subscription</span>
     </div>
   </div>
@@ -608,7 +725,7 @@
       <div class="reveal" style="position: relative;">
         <div class="bg-white rounded-2xl p-8 h-full" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
           <span style="font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 700; color: rgba(106,191,75,0.5); line-height: 1;">01</span>
-          <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Take the 3-minute quiz</h3>
+          <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Take the 1-minute quiz</h3>
           <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">Answer a few questions about your body, symptoms, and goals. No account to make, no pressure.</p>
         </div>
       </div>
@@ -617,8 +734,8 @@
       <div class="reveal" style="position: relative;">
         <div class="bg-white rounded-2xl p-8 h-full" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
           <span style="font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 700; color: rgba(106,191,75,0.5); line-height: 1;">02</span>
-          <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Get your pharmacist-reviewed plan</h3>
-          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">See your personalized plan right away — practitioner-grade supplements matched to you, and reviewed by our pharmacists against what you already take.</p>
+          <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Get your personalized plan</h3>
+          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">See your personalized plan right away — practitioner-grade supplements matched to your body, your symptoms, and your goals.</p>
         </div>
       </div>
 
@@ -676,6 +793,13 @@
         </button>
       </div>
     </div>
+
+    <!-- Stated under the quiz itself, so it is read before the results rather
+         than only alongside them. -->
+    <p class="quiz-disclaimer">
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+      This quiz is not medical advice and does not replace your doctor. Always consult your physician before starting any supplement.
+    </p>
   </div>
 </section>
 
@@ -700,8 +824,8 @@
         <div class="w-12 h-12 rounded-xl flex items-center justify-center mb-5" style="background: linear-gradient(135deg, rgba(106,191,75,0.14), rgba(27,82,38,0.07));">
           <svg width="24" height="24" fill="none" stroke="var(--green)" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
         </div>
-        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Pharmacist-reviewed, practitioner-grade</h3>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">100% Xymogen — professional-grade supplements you can't buy in stores — and a pharmacist checks your plan against your prescriptions and hormone therapy.</p>
+        <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Practitioner-grade only</h3>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">100% Xymogen — professional-grade supplements you can't buy in retail stores, ordered through the WholeScripts dispensary under our pharmacy.</p>
       </div>
 
       <div class="spec-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
@@ -753,7 +877,7 @@
       </details>
       <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
         <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">How do I order after the quiz?</summary>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">Three steps: <strong>1)</strong> create a free account under our pharmacy on WholeScripts, <strong>2)</strong> search each product from your plan (we show you the exact name and a Copy button) and add it to your cart, <strong>3)</strong> check out. Your results page walks you through it — or call us and a pharmacist will set it up with you.</p>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">The quiz matches you to one of our protocols — a set of supplements our pharmacist has already put together on WholeScripts — and your results page gives you the two links you need. <strong>1)</strong> Create your free WholeScripts account using the first link. It opens a page that already lists My Best Pharmacy as your practitioner, so there's no referral code to type in — and it's what connects your account to us, so do this one first. <strong>2)</strong> Open your protocol with the second link. Everything in it is already bundled, so you press <strong>Add to Cart</strong> once instead of searching for products one at a time. <strong>3)</strong> Choose monthly delivery if you want it to arrive automatically, then check out and pay WholeScripts directly. Rather not do it alone? Call us and a pharmacist will walk you through it.</p>
       </details>
       <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
         <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">What will it cost?</summary>
@@ -761,7 +885,7 @@
       </details>
       <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
         <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">Why WholeScripts and Xymogen?</summary>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">Xymogen is a practitioner-grade supplement line sold through the WholeScripts dispensary, not in retail stores. Registering under our pharmacy links your WholeScripts account to our pharmacists, who set your plan and check it against your therapy.</p>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">Xymogen is a practitioner-grade supplement line sold through the WholeScripts dispensary, not in retail stores. Registering under our pharmacy links your WholeScripts account to My Best Pharmacy.</p>
       </details>
     </div>
   </div>
@@ -773,7 +897,14 @@
     <div class="grid md:grid-cols-4 gap-10" style="margin-bottom: 48px;">
       <!-- Brand col -->
       <div class="md:col-span-2">
-        <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-14 w-auto mb-4" style="filter: brightness(0) invert(1);" />
+        <!-- The logo PNG has no alpha channel — it is artwork on an opaque white
+             background. A brightness(0)/invert(1) knockout therefore whited out the
+             whole rectangle instead of the artwork, which is why it read as a blank
+             box. The brand greens (#1B5226) are also too close to the footer
+             (#0B3016) to sit on it directly, so the logo gets a white card. -->
+        <div class="footer-logo-card">
+          <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-16 w-auto" style="display: block;" />
+        </div>
         <p style="color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.75; max-width: 300px;">Full-service pharmacy — OTC products, retail prescriptions, custom compounding, and medical equipment — serving Boynton Beach and South Florida.</p>
         <p class="mt-4" style="color: var(--green); font-size: 13px; font-weight: 500;">Licensed pharmacy in the State of Florida.</p>
       </div>
@@ -865,33 +996,91 @@
     // We never send a patient to WholeScripts any other way (a cold search link would
     // let them register without the referral and lose that connection).
     const WS_REGISTER = 'https://www.wholescripts.com/register/mybestpharmacy';
+
+    /* ── Protocols ───────────────────────────────────────────────────────────
+       One protocol per plan the quiz can produce. The key is the plan's keys
+       joined in ORDER, so it is derived from the plan itself and cannot drift.
+
+       These 16 are the complete set: every one of the 32 possible rule outcomes
+       was run through the engine, and after the MIN_PLAN top-up they collapse to
+       exactly these. Nothing else is reachable, so nothing else needs building.
+
+       `url` is the WholeScripts protocol link — it opens the protocol with the
+       products already in the cart, and registering through it connects the new
+       account to My Best Pharmacy. `name` should match what the protocol is
+       called in WholeScripts so the page and the cart agree.
+
+       Until a protocol has a url, that plan falls back to the per-product SKU
+       list, so the page keeps working while these are filled in. */
+    const WS_PROTOCOL = 'https://www.wholescripts.com/customer/protocol/';
+    // `n` is the protocol's number in the pharmacy's own build list, so the number
+    // shown here matches the one on WholeScripts. `name` is what the patient reads.
+    const PROTOCOLS = {
+      'magnesium+b12+omega+k2d3':     { n: 1,  name: 'The Complete Foundation',      url: WS_PROTOCOL + '247015' },
+      'magnesium+b12+omega+k2d3+dim': { n: 2,  name: 'Complete Foundation + Balance', url: WS_PROTOCOL + '247018' },
+      'magnesium+b12+k2d3':           { n: 3,  name: 'Energy & Bone Support',        url: WS_PROTOCOL + '247020' },
+      'magnesium+omega+k2d3':         { n: 4,  name: 'Calm, Heart & Bone',           url: WS_PROTOCOL + '247021' },
+      'magnesium+b12+omega':          { n: 5,  name: 'Everyday Essentials',          url: WS_PROTOCOL + '248019' },
+      'b12+omega+k2d3':               { n: 6,  name: 'Energy, Heart & Bone',         url: WS_PROTOCOL + '248020' },
+      'magnesium+omega+k2d3+dim':     { n: 7,  name: 'Heart, Bone & Balance',        url: WS_PROTOCOL + '247022' },
+      'magnesium+b12+k2d3+dim':       { n: 8,  name: 'Energy, Bone & Balance',       url: WS_PROTOCOL + '247023' },
+      'magnesium+b12+omega+dim':      { n: 9,  name: 'Everyday Essentials + Balance', url: WS_PROTOCOL + '248021' },
+      'magnesium+k2d3+dim':           { n: 10, name: 'Calm, Bone & Balance',         url: WS_PROTOCOL + '248022' },
+      'b12+k2d3+dim':                 { n: 11, name: 'Energy, Bone & Balance (Core)', url: WS_PROTOCOL + '248023' },
+      'b12+omega+k2d3+dim':           { n: 12, name: 'Energy, Heart, Bone & Balance', url: WS_PROTOCOL + '248024' },
+      'magnesium+b12+dim':            { n: 13, name: 'Calm, Energy & Balance',       url: WS_PROTOCOL + '247024' },
+      'magnesium+omega+dim':          { n: 14, name: 'Calm, Heart & Balance',        url: WS_PROTOCOL + '248025' },
+      'b12+omega+dim':                { n: 15, name: 'Energy, Heart & Balance',      url: WS_PROTOCOL + '247025' },
+      'omega+k2d3+dim':               { n: 16, name: 'Heart, Bone & Balance (Core)', url: WS_PROTOCOL + '248026' }
+    };
+
+    /** The protocol for a plan, or null if it has no usable link yet. */
+    function protocolFor(keys) {
+      const p = PROTOCOLS[keys.join('+')];
+      return p && p.url ? p : null;
+    }
     // `brand` = how the product reads on the card. `product` = the bare term the
     // patient searches on WholeScripts once signed in. `about` is the plain-English
     // "what is this?" — supports phrasing only, no disease claims.
+    // `sku` is the WholeScripts SKU the patient pastes into the search box. It is
+    // size-specific (a 120-count and a 240-count bottle are different SKUs), so it
+    // must be copied verbatim from the WholeScripts product page for the exact size
+    // we want patients ordering — never guessed. A supplement with an empty `sku`
+    // falls back to searching by product name, so the card is never blank.
     const SUPPS = {
       magnesium: {
         name: 'Magnesium Glycinate', supports: 'Sleep, calm & muscle relaxation',
         brand: 'Xymogen · OptiMag 125', product: 'OptiMag 125',
+        // Verified: wholescripts.com/p/000000000300001039 loads "OptiMag 125 120 Capsules".
+        sku: '000000000300001039',
         about: 'A mineral many people fall short on. The glycinate form is gentle on the stomach and is usually taken in the evening to support winding down and restful sleep.'
       },
       b12: {
         name: 'B12 / B-Complex', supports: 'Energy & mental clarity',
         brand: 'Xymogen · B-Activ', product: 'B-Activ',
+        // Verified: wholescripts.com/p/000000000300000118 loads "B Activ 90 Capsules".
+        sku: '000000000300000118',
         about: 'The B vitamins your body uses to turn food into energy and to support normal nerve and brain function. B12 comes mostly from animal foods, so intake can run low.'
       },
       omega: {
         name: 'Omega-3 Fish Oil', supports: 'Heart, joints & inflammation',
         brand: 'Xymogen · Omega MonoPure 1300 EC', product: 'Omega MonoPure 1300 EC',
+        // Verified: wholescripts.com/p/000000000300001003 loads "Omega MonoPure 1300 EC 60 Softgels".
+        sku: '000000000300001003',
         about: 'The fats found in oily fish like salmon and sardines, taken to support heart, joint, and brain health when fish is not a regular part of your week.'
       },
       k2d3: {
         name: 'Vitamin K2 + D3', supports: 'Bone strength & vitamin D',
         brand: 'Xymogen · K2-D3 5000', product: 'K2-D3 5000',
+        // Verified: wholescripts.com/p/000000000300000890 loads "K2-D3 5000 60 Capsules".
+        sku: '000000000300000890',
         about: 'Vitamin D supports how much calcium you absorb and K2 supports where that calcium ends up, which is why the two are taken together for bone health.'
       },
       dim: {
         name: 'DIM (DIMension 3)', supports: 'Healthy estrogen metabolism',
         brand: 'Xymogen · DIMension 3', product: 'DIMension 3',
+        // Verified: wholescripts.com/p/000000000300000571 loads "DIMension 3 120 Capsules".
+        sku: '000000000300000571',
         about: 'A compound found in broccoli and other cruciferous vegetables, taken to support the way the body processes estrogen.'
       }
     };
@@ -921,16 +1110,24 @@
         ]
       },
       {
-        id: 'therapy', type: 'single',
+        id: 'therapy', type: 'multi',
         title: 'Are you currently on hormone therapy?',
-        sub: 'This helps us tailor your plan safely around your treatment.',
+        sub: 'Select all that apply — or choose "Not currently."',
         options: [
           { value: 'testosterone', label: 'Testosterone' },
           { value: 'progesterone', label: 'Progesterone' },
           { value: 'estrogen',     label: 'Estrogen / Estradiol' },
           { value: 'combination',  label: 'Combination therapy' },
+          { value: 'other',        label: 'Other (tell us which)' },
           { value: 'none',         label: 'Not currently' }
-        ]
+        ],
+        // Picking `value` reveals a free-text box stored under `id`. The text is
+        // required before Next unlocks — an unnamed "Other" tells us nothing.
+        other: {
+          value: 'other', id: 'therapyOther',
+          label: 'Which hormone therapy are you on?',
+          placeholder: 'e.g. DHEA, thyroid / levothyroxine, pellet therapy…'
+        }
       },
       {
         id: 'goal', type: 'multi',
@@ -1022,17 +1219,24 @@
     const ORDER = ['magnesium', 'b12', 'omega', 'k2d3', 'dim'];
     const MAX_REASONS = 3;
     const FALLBACK_REASON = 'nothing in your answers pointed to a specific gap, so this is where most plans start';
+    // Every plan is filled as a WholeScripts protocol, and a protocol is built from
+    // at least three products — so a plan must never come back shorter than this.
+    const MIN_PLAN = 3;
+    const TOPUP_REASON = 'it is one of the foundations we build every plan on';
 
     // Normalized read-only view of the answers, so every predicate stays a one-liner.
     function view(a) {
       const sym = a.symptoms || [];
       const hist = a.history || [];
       const goals = Array.isArray(a.goal) ? a.goal : (a.goal ? [a.goal] : []);
+      // Therapy is select-all: a patient can be on more than one at once.
+      const thx = Array.isArray(a.therapy) ? a.therapy : (a.therapy ? [a.therapy] : []);
       return {
         a: a,
         sym: (t) => sym.indexOf(t) !== -1,
         hist: (t) => hist.indexOf(t) !== -1,
-        goal: (t) => goals.indexOf(t) !== -1
+        goal: (t) => goals.indexOf(t) !== -1,
+        thr: (t) => thx.indexOf(t) !== -1
       };
     }
 
@@ -1090,7 +1294,11 @@
       // estrogen or combination therapy, or alongside hot flashes. The gate runs
       // before the reasons, so no trigger can route around it.
       dim: {
-        blocked: v => v.a.therapy === 'estrogen' || v.a.therapy === 'combination' ||
+        // A written-in therapy also blocks. We cannot tell from free text whether
+        // what the patient typed is estrogen-based — brand names and misspellings
+        // make keyword matching unreliable — so an unrecognized therapy is treated
+        // as one DIM should not be paired with, rather than guessed at.
+        blocked: v => v.thr('estrogen') || v.thr('combination') || v.thr('other') ||
                       v.sym('hotflashes') || v.a.lifestage === 'male',
         reasons: [
           [v => v.goal('balance'), 'hormone balance is one of your goals'],
@@ -1109,8 +1317,16 @@
         const hits = rule.reasons.filter(r => r[0](v)).map(r => r[1]);
         if (hits.length) matched[key] = hits;
       });
-      // Fallback: never return an empty plan.
-      if (Object.keys(matched).length === 0) matched.magnesium = [FALLBACK_REASON];
+      // Top up short plans to MIN_PLAN from the foundational supplements, in ORDER.
+      // A supplement whose `blocked` gate fired is never used to fill — that gate is
+      // a safety rule, not a preference, so DIM can never arrive this way. The first
+      // four carry no gate, so three is always reachable without touching it.
+      ORDER.forEach(key => {
+        if (matched[key] || Object.keys(matched).length >= MIN_PLAN) return;
+        const rule = RULES[key];
+        if (rule.blocked && rule.blocked(v)) return;
+        matched[key] = [TOPUP_REASON];
+      });
       return matched;
     }
 
@@ -1144,9 +1360,42 @@
       return '<svg width="13" height="13" fill="none" stroke="#fff" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
     }
 
+    /** Escapes a value being echoed back into an HTML attribute. */
+    function escAttr(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    /** Is this question's "Other" option currently picked? */
+    function otherOn(q) {
+      if (!q.other) return false;
+      const v = answers[q.id];
+      return Array.isArray(v) ? v.indexOf(q.other.value) !== -1 : v === q.other.value;
+    }
+
+    /** The write-in text for an "Other" option, trimmed. */
+    function otherText(q) {
+      return q.other ? (answers[q.other.id] || '').trim() : '';
+    }
+
+    function otherPanelMarkup(q) {
+      return '<div class="opt-other" id="opt-other"' + (otherOn(q) ? '' : ' hidden') + '>' +
+        '<label class="opt-other-label" for="opt-other-input">' + q.other.label + '</label>' +
+        '<input class="opt-other-input" id="opt-other-input" type="text" autocomplete="off" maxlength="80"' +
+          ' placeholder="' + escAttr(q.other.placeholder) + '"' +
+          ' value="' + escAttr(answers[q.other.id] || '') + '" />' +
+      '</div>';
+    }
+
     function isAnswered(q) {
       const v = answers[q.id];
-      if (q.type === 'multi') return Array.isArray(v) && v.length > 0;
+      if (q.type === 'multi') {
+        if (!Array.isArray(v) || v.length === 0) return false;
+        // An "Other" with nothing written in tells us nothing, so it does not count
+        // as an answer until the patient names the therapy.
+        if (otherOn(q)) return !!otherText(q);
+        return true;
+      }
       return !!v;
     }
 
@@ -1166,12 +1415,25 @@
       stage.innerHTML =
         '<h3 class="quiz-q-title">' + q.title + '</h3>' +
         '<p class="quiz-q-sub">' + q.sub + '</p>' +
-        '<div class="opt-grid">' + opts + '</div>';
+        '<div class="opt-grid">' + opts + '</div>' +
+        (q.other ? otherPanelMarkup(q) : '');
 
       // attach handlers
       stage.querySelectorAll('.opt').forEach(btn => {
         btn.addEventListener('click', () => onSelect(q, btn.getAttribute('data-value')));
       });
+
+      const otherInput = stage.querySelector('.opt-other-input');
+      if (otherInput) {
+        otherInput.addEventListener('input', () => {
+          answers[q.other.id] = otherInput.value;
+          updateNextState(q);
+        });
+        // Enter in the write-in should advance, same as pressing Next.
+        otherInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') { e.preventDefault(); goNext(); }
+        });
+      }
 
       // progress + meta
       const pct = (idx / QUESTIONS.length) * 100;
@@ -1195,7 +1457,12 @@
       const nextBtn = document.getElementById('quiz-next');
       const hint = document.getElementById('quiz-hint');
       if (nextBtn) nextBtn.disabled = !ok;
-      if (hint) hint.textContent = ok ? '' : (q.type === 'multi' ? 'Select one or more to continue' : 'Select an option to continue');
+      if (hint) {
+        hint.textContent = ok ? ''
+          : otherOn(q) && !otherText(q) ? 'Tell us which therapy to continue'
+          : q.type === 'multi' ? 'Select one or more to continue'
+          : 'Select an option to continue';
+      }
     }
 
     function onSelect(q, value) {
@@ -1220,6 +1487,16 @@
         btn.classList.toggle('selected', on);
         btn.setAttribute('aria-checked', on);
       });
+      // Reveal the write-in with Other, and drop whatever was typed when it is
+      // cleared — including via "Not currently", which wipes every other pick.
+      if (q.other) {
+        const on = otherOn(q);
+        const panel = document.getElementById('opt-other');
+        const input = document.getElementById('opt-other-input');
+        if (!on) delete answers[q.other.id];
+        if (panel) panel.hidden = !on;
+        if (input) { if (on) input.focus(); else input.value = ''; }
+      }
       updateNextState(q);
     }
 
@@ -1282,10 +1559,19 @@
       return SUPPS[key].brand;
     }
 
-    function suppRow(key) {
+    // `hideBuy` drops the per-product SKU row: when the plan has a protocol link,
+    // the patient never searches for anything, so a SKU would just be noise.
+    function suppRow(key, hideBuy) {
       const s = SUPPS[key];
       const why = reasonSentence(reasons[key] || [FALLBACK_REASON]);
       const open = expanded.has(key);
+      // Order by SKU when we have one — an exact code can't be mistyped or matched
+      // to the wrong bottle size. Without a SKU on file we fall back to the product
+      // name, which is still searchable, rather than showing an empty row.
+      const hasSku = !!s.sku;
+      const term = hasSku ? s.sku : s.product;
+      const buyLabel = hasSku ? 'WholeScripts SKU' : 'Search WholeScripts for';
+      const copyLabel = hasSku ? 'Copy SKU' : 'Copy name';
       return '<div class="rx-card is-on rx-static" data-key="' + key + '">' +
         '<div class="rx-head">' +
           '<span class="rx-mark">' + checkSvg() + '</span>' +
@@ -1302,30 +1588,90 @@
           '</button>' +
           '<div class="rx-about-panel" id="rx-about-' + key + '"' + (open ? '' : ' hidden') + '>' + s.about + '</div>' +
         '</div>' +
-        '<div class="rx-buy">' +
-          '<span class="rx-buy-label">Search WholeScripts for</span>' +
-          '<span class="rx-buy-term">' + s.product + '</span>' +
-          '<button type="button" class="rx-buy-btn rx-copy" data-copy="' + s.product + '">' + COPY_ICON + '<span class="rx-copy-label">Copy name</span></button>' +
-        '</div>' +
+        (hideBuy ? '' :
+          '<div class="rx-buy">' +
+            '<span class="rx-buy-label">' + buyLabel + '</span>' +
+            '<span class="rx-buy-term' + (hasSku ? ' is-sku' : '') + '">' + term + '</span>' +
+            '<button type="button" class="rx-buy-btn rx-copy" data-copy="' + term + '" data-copy-label="' + copyLabel + '">' +
+              COPY_ICON + '<span class="rx-copy-label">' + copyLabel + '</span></button>' +
+          '</div>') +
       '</div>';
     }
 
     // Display-only plan -> self-serve purchase. The patient registers under our
     // pharmacy on WholeScripts, then orders each product themselves; no cart is
     // built on our end.
+    /* The protocol path: the plan is already assembled on WholeScripts, so there is
+       nothing to search or add one at a time. WholeScripts asks the patient to sign
+       in or register before it will show a protocol, so the steps say so plainly
+       rather than letting them hit an unexpected login wall. */
+    function protocolCalloutMarkup(protocol, count) {
+      // Order matters. A logged-out visitor opening a protocol link is bounced to a
+      // bare /login that carries no pharmacy context, so the account gets made with
+      // no connection to us. Registering first through the referral link is the only
+      // path that attaches the pharmacy — that page shows "Your Practitioner: My Best
+      // Pharmacy" already filled in, so there is no code for the patient to enter.
+      const steps = [
+        ['Create your free WholeScripts account first',
+         'Use the green button below &mdash; it opens a registration page that already says <strong>Your Practitioner: My Best Pharmacy</strong>. That is what makes us your pharmacy, and there is nothing for you to type in: no referral code, no lookup. Just your name, email, and a password. It is free and there is no membership fee. <strong>Do this before opening your protocol</strong>, or the account will not be connected to us.'],
+        ['Come back here and open your protocol',
+         'WholeScripts won&rsquo;t send you to your protocol on its own, so once your account is made, return to this tab and press the second button. It opens <strong>Protocol No. ' + protocol.n + '</strong> &mdash; ' + protocol.name + ' &mdash; with all ' + count + ' supplement' + (count === 1 ? '' : 's') + ' already together. Keep this tab open and it will be waiting for you.'],
+        ['Add the whole protocol to your cart',
+         'Press <strong>Add to Cart</strong> once and everything goes in &mdash; nothing to search for, nothing to add one at a time.'],
+        ['Set it to arrive monthly, then check out',
+         'Before you pay, choose <strong>monthly delivery</strong> so your protocol arrives every month and you never run out &mdash; or order a single month to try it first. Then press <strong>Check Out</strong> and pay WholeScripts directly. You can change or stop a monthly delivery yourself at any time.']
+      ];
+      return '<div class="ws-join" id="ws-callout">' +
+        '<p class="ws-join-eyebrow">' + CHECK_ICON + 'How to order &middot; about 2 minutes</p>' +
+        '<h4 class="ws-join-title">How to get your protocol</h4>' +
+        '<p class="ws-join-body">Everything in your protocol is already bundled together on WholeScripts. ' +
+          '<strong>Read these four steps first</strong> &mdash; then use the two buttons at the bottom, in order. ' +
+          'They open in a new tab, so these instructions stay right here if you need to check back.</p>' +
+        '<ol class="ws-steps ws-steps-lg">' +
+          steps.map(function (s, i) {
+            var accent = ['var(--green)', 'var(--green-dk)', 'var(--blue-lt)', 'var(--blue)'][i];
+            var tint = ['rgba(106,191,75,0.09)', 'rgba(78,144,53,0.10)', 'rgba(34,110,50,0.09)', 'rgba(27,82,38,0.07)'][i];
+            return '<li class="ws-step" style="border-left-color:' + accent + '; background:' + tint + ';">' +
+              '<span class="ws-step-num" style="background:' + accent + ';">' + (i + 1) + '</span>' +
+              '<span class="ws-step-main"><span class="ws-step-title">' + s[0] + '</span>' +
+              '<span class="ws-step-body">' + s[1] + '</span></span>' +
+            '</li>';
+          }).join('') +
+        '</ol>' +
+        // Two actions, in the order that keeps the pharmacy attached. WholeScripts
+        // has no post-registration redirect — its own redirect service is defined but
+        // never called, and it drops the whole URL when bouncing a logged-out visitor
+        // to /login — so the patient genuinely has to come back for step 2. Saying so
+        // is better than letting them finish signing up and wonder where to go.
+        '<div class="ws-final-cta">' +
+          '<p class="ws-final-label">Step 1 &mdash; new to WholeScripts</p>' +
+          '<a class="btn-green ws-final-btn" href="' + WS_REGISTER +
+            '" target="_blank" rel="noopener noreferrer">Create my free account' + EXT_ICON + '</a>' +
+          '<span class="ws-join-note">Opens a page that already lists My Best Pharmacy as your practitioner &mdash; no code to enter. Come back to this tab when you&rsquo;re done.</span>' +
+          '<span class="ws-final-divider"></span>' +
+          '<p class="ws-final-label">Step 2 &mdash; once you have an account</p>' +
+          '<a class="btn-ghost-green ws-final-btn" href="' + protocol.url + '" target="_blank" rel="noopener noreferrer">' +
+            'Open Protocol No. ' + protocol.n + EXT_ICON + '</a>' +
+          '<span class="ws-join-note">' + protocol.name + ' &middot; already have an account? Start here</span>' +
+        '</div>' +
+        '<p class="ws-alt"><strong>Want us to do it with you?</strong> Call <a href="tel:5612004245">(561) 200-4245</a> ' +
+          'and a pharmacist will walk you through it. Already have a WholeScripts account? We&rsquo;ll link it to the pharmacy.</p>' +
+      '</div>';
+    }
+
     function wsCalloutMarkup() {
       const steps = [
         ['Create your free account',
          'Click the green button below. It opens <strong>WholeScripts</strong> already linked to My Best Pharmacy &mdash; just enter your name, email, and a password. It&rsquo;s free, and there&rsquo;s no membership fee.'],
         ['Add your supplements to the cart',
-         'Once you&rsquo;re signed in, type a product name from your plan above into the WholeScripts search box &mdash; tap <strong>Copy name</strong> on any card to grab it. Open the product and click <strong>Add to Cart</strong>. Do that for each one on your list.'],
+         'Once you&rsquo;re signed in, paste a SKU from your plan above into the WholeScripts search box &mdash; tap <strong>Copy SKU</strong> on any card to grab it. That takes you straight to the exact product. Click <strong>Add to Cart</strong>, and do the same for each one on your list.'],
         ['Check out &mdash; then reorder anytime',
          'Click the cart in the top corner and press <strong>Check Out</strong>. You pay WholeScripts directly, only for what you added. Running low next month? Sign back in and reorder &mdash; nothing charges you automatically.']
       ];
       return '<div class="ws-join" id="ws-callout">' +
         '<p class="ws-join-eyebrow">' + CHECK_ICON + 'How to order &middot; about 5 minutes</p>' +
         '<h4 class="ws-join-title">Get your plan in 3 simple steps</h4>' +
-        '<p class="ws-join-body">WholeScripts is the online dispensary we order practitioner-grade supplements through &mdash; the kind not sold in stores. You buy through it under our pharmacy, so our pharmacists can review your plan. No subscription: order a month at a time and pay only for what you add.</p>' +
+        '<p class="ws-join-body">WholeScripts is the online dispensary we order practitioner-grade supplements through &mdash; the kind not sold in stores. You buy through it under our pharmacy, so your account stays connected to us. No subscription: order a month at a time and pay only for what you add.</p>' +
         '<ol class="ws-steps ws-steps-lg">' +
           steps.map(function (s, i) {
             // Green deepens step to step; each tile gets a matching soft wash.
@@ -1347,17 +1693,20 @@
       '</div>';
     }
 
-    // "Copy name" puts the exact product term on the clipboard so the patient can
-    // paste it straight into the WholeScripts search box after signing up.
+    // Puts the exact search term — the SKU where we have one, otherwise the product
+    // name — on the clipboard so the patient can paste it straight into the
+    // WholeScripts search box after signing up. The button restores its own label
+    // rather than a hardcoded one, since it differs per card.
     function copyProduct(btn) {
       const text = btn.getAttribute('data-copy');
       const label = btn.querySelector('.rx-copy-label');
+      const idle = btn.getAttribute('data-copy-label') || 'Copy';
       const done = () => {
         btn.classList.add('is-copied');
         if (label) label.textContent = 'Copied!';
         setTimeout(() => {
           btn.classList.remove('is-copied');
-          if (label) label.textContent = 'Copy name';
+          if (label) label.textContent = idle;
         }, 1600);
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1379,35 +1728,48 @@
       recommended = recommend(answers);
       reasons = evaluate(answers);
       const count = recommended.length;
-      const rows = recommended.map(suppRow).join('');
+      const protocol = protocolFor(recommended);
+      const rows = recommended.map(k => suppRow(k, !!protocol)).join('');
+
+      // The protocol is the headline: the patient is being given one named thing,
+      // not a list they have to assemble. The contents sit right underneath it so
+      // "what am I actually getting" is answered before anything else.
+      const header = protocol
+        ? '<div class="rx-proto-head">' +
+            '<div class="rx-proto-eyebrow">' +
+              '<span class="rx-proto-dot"></span>Your result' +
+            '</div>' +
+            '<p class="rx-proto-kicker">Your protocol is</p>' +
+            '<h3 class="rx-proto-num" id="rx-title">Protocol <span class="rx-proto-hash">No.&nbsp;' + protocol.n + '</span></h3>' +
+            '<p class="rx-proto-name">' + protocol.name + '</p>' +
+            '<p class="rx-proto-sub">Built for you from your answers &mdash; ' + count +
+              ' practitioner-grade supplement' + (count === 1 ? '' : 's') + ', already put together on WholeScripts.</p>' +
+            '<div class="rx-proto-includes">' +
+              '<span class="rx-proto-includes-label">What&rsquo;s in it</span>' +
+              '<div class="rx-proto-chips">' +
+                recommended.map(k => '<span class="rx-proto-chip">' + CHECK_SM + SUPPS[k].name + '</span>').join('') +
+              '</div>' +
+            '</div>' +
+          '</div>'
+        : '<div style="text-align:center; margin-bottom:24px;">' +
+            '<div style="display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:100px; background:rgba(106,191,75,0.1); margin-bottom:14px;">' +
+              '<span style="width:7px;height:7px;border-radius:50%;background:var(--green);"></span>' +
+              '<span style="color:var(--green-dk); font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;">Your personalized plan</span>' +
+            '</div>' +
+            '<h3 class="quiz-q-title" id="rx-title">' + count + ' supplement' + (count === 1 ? '' : 's') + ', chosen for you</h3>' +
+            '<p class="quiz-q-sub rx-lede">Every one was chosen from your own answers &mdash; practitioner-grade, and matched to your goals.</p>' +
+          '</div>';
 
       stage.innerHTML =
-        '<div style="text-align:center; margin-bottom:24px;">' +
-          '<div style="display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:100px; background:rgba(106,191,75,0.1); margin-bottom:14px;">' +
-            '<span style="width:7px;height:7px;border-radius:50%;background:var(--green);"></span>' +
-            '<span style="color:var(--green-dk); font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;">Your personalized plan</span>' +
-          '</div>' +
-          '<h3 class="quiz-q-title" id="rx-title">' + count + ' supplement' + (count === 1 ? '' : 's') + ', chosen for you</h3>' +
-          '<p class="quiz-q-sub rx-lede">Every one was chosen from your own answers &mdash; practitioner-grade, and reviewed by our pharmacists. Below your plan, we&rsquo;ll show you exactly how to order it &mdash; a month at a time, no subscription.</p>' +
-        '</div>' +
+        header +
 
-        // Value chips — the promise, scannable before the details.
-        '<div class="rx-vals">' +
-          valChip('Practitioner-grade') + valChip('Pharmacist-reviewed') +
-          valChip('No subscription') + valChip('Free to set up') +
-        '</div>' +
-
-        // Supplement list
+        // Why each one is in there — the personalization, under the protocol name.
+        '<p class="rx-why-heading">Why each of these is in your protocol</p>' +
         '<div style="display:flex; flex-direction:column; gap:12px;">' + rows + '</div>' +
 
-        // How to order — the path from plan to purchase.
-        wsCalloutMarkup() +
-
-        // Reassurance
-        '<p style="display:flex; align-items:flex-start; gap:8px; margin-top:18px; color:var(--gray-600); font-size:13px; line-height:1.6;">' +
-          '<svg style="flex-shrink:0; margin-top:2px;" width="15" height="15" fill="none" stroke="var(--green)" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>' +
-          'These are supplement suggestions based on your answers, not medical advice. Always consult your physician for guidance specific to your health needs.' +
-        '</p>';
+        // How to order — the protocol walkthrough, or the manual product-by-product
+        // fallback for any plan that has no protocol link yet.
+        (protocol ? protocolCalloutMarkup(protocol, count) : wsCalloutMarkup());
 
       // Cards are display-only: the "What is this?" disclosure and a "Copy name"
       // helper that puts the exact search term on the clipboard.

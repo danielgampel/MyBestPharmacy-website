@@ -140,6 +140,11 @@
     /* Info card */
     .info-card { border-radius: 18px; padding: 28px 32px; border: 1px solid var(--gray-100); }
 
+    .footer-logo-card {
+      display: inline-block; background: #fff; padding: 11px 15px;
+      border-radius: 14px; margin-bottom: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.28), 0 2px 6px rgba(0,0,0,0.18);
+    }
     footer a { transition: color 0.2s; }
     footer a:hover { color: var(--green) !important; }
     a:focus-visible, button:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; border-radius: 4px; }
@@ -600,7 +605,13 @@
   <div class="max-w-7xl mx-auto px-6 lg:px-10" style="padding-top: 72px; padding-bottom: 32px;">
     <div class="grid md:grid-cols-4 gap-10" style="margin-bottom: 48px;">
       <div class="md:col-span-2">
-        <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-14 w-auto mb-4" style="filter: brightness(0) invert(1);" />
+        <!-- Logo PNG has no alpha channel, so a brightness(0)/invert(1) knockout
+             whited out the whole rectangle instead of the artwork. The brand greens
+             are also too close to the footer (#0B3016) to sit on it directly, so the
+             logo runs full-colour on a white card. -->
+        <div class="footer-logo-card">
+          <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-16 w-auto" style="display: block;" />
+        </div>
         <p style="color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.75; max-width: 300px;">Full-service pharmacy serving patients and providers throughout South Florida.</p>
         <p class="mt-4" style="color: var(--green); font-size: 13px; font-weight: 500;">Licensed pharmacy in the State of Florida.</p>
       </div>
