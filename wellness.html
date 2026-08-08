@@ -122,32 +122,40 @@
     .underline-g::after { content: ''; position: absolute; bottom: 0; left: 0; width: 44px; height: 3px; background: var(--green); border-radius: 2px; }
     .underline-g-c::after { left: 50%; transform: translateX(-50%); }
 
-    /* ── "Why we built this" story ─────────────────── */
-    .story-grid { display: grid; grid-template-columns: 1fr; gap: 44px; align-items: center; }
-    @media (min-width: 900px) { .story-grid { grid-template-columns: 1.05fr 0.95fr; gap: 60px; } }
-
-    .story-photo { position: relative; border-radius: 22px; overflow: hidden; box-shadow: 0 24px 60px rgba(27,82,38,0.16), 0 6px 18px rgba(27,82,38,0.08); }
-    .story-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 22%; aspect-ratio: 4 / 3.4; }
-    /* Colour treatment + bottom scrim so the caption card stays legible. */
-    .story-photo::before { content: ''; position: absolute; inset: 0; background: linear-gradient(140deg, rgba(27,82,38,0.30), rgba(106,191,75,0.14)); mix-blend-mode: multiply; pointer-events: none; }
-    .story-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,26,12,0.34) 0%, rgba(7,26,12,0.06) 40%, transparent 62%); pointer-events: none; }
-
-    .story-p { color: var(--gray-700); line-height: 1.78; font-size: 1.02rem; margin-bottom: 18px; }
+    /* ── Story + Xymogen, side by side ─────────────── */
+    .story-p { color: var(--gray-700); line-height: 1.74; font-size: 1.02rem; margin-bottom: 16px; }
     .story-p:last-child { margin-bottom: 0; }
+    .story-cta { margin-top: 28px; }
+    @media (max-width: 560px) { .story-cta .btn-green { width: 100%; } }
 
-    /* ── Xymogen brand band ────────────────────────── */
-    .xy-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
-    @media (min-width: 860px) { .xy-grid { grid-template-columns: 1fr 1fr; gap: 20px; } }
-    .xy-card { background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 26px; transition: transform 0.32s cubic-bezier(0.34,1.56,0.64,1), background 0.3s ease, border-color 0.3s ease; }
-    .xy-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.085); border-color: rgba(106,191,75,0.42); }
-    .xy-ico { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(106,191,75,0.22), rgba(106,191,75,0.07)); border: 1px solid rgba(106,191,75,0.30); margin-bottom: 16px; }
-    .xy-card h3 { font-size: 1.18rem; font-weight: 700; color: #fff; margin: 0 0 9px; letter-spacing: -0.01em; }
-    .xy-card p { color: rgba(255,255,255,0.68); font-size: 14.5px; line-height: 1.72; margin: 0; }
-    .xy-value { margin-top: 22px; border-radius: 18px; padding: 30px 34px; background: linear-gradient(120deg, rgba(106,191,75,0.16), rgba(106,191,75,0.05)); border: 1px solid rgba(106,191,75,0.34); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; }
-    .xy-value h3 { font-size: 1.26rem; font-weight: 700; color: #fff; margin: 0 0 9px; letter-spacing: -0.015em; }
-    .xy-value p { margin: 0; color: rgba(255,255,255,0.74); font-size: 14.8px; line-height: 1.72; }
-    .xy-value-txt { max-width: 560px; }
-    @media (max-width: 560px) { .xy-value { padding: 24px 22px; } .xy-value .btn-green { width: 100%; justify-content: center; } }
+    /* Dark panel — used as the interstitial step between the last quiz
+       question and the results, inside the white quiz card. */
+    .xy-panel { position: relative; overflow: hidden; border-radius: 20px; padding: 32px 30px; background: linear-gradient(155deg, #0B3016 0%, #1B5226 62%, #0A2E14 100%); box-shadow: 0 22px 52px rgba(11,48,22,0.20), 0 5px 16px rgba(11,48,22,0.12); }
+    .xy-panel::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 55% at 85% 8%, rgba(106,191,75,0.20) 0%, transparent 60%); pointer-events: none; }
+    .xy-panel > * { position: relative; z-index: 1; }
+    .xy-panel-step { margin-top: 14px; }
+
+    /* Build-your-protocol wait state. The plan is already computed — the pause
+       exists so the Xymogen case gets read before the products appear. */
+    .xy-load { display: flex; align-items: center; gap: 12px; margin-top: 22px; padding: 14px 16px; border-radius: 14px; background: rgba(106,191,75,0.08); border: 1px solid rgba(106,191,75,0.28); transition: background 0.3s ease, border-color 0.3s ease; }
+    .xy-load.is-done { background: rgba(106,191,75,0.15); border-color: rgba(106,191,75,0.5); }
+    .xy-load-ico { flex-shrink: 0; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; color: var(--green-dk); }
+    .xy-spin { width: 18px; height: 18px; border-radius: 50%; border: 2.5px solid rgba(106,191,75,0.28); border-top-color: var(--green); animation: xySpin 0.85s linear infinite; }
+    @keyframes xySpin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .xy-spin { animation-duration: 2.4s; } }
+    .xy-load-txt { font-size: 14.2px; font-weight: 600; color: var(--green-dk); line-height: 1.4; }
+    .xy-while { margin-top: 26px; font-size: 14.5px; font-weight: 600; color: var(--gray-700); line-height: 1.5; }
+    .xy-while em, .xy-em { font-style: italic; color: var(--green-dk); }
+    .xy-panel-solo { margin-top: 26px; }
+
+    /* Back / Retake pair on the left of the results footer. */
+    .rx-nav { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .xy-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 15px; }
+    .xy-item { display: flex; gap: 12px; align-items: flex-start; }
+    .xy-item svg { flex-shrink: 0; margin-top: 3px; }
+    .xy-item strong { display: block; color: #fff; font-weight: 600; font-size: 15px; letter-spacing: -0.005em; margin-bottom: 2px; }
+    .xy-item span { display: block; color: rgba(255,255,255,0.62); font-size: 13.6px; line-height: 1.6; }
+    @media (max-width: 560px) { .xy-panel { padding: 26px 22px; } }
 
     /* ── "Why we're different" comparison table ────── */
     .cmp-table { display: grid; grid-template-columns: 1fr 1fr; background: #fff; border: 1px solid var(--gray-100); border-radius: 20px; overflow: hidden; box-shadow: 0 18px 44px rgba(27,82,38,0.10), 0 3px 10px rgba(27,82,38,0.05); }
@@ -159,18 +167,19 @@
     .cmp-us { color: var(--gray-900); font-weight: 600; background: rgba(106,191,75,0.07); }
     .cmp-table > .cmp-cell:nth-last-child(-n+2) { border-bottom: none; }
     .cmp-ico { flex-shrink: 0; margin-top: 2px; }
-    .cmp-label { display: none; }
 
+    /* Stays a real two-column comparison on phones — stacking it made the
+       rows read as one long alternating list instead of a side-by-side. */
     @media (max-width: 700px) {
-      .cmp-table { grid-template-columns: 1fr; }
-      .cmp-head { display: none; }
-      .cmp-cell { padding: 14px 20px; font-size: 14.5px; flex-wrap: wrap; }
-      .cmp-them { border-right: none; }
-      .cmp-table > .cmp-cell:nth-last-child(-n+2) { border-bottom: 1px solid var(--gray-100); }
-      .cmp-table > .cmp-cell:last-child { border-bottom: none; }
-      .cmp-label { display: block; width: 100%; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; }
-      .cmp-them .cmp-label { color: var(--gray-600); }
-      .cmp-us .cmp-label { color: var(--green-dk); }
+      .cmp-table { border-radius: 16px; }
+      .cmp-head { padding: 12px 13px; font-size: 9.5px; letter-spacing: 0.08em; line-height: 1.35; }
+      .cmp-cell { padding: 13px; font-size: 13px; line-height: 1.42; gap: 8px; }
+      .cmp-ico { width: 13px; height: 13px; margin-top: 2px; }
+    }
+    @media (max-width: 380px) {
+      .cmp-head { padding: 11px 10px; font-size: 9px; }
+      .cmp-cell { padding: 12px 10px; font-size: 12.2px; gap: 6px; }
+      .cmp-ico { width: 12px; height: 12px; }
     }
 
     /* ── Footer ──────────────────────────────────────── */
@@ -214,6 +223,7 @@
 
     .opt {
       display: flex; align-items: center; gap: 14px;
+      /* Options carrying a plain-language hint stack label over hint. */
       width: 100%; text-align: left; cursor: pointer;
       padding: 17px 18px; border-radius: 14px;
       border: 2px solid var(--gray-100); background: #fff;
@@ -233,6 +243,8 @@
     .opt-check svg { opacity: 0; transition: opacity 0.2s ease; }
     .opt.selected .opt-check svg { opacity: 1; }
     .opt-label { font-size: 15px; font-weight: 600; color: var(--gray-900); line-height: 1.3; }
+    .opt-hint { display: block; font-size: 12.5px; font-weight: 400; color: var(--gray-600); line-height: 1.35; margin-top: 3px; }
+    .opt.selected .opt-hint { color: var(--green-dk); }
 
     /* Write-in panel for an "Other" option — revealed only once Other is picked. */
     .opt-other { margin-top: 14px; }
@@ -650,6 +662,9 @@
        greyed-out disabled Next already signals that an answer is required. */
     @media (max-width: 560px) {
       .quiz-hint { display: none; }
+      /* "Show my results" is the longest label this button ever carries; trim the
+         side padding so it stays on one line next to Back. */
+      .quiz-footer .btn-green { padding-left: 18px; padding-right: 18px; white-space: nowrap; }
       /* Same squeeze on the result cards: the badge pushed every supplement name
          onto two lines. The check circle, the tint, and the live count in the
          heading all still say whether an item is in. */
@@ -763,80 +778,15 @@
   </div>
 </section>
 
-<!-- ══════════════════════════ WHY WE BUILT THIS ══════════════════════════ -->
-<section class="mob-section" style="padding: 96px 0; background: var(--off-white);">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10">
-    <div class="story-grid">
-
-      <div class="reveal">
-        <span class="tag">Our Story</span>
-        <h2 class="underline-g" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em; margin-bottom: 26px;">Why We Built This Program</h2>
-        <p class="story-p">Most people standing in a supplement aisle have no real way of knowing what their body actually needs. So they guess — picking up whatever sounds right, buying products that don't line up with their health goals, and paying for full bottles they may never finish.</p>
-        <p class="story-p">We kept hearing it from our own patients at the counter. So we built My Best Wellness: a short wellness assessment that lets us match professional-grade Xymogen supplements to what you're actually dealing with, instead of leaving you to work it out alone.</p>
-      </div>
-
-      <div class="reveal story-photo">
-        <img src="website_pics/pharmacyladyweb.jpg" alt="A My Best Pharmacy pharmacist in our Boynton Beach store" />
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════ WHY XYMOGEN ══════════════════════════ -->
-<section class="mob-section relative overflow-hidden" style="padding: 96px 0; background: linear-gradient(155deg, #0B3016 0%, #1B5226 58%, #0A2E14 100%);">
-  <div class="hex-bg absolute inset-0" style="opacity: 0.5;"></div>
-  <div class="absolute inset-0" style="background: radial-gradient(ellipse 55% 60% at 78% 12%, rgba(106,191,75,0.14) 0%, transparent 58%), radial-gradient(ellipse 50% 55% at 12% 88%, rgba(34,110,50,0.22) 0%, transparent 55%);"></div>
-
-  <div class="relative z-10 max-w-5xl mx-auto px-6 lg:px-10">
-    <div class="text-center reveal" style="margin-bottom: 44px;">
-      <span class="tag" style="color: var(--green);">The Brand Behind Your Plan</span>
-      <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #fff; letter-spacing: -0.025em;">Why We Chose <em style="font-style: italic; color: var(--green);">Xymogen</em></h2>
-      <p style="color: rgba(255,255,255,0.68); font-size: 1.05rem; margin-top: 18px; max-width: 620px; margin-left: auto; margin-right: auto; line-height: 1.72;">We could have filled a shelf with a dozen supplement brands. Instead we picked one professional line and built the entire program around it — here's why.</p>
-    </div>
-
-    <div class="xy-grid">
-
-      <div class="xy-card reveal">
-        <div class="xy-ico">
-          <svg width="21" height="21" fill="none" stroke="var(--green)" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
-        </div>
-        <h3>Practitioner-only, by design</h3>
-        <p>Xymogen isn't sold in supermarkets, big-box stores, or online marketplaces. It's dispensed only through licensed practitioners — so every bottle reaches you through a pharmacy that stands behind it, with no third-party resellers in between.</p>
-      </div>
-
-      <div class="xy-card reveal">
-        <div class="xy-ico">
-          <svg width="21" height="21" fill="none" stroke="var(--green)" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg>
-        </div>
-        <h3>Built in forms your body can use</h3>
-        <p>The form of a nutrient matters as much as the number on the label. Xymogen formulates with the better-absorbed versions — magnesium glycinate instead of cheap oxide, active B vitamins instead of the crude forms — so more of what you pay for actually gets absorbed.</p>
-      </div>
-
-      <div class="xy-card reveal">
-        <div class="xy-ico">
-          <svg width="21" height="21" fill="none" stroke="var(--green)" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c.251.023.501.05.75.082m-.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l1.57.393A9.065 9.065 0 0112 21a9.065 9.065 0 01-9.37-5.307L5 14.5m14.8.8l-1.57-.393m-12.23.393L5 14.5"/></svg>
-        </div>
-        <h3>Doses that actually do something</h3>
-        <p>Plenty of retail supplements carry just enough of an ingredient to justify printing it on the label. We chose a line formulated at the amounts used in real practice, so the ingredient list reflects what's genuinely in the capsule.</p>
-      </div>
-
-      <div class="xy-card reveal">
-        <div class="xy-ico">
-          <svg width="21" height="21" fill="none" stroke="var(--green)" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
-        </div>
-        <h3>One line, known inside out</h3>
-        <p>Rather than stocking twenty brands we only half-know, our pharmacist works with one professional line every day. That's how we can tell you exactly why a specific formula ended up in your plan — and pick up the phone when you have a question about it.</p>
-      </div>
-
-    </div>
-
-    <div class="xy-value reveal">
-      <div class="xy-value-txt">
-        <h3>The best value isn't the cheapest bottle</h3>
-        <p>A supplement your body can't absorb is the expensive one — you finish the bottle and get nothing out of it. Professional-grade formulas cost more per bottle, but you're paying for the part that actually reaches you. And because our program lets you order a month at a time, you're not fronting cash for a bulk supply you may never finish.</p>
-      </div>
-      <a href="#quiz" class="btn-green" style="flex-shrink: 0;">
+<!-- ══════════════════════════ OUR STORY ══════════════════════════ -->
+<section class="mob-section" style="padding: 84px 0; background: var(--off-white);">
+  <div class="max-w-2xl mx-auto px-6 lg:px-10 text-center reveal">
+    <span class="tag">Our Story</span>
+    <h2 class="underline-g underline-g-c" style="font-size: clamp(1.85rem, 4vw, 2.6rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em; margin-bottom: 22px;">Why We Built This Program</h2>
+    <p class="story-p">In a supplement aisle, most people are guessing — grabbing whatever sounds right and paying for bottles they never finish. We heard it from our own patients, week after week.</p>
+    <p class="story-p">So we built My Best Wellness: a short assessment that matches professional-grade Xymogen supplements to what you're actually dealing with.</p>
+    <div class="story-cta">
+      <a href="#quiz" class="btn-green">
         Take the wellness quiz
         <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
@@ -857,20 +807,20 @@
       <div class="cmp-head cmp-head-them">Most Supplement Stores</div>
       <div class="cmp-head cmp-head-us">My Best Wellness</div>
 
-      <div class="cmp-cell cmp-them"><span class="cmp-label">Most Supplement Stores</span><svg class="cmp-ico" width="16" height="16" fill="none" stroke="#9AAEC4" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>You choose your own supplements</div>
-      <div class="cmp-cell cmp-us"><span class="cmp-label">My Best Wellness</span><svg class="cmp-ico" width="16" height="16" fill="none" stroke="var(--green)" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Personalized recommendations</div>
+      <div class="cmp-cell cmp-them"><svg class="cmp-ico" width="16" height="16" fill="none" stroke="#9AAEC4" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>You choose your own supplements</div>
+      <div class="cmp-cell cmp-us"><svg class="cmp-ico" width="16" height="16" fill="none" stroke="var(--green)" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Personalized recommendations</div>
 
-      <div class="cmp-cell cmp-them"><span class="cmp-label">Most Supplement Stores</span><svg class="cmp-ico" width="16" height="16" fill="none" stroke="#9AAEC4" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>Trial and error</div>
-      <div class="cmp-cell cmp-us"><span class="cmp-label">My Best Wellness</span><svg class="cmp-ico" width="16" height="16" fill="none" stroke="var(--green)" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Guided protocol</div>
+      <div class="cmp-cell cmp-them"><svg class="cmp-ico" width="16" height="16" fill="none" stroke="#9AAEC4" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>Trial and error</div>
+      <div class="cmp-cell cmp-us"><svg class="cmp-ico" width="16" height="16" fill="none" stroke="var(--green)" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Guided protocol</div>
 
-      <div class="cmp-cell cmp-them"><span class="cmp-label">Most Supplement Stores</span><svg class="cmp-ico" width="16" height="16" fill="none" stroke="#9AAEC4" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>Buy full bottles</div>
-      <div class="cmp-cell cmp-us"><span class="cmp-label">My Best Wellness</span><svg class="cmp-ico" width="16" height="16" fill="none" stroke="var(--green)" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Monthly supply available</div>
+      <div class="cmp-cell cmp-them"><svg class="cmp-ico" width="16" height="16" fill="none" stroke="#9AAEC4" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>Buy full bottles</div>
+      <div class="cmp-cell cmp-us"><svg class="cmp-ico" width="16" height="16" fill="none" stroke="var(--green)" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Monthly supply available</div>
 
-      <div class="cmp-cell cmp-them"><span class="cmp-label">Most Supplement Stores</span><svg class="cmp-ico" width="16" height="16" fill="none" stroke="#9AAEC4" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>Generic retail brands</div>
-      <div class="cmp-cell cmp-us"><span class="cmp-label">My Best Wellness</span><svg class="cmp-ico" width="16" height="16" fill="none" stroke="var(--green)" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Professional-grade formulas</div>
+      <div class="cmp-cell cmp-them"><svg class="cmp-ico" width="16" height="16" fill="none" stroke="#9AAEC4" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>Generic retail brands</div>
+      <div class="cmp-cell cmp-us"><svg class="cmp-ico" width="16" height="16" fill="none" stroke="var(--green)" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Professional-grade formulas</div>
 
-      <div class="cmp-cell cmp-them"><span class="cmp-label">Most Supplement Stores</span><svg class="cmp-ico" width="16" height="16" fill="none" stroke="#9AAEC4" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>No pharmacy support</div>
-      <div class="cmp-cell cmp-us"><span class="cmp-label">My Best Wellness</span><svg class="cmp-ico" width="16" height="16" fill="none" stroke="var(--green)" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Local pharmacist support</div>
+      <div class="cmp-cell cmp-them"><svg class="cmp-ico" width="16" height="16" fill="none" stroke="#9AAEC4" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>No pharmacy support</div>
+      <div class="cmp-cell cmp-us"><svg class="cmp-ico" width="16" height="16" fill="none" stroke="var(--green)" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>Local pharmacist support</div>
     </div>
   </div>
 </section>
@@ -1256,9 +1206,9 @@
         sub: 'This helps us tailor recommendations to your biology and life stage.',
         options: [
           { value: 'male',      label: 'Male' },
-          { value: 'premeno',   label: 'Female — premenopausal' },
-          { value: 'perimeno',  label: 'Female — perimenopausal' },
-          { value: 'postmeno',  label: 'Female — postmenopausal' }
+          { value: 'premeno',   label: 'Female — premenopausal',  hint: 'Still getting regular periods' },
+          { value: 'perimeno',  label: 'Female — perimenopausal', hint: 'Periods irregular or changing' },
+          { value: 'postmeno',  label: 'Female — postmenopausal', hint: 'No period for a year or more' }
         ]
       },
       {
@@ -1511,6 +1461,10 @@
     const answers = {};
     let idx = 0;
     let finished = false;
+    let interlude = false;      // the "why Xymogen" step, shown just before the plan
+    let interludeReady = false; // its wait has elapsed, so results can be opened
+    let interludeTimers = [];
+    let waitServed = false;     // the wait runs once per attempt, not per pass
 
     const stage = document.getElementById('quiz-stage');
     const fill = document.getElementById('quiz-progress-fill');
@@ -1562,7 +1516,159 @@
       return !!v;
     }
 
+    /* One beat between the last answer and the plan. The plan is already computed
+       the moment the last question is answered — this pause is deliberate, so the
+       Xymogen case gets read before the product list appears and the patient knows
+       what they are looking at. Change INTERLUDE_MS to retune the wait. */
+    const INTERLUDE_MS = 22000;
+    const XY_TICK = '<svg width="17" height="17" fill="none" stroke="var(--green)" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>';
+    const XY_SPIN = '<span class="xy-spin"></span>';
+    const XY_DONE = '<svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>';
+    const XY_STATUS = [
+      'Reading your answers…',
+      'Matching formulas to your goals…',
+      'Running our safety checks…',
+      'Putting your protocol together…'
+    ];
+    const XY_POINTS = [
+      ['Ingredients tested before they reach you',
+       'Raw materials are screened and finished batches are tested for purity and potency. No hidden fillers, no mystery blends.'],
+      ['Daily packets, so nothing gets forgotten',
+       'Several Xymogen formulas come as pre-measured daily packets &mdash; a whole day in one pouch. Nothing to count out, nothing to sort.'],
+      ['Made in forms your body can absorb',
+       'Magnesium glycinate, active B vitamins, chelated minerals &mdash; the premium forms, at the doses practitioners actually use.'],
+      ['A brand you can only get through a pharmacy',
+       'Xymogen is never sold in stores or on Amazon &mdash; only through licensed practitioners. Every bottle comes from us, so you know exactly what you&rsquo;re getting.'],
+      ['One line, known inside out',
+       'We work with Xymogen every day, so we can tell you why each formula is in your plan &mdash; and pick up the phone when you ask.']
+    ];
+
+    /* `readOnly` is the revisit from the finished plan: same reasons, but there is
+       no protocol left to build, so it drops the wait framing entirely. */
+    function renderInterlude(readOnly) {
+      const lead = readOnly
+        ? '<h3 class="quiz-q-title">Why we chose <em class="xy-em">Xymogen</em></h3>' +
+          '<p class="quiz-q-sub">Every supplement in your protocol comes from this one professional line.</p>'
+        : '<h3 class="quiz-q-title" id="xy-head">Building your protocol&hellip;</h3>' +
+          '<p class="quiz-q-sub" id="xy-sub">Matching your answers to the right formulas. This takes a few seconds.</p>' +
+          '<div class="xy-load" id="xy-load">' +
+            '<span class="xy-load-ico" id="xy-load-ico">' + XY_SPIN + '</span>' +
+            '<span class="xy-load-txt" id="xy-load-txt" aria-live="polite">' + XY_STATUS[0] + '</span>' +
+          '</div>' +
+          '<p class="xy-while" id="xy-while">While you wait &mdash; why every supplement in your plan is <em>Xymogen</em>:</p>';
+
+      stage.innerHTML = lead +
+        '<div class="xy-panel xy-panel-step' + (readOnly ? ' xy-panel-solo' : '') + '">' +
+          '<ul class="xy-list">' +
+            XY_POINTS.map(function (p) {
+              return '<li class="xy-item">' + XY_TICK +
+                '<div><strong>' + p[0] + '</strong><span>' + p[1] + '</span></div></li>';
+            }).join('') +
+          '</ul>' +
+        '</div>';
+    }
+
+    function clearInterludeTimers() {
+      interludeTimers.forEach(clearTimeout);
+      interludeTimers = [];
+      fill.style.transition = '';   // undo the slow creep before any other step moves it
+    }
+
+    function finishInterlude() {
+      interludeReady = true;
+      waitServed = true;
+      const row = document.getElementById('xy-load');
+      const ico = document.getElementById('xy-load-ico');
+      const txt = document.getElementById('xy-load-txt');
+      if (row) row.classList.add('is-done');
+      if (ico) ico.innerHTML = XY_DONE;
+      if (txt) txt.textContent = 'Your protocol is ready.';
+      const head = document.getElementById('xy-head');
+      const sub = document.getElementById('xy-sub');
+      if (head) head.textContent = 'Your protocol is ready';
+      if (sub) sub.textContent = 'Finished reading? Open it below.';
+      const whileEl = document.getElementById('xy-while');
+      if (whileEl) whileEl.innerHTML = 'Why every supplement in your plan is <em>Xymogen</em>:';
+      stepLabel.textContent = 'Protocol ready';
+      stepCount.textContent = 'Ready';
+      const nextBtn = document.getElementById('quiz-next');
+      if (nextBtn) {
+        nextBtn.disabled = false;
+        nextBtn.innerHTML = 'Show my results <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      }
+    }
+
+    // The Back / hint / Next row every quiz step shares.
+    function stepFooterMarkup() {
+      return '<button class="btn-quiet" id="quiz-back">' +
+          '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back</button>' +
+        '<span class="quiz-hint" id="quiz-hint"></span>' +
+        '<button class="btn-green" id="quiz-next">Next <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>';
+    }
+
+    // Stepping back from the finished plan. The protocol is already built, so this
+    // opens ready — no second wait — and Back / Next behave like any other step.
+    function showInterludeFromResults() {
+      clearInterludeTimers();
+      interlude = true;
+      interludeReady = true;
+      finished = false;
+      renderInterlude(true);
+      stepLabel.textContent = 'Why Xymogen';
+      stepCount.textContent = 'Your protocol is saved';
+      fill.style.width = '100%';
+      footer.innerHTML = stepFooterMarkup();
+      footer.style.flexWrap = '';
+      const nextBtn = document.getElementById('quiz-next');
+      if (nextBtn) {
+        nextBtn.disabled = false;
+        nextBtn.innerHTML = 'Show my results <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      }
+    }
+
+    function showInterlude() {
+      clearInterludeTimers();
+      interlude = true;
+      interludeReady = false;
+      renderInterlude();
+      stepLabel.textContent = 'Building your protocol';
+      stepCount.textContent = 'Almost ready';
+
+      // The bar creeps the last stretch to full across the wait, so the pause has
+      // something honest to point at rather than a frozen screen.
+      fill.style.transition = 'width ' + INTERLUDE_MS + 'ms linear';
+      fill.style.width = '100%';
+
+      const backBtn = document.getElementById('quiz-back');
+      const nextBtn = document.getElementById('quiz-next');
+      const hint = document.getElementById('quiz-hint');
+      if (backBtn) backBtn.disabled = false;
+      if (hint) hint.textContent = '';
+      if (nextBtn) { nextBtn.disabled = true; nextBtn.innerHTML = 'Preparing…'; }
+
+      // Already sat through it once this attempt — changing an answer and coming
+      // forward again should not cost another wait.
+      if (waitServed) {
+        fill.style.transition = '';
+        fill.style.width = '100%';
+        finishInterlude();
+        return;
+      }
+
+      const per = INTERLUDE_MS / XY_STATUS.length;
+      XY_STATUS.forEach(function (msg, i) {
+        if (i === 0) return;
+        interludeTimers.push(setTimeout(function () {
+          const el = document.getElementById('xy-load-txt');
+          if (el) el.textContent = msg;
+        }, per * i));
+      });
+      interludeTimers.push(setTimeout(finishInterlude, INTERLUDE_MS));
+    }
+
     function renderQuestion() {
+      interlude = false;
+      clearInterludeTimers();
       const q = QUESTIONS[idx];
       const selected = answers[q.id];
       const opts = q.options.map(o => {
@@ -1572,7 +1678,9 @@
         return '<button type="button" class="opt' + (on ? ' selected' : '') + '" role="' +
           (q.type === 'multi' ? 'checkbox' : 'radio') + '" aria-checked="' + on + '" data-value="' + o.value + '">' +
           '<span class="opt-check">' + checkSvg() + '</span>' +
-          '<span class="opt-label">' + o.label + '</span></button>';
+          '<span class="opt-label">' + o.label +
+            (o.hint ? '<span class="opt-hint">' + o.hint + '</span>' : '') +
+          '</span></button>';
       }).join('');
 
       stage.innerHTML =
@@ -1608,10 +1716,7 @@
       const backBtn = document.getElementById('quiz-back');
       const nextBtn = document.getElementById('quiz-next');
       if (backBtn) backBtn.disabled = idx === 0;
-      const last = idx === QUESTIONS.length - 1;
-      if (nextBtn) nextBtn.innerHTML = last
-        ? 'See my formula <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>'
-        : 'Next <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      if (nextBtn) nextBtn.innerHTML = 'Next <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
       updateNextState(q);
     }
 
@@ -1674,6 +1779,16 @@
     }
 
     function goNext() {
+      // The Xymogen interlude sits between the last answer and the plan, and the
+      // plan does not open until its wait has run out.
+      if (interlude) {
+        if (!interludeReady) return;
+        clearInterludeTimers();
+        interlude = false;
+        showResults();
+        scrollToQuiz();
+        return;
+      }
       const q = QUESTIONS[idx];
       if (!isAnswered(q)) return;
       if (idx < QUESTIONS.length - 1) {
@@ -1681,12 +1796,15 @@
         renderQuestion();
         scrollToQuiz();
       } else {
-        showResults();
+        showInterlude();
         scrollToQuiz();
       }
     }
     function goBack() {
-      if (finished) { finished = false; renderQuestion(); scrollToQuiz(); return; }
+      // One screen back from the plan is the Xymogen page, not the last question —
+      // and it never replays the wait.
+      if (finished) { showInterludeFromResults(); scrollToQuiz(); return; }
+      if (interlude) { renderQuestion(); scrollToQuiz(); return; }
       if (idx > 0) { idx--; renderQuestion(); scrollToQuiz(); }
     }
 
@@ -1775,21 +1893,19 @@
       // path that attaches the pharmacy — that page shows "Your Practitioner: My Best
       // Pharmacy" already filled in, so there is no code for the patient to enter.
       const steps = [
-        ['Create your free WholeScripts account first',
-         'Use the green button below &mdash; it opens a registration page that already says <strong>Your Practitioner: My Best Pharmacy</strong>. That is what makes us your pharmacy, and there is nothing for you to type in: no referral code, no lookup. Just your name, email, and a password. It is free and there is no membership fee. <strong>Do this before opening your protocol</strong>, or the account will not be connected to us.'],
-        ['Come back here and open your protocol',
-         'WholeScripts won&rsquo;t send you to your protocol on its own, so once your account is made, return to this tab and press the second button. It opens <strong>Protocol No. ' + protocol.n + '</strong> &mdash; ' + protocol.name + ' &mdash; with all ' + count + ' supplement' + (count === 1 ? '' : 's') + ' already together. Keep this tab open and it will be waiting for you.'],
-        ['Add the whole protocol to your cart',
-         'Press <strong>Add to Cart</strong> once and everything goes in &mdash; nothing to search for, nothing to add one at a time.'],
-        ['Set it to arrive monthly, then check out',
-         'Before you pay, choose <strong>monthly delivery</strong> so your protocol arrives every month and you never run out &mdash; or order a single month to try it first. Then press <strong>Check Out</strong> and pay WholeScripts directly. You can change or stop a monthly delivery yourself at any time.']
+        ['Create your free account',
+         'Green button below. Free, no membership &mdash; and it already lists us as your pharmacy. <strong>Do this first.</strong>'],
+        ['Come back and open your protocol',
+         'Return to this tab, press the second button. <strong>Protocol No. ' + protocol.n + '</strong> opens with all ' + count + ' supplement' + (count === 1 ? '' : 's') + ' in it.'],
+        ['Add to cart',
+         'One tap adds the whole protocol.'],
+        ['Choose monthly, then check out',
+         'Pick <strong>monthly delivery</strong> so you never run out &mdash; or just order once. Change or stop it anytime.']
       ];
       return '<div class="ws-join" id="ws-callout">' +
-        '<p class="ws-join-eyebrow">' + CHECK_ICON + 'How to order &middot; about 2 minutes</p>' +
+        '<p class="ws-join-eyebrow">' + CHECK_ICON + 'How to order &middot; 2 minutes</p>' +
         '<h4 class="ws-join-title">How to get your protocol</h4>' +
-        '<p class="ws-join-body">Everything in your protocol is already bundled together on WholeScripts. ' +
-          '<strong>Read these four steps first</strong> &mdash; then use the two buttons at the bottom, in order. ' +
-          'They open in a new tab, so these instructions stay right here if you need to check back.</p>' +
+        '<p class="ws-join-body">Two buttons at the bottom, in order. They open in a new tab.</p>' +
         '<ol class="ws-steps ws-steps-lg">' +
           steps.map(function (s, i) {
             var accent = ['var(--green)', 'var(--green-dk)', 'var(--blue-lt)', 'var(--blue)'][i];
@@ -1810,31 +1926,31 @@
           '<p class="ws-final-label">Step 1 &mdash; new to WholeScripts</p>' +
           '<a class="btn-green ws-final-btn" href="' + WS_REGISTER +
             '" target="_blank" rel="noopener noreferrer">Create my free account' + EXT_ICON + '</a>' +
-          '<span class="ws-join-note">Opens a page that already lists My Best Pharmacy as your practitioner &mdash; no code to enter. Come back to this tab when you&rsquo;re done.</span>' +
+          '<span class="ws-join-note">Free &middot; no code to enter &middot; come back to this tab after</span>' +
           '<span class="ws-final-divider"></span>' +
           '<p class="ws-final-label">Step 2 &mdash; once you have an account</p>' +
           '<a class="btn-ghost-green ws-final-btn" href="' + protocol.url + '" target="_blank" rel="noopener noreferrer">' +
             'Open Protocol No. ' + protocol.n + EXT_ICON + '</a>' +
           '<span class="ws-join-note">' + protocol.name + ' &middot; already have an account? Start here</span>' +
         '</div>' +
-        '<p class="ws-alt"><strong>Want us to do it with you?</strong> Call <a href="tel:5612004245">(561) 200-4245</a> ' +
-          'and a pharmacist will walk you through it. Already have a WholeScripts account? We&rsquo;ll link it to the pharmacy.</p>' +
+        '<p class="ws-alt"><strong>Want help?</strong> Call <a href="tel:5612004245">(561) 200-4245</a> ' +
+          'and a pharmacist will walk you through it.</p>' +
       '</div>';
     }
 
     function wsCalloutMarkup() {
       const steps = [
         ['Create your free account',
-         'Click the green button below. It opens <strong>WholeScripts</strong> already linked to My Best Pharmacy &mdash; just enter your name, email, and a password. It&rsquo;s free, and there&rsquo;s no membership fee.'],
-        ['Add your supplements to the cart',
-         'Once you&rsquo;re signed in, paste a SKU from your plan above into the WholeScripts search box &mdash; tap <strong>Copy SKU</strong> on any card to grab it. That takes you straight to the exact product. Click <strong>Add to Cart</strong>, and do the same for each one on your list.'],
-        ['Check out &mdash; then reorder anytime',
-         'Click the cart in the top corner and press <strong>Check Out</strong>. You pay WholeScripts directly, only for what you added. Running low next month? Sign back in and reorder &mdash; nothing charges you automatically.']
+         'Green button below. Free, no membership &mdash; and it already lists us as your pharmacy.'],
+        ['Add your supplements',
+         'Tap <strong>Copy SKU</strong> on a card above, paste it into WholeScripts search, then <strong>Add to Cart</strong>. Repeat for each one.'],
+        ['Check out',
+         'Press <strong>Check Out</strong> and pay WholeScripts directly. Reorder anytime &mdash; nothing charges automatically.']
       ];
       return '<div class="ws-join" id="ws-callout">' +
-        '<p class="ws-join-eyebrow">' + CHECK_ICON + 'How to order &middot; about 5 minutes</p>' +
-        '<h4 class="ws-join-title">Get your plan in 3 simple steps</h4>' +
-        '<p class="ws-join-body">WholeScripts is the online dispensary we order practitioner-grade supplements through &mdash; the kind not sold in stores. You buy through it under our pharmacy, so your account stays connected to us. No subscription: order a month at a time and pay only for what you add.</p>' +
+        '<p class="ws-join-eyebrow">' + CHECK_ICON + 'How to order &middot; 5 minutes</p>' +
+        '<h4 class="ws-join-title">Get your plan in 3 steps</h4>' +
+        '<p class="ws-join-body">WholeScripts is the dispensary we order practitioner-grade supplements through. You buy under our pharmacy &mdash; no subscription.</p>' +
         '<ol class="ws-steps ws-steps-lg">' +
           steps.map(function (s, i) {
             // Green deepens step to step; each tile gets a matching soft wash.
@@ -1846,13 +1962,13 @@
               '<span class="ws-step-body">' + s[1] + '</span>' +
               (i === 0
                 ? '<a class="btn-green ws-step-cta" href="' + WS_REGISTER + '" target="_blank" rel="noopener noreferrer">Create my free account' + EXT_ICON + '</a>' +
-                  '<span class="ws-join-note">Opens WholeScripts &middot; free &middot; about a minute</span>'
+                  '<span class="ws-join-note">Free &middot; about a minute</span>'
                 : '') +
               '</span>' +
             '</li>';
           }).join('') +
         '</ol>' +
-        '<p class="ws-alt"><strong>Want us to do it with you?</strong> Call <a href="tel:5612004245">(561) 200-4245</a> and a pharmacist will set it up over the phone, step by step. Already have a WholeScripts account? We&rsquo;ll link it to the pharmacy.</p>' +
+        '<p class="ws-alt"><strong>Want help?</strong> Call <a href="tel:5612004245">(561) 200-4245</a> and a pharmacist will set it up over the phone.</p>' +
       '</div>';
     }
 
@@ -1955,6 +2071,8 @@
 
     function showResults() {
       finished = true;
+      interlude = false;
+      clearInterludeTimers();
       fill.style.width = '100%';
       stepLabel.textContent = 'Your Results';
       stepCount.textContent = 'Complete';
@@ -1964,10 +2082,14 @@
       expanded.clear();
       renderResultsBody();
 
-      // Swap footer to result actions
+      // Swap footer to result actions. Back keeps working the way it does on every
+      // other step — it steps back one screen, to the Xymogen page.
       footer.innerHTML =
-        '<button class="btn-quiet" id="quiz-retake">' +
-          '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Retake quiz</button>' +
+        '<div class="rx-nav">' +
+          '<button class="btn-quiet" id="quiz-back">' +
+            '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back</button>' +
+          '<button class="btn-quiet" id="quiz-retake">Retake quiz</button>' +
+        '</div>' +
         '<div class="mob-ctas" style="display:flex; gap:12px; flex-wrap:wrap; justify-content:flex-end;">' +
           '<a href="/contact" class="btn-quiet">Message us</a>' +
           '<a href="tel:5612004245" class="btn-green">Questions? Call (561) 200-4245</a>' +
@@ -1977,13 +2099,12 @@
 
     function resetQuiz() {
       for (const k in answers) delete answers[k];
-      idx = 0; finished = false;
+      idx = 0; finished = false; interlude = false; interludeReady = false;
+      waitServed = false;   // a fresh attempt earns a fresh build screen
+      clearInterludeTimers();
       recommended = []; reasons = {}; expanded.clear();
-      footer.innerHTML =
-        '<button class="btn-quiet" id="quiz-back">' +
-          '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back</button>' +
-        '<span class="quiz-hint" id="quiz-hint">Select an option to continue</span>' +
-        '<button class="btn-green" id="quiz-next" disabled>Next <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>';
+      footer.innerHTML = stepFooterMarkup();
+      footer.style.flexWrap = '';
       renderQuestion();
       topbar.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
