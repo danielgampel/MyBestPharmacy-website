@@ -1011,15 +1011,27 @@
     mq.addEventListener ? mq.addEventListener('change', sync) : mq.addListener(sync);
   })();
 
-  // Wellness quiz popup — shows once, then stays away for 7 days after dismissal
+  // Wellness quiz popup — surfaces the quiz for visitors who'd scroll past the
+  // inline teaser on mobile. Shown at most once per browsing session, so a
+  // refresh never re-opens it, then snoozed on a timer: a few days after someone
+  // waves it off, a long stretch once they've actually gone to the quiz.
+  // Append ?showquiz=1 to the URL to force it open for a demo.
   (() => {
     const pop = document.getElementById('quiz-pop-overlay');
     if (!pop) return;
-    const KEY = 'mbpQuizPopDismissed';
-    const SNOOZE_DAYS = 7;
-    const read = () => { try { return Number(localStorage.getItem(KEY)) || 0; } catch (e) { return 0; } };
-    const save = () => { try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {} };
-    if (Date.now() - read() < SNOOZE_DAYS * 86400000) return;
+
+    const KEY = 'mbpQuizPopSnoozeUntil';
+    const SESSION_KEY = 'mbpQuizPopSeen';
+    const SNOOZE_DISMISSED = 3;   // days — closed it without going to the quiz
+    const SNOOZE_TOOK_QUIZ = 90;  // days — clicked through to the quiz
+
+    const forced = /[?&]showquiz=1/.test(location.search);
+    const snoozedUntil = () => { try { return Number(localStorage.getItem(KEY)) || 0; } catch (e) { return 0; } };
+    const snooze = (days) => { try { localStorage.setItem(KEY, String(Date.now() + days * 86400000)); } catch (e) {} };
+    const seenThisSession = () => { try { return sessionStorage.getItem(SESSION_KEY) === '1'; } catch (e) { return false; } };
+    const markSeen = () => { try { sessionStorage.setItem(SESSION_KEY, '1'); } catch (e) {} };
+
+    if (!forced && (seenThisSession() || Date.now() < snoozedUntil())) return;
 
     const closeBtn = document.getElementById('quiz-pop-close');
     const laterBtn = document.getElementById('quiz-pop-later');
@@ -1028,13 +1040,14 @@
 
     const show = () => {
       prevFocus = document.activeElement;
+      markSeen();
       pop.classList.add('open');
       pop.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
       document.getElementById('quiz-pop-card').focus();
     };
     const hide = () => {
-      save();
+      snooze(SNOOZE_DISMISSED);
       pop.classList.remove('open');
       pop.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
@@ -1045,7 +1058,7 @@
     laterBtn.addEventListener('click', hide);
     pop.addEventListener('click', (e) => { if (e.target === pop) hide(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && pop.classList.contains('open')) hide(); });
-    cta.addEventListener('click', save);
+    cta.addEventListener('click', () => snooze(SNOOZE_TOOK_QUIZ));
 
     setTimeout(show, navigator.webdriver ? 0 : 1200);
   })();
