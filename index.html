@@ -255,6 +255,29 @@
       .program-item:last-child { border-bottom: none; }
 
 }
+
+    /* ── Wellness quiz popup ─────────────────────────── */
+    .quiz-pop-overlay { position: fixed; inset: 0; background: rgba(7,26,11,0.5); z-index: 300; display: flex; align-items: center; justify-content: center; padding: 16px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .quiz-pop-overlay.open { opacity: 1; pointer-events: auto; }
+    .quiz-pop { position: relative; background: #fff; border-radius: 20px; width: 100%; max-width: 430px; padding: 40px 32px 32px; text-align: center; box-shadow: 0 24px 64px rgba(11,48,22,0.28), 0 4px 16px rgba(11,48,22,0.12); transform: translateY(14px) scale(0.97); transition: transform 0.32s cubic-bezier(0.22,1,0.36,1); }
+    .quiz-pop-overlay.open .quiz-pop { transform: translateY(0) scale(1); }
+    .quiz-pop-close { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border: none; background: transparent; border-radius: 10px; color: var(--gray-600); cursor: pointer; transition: background 0.2s ease, color 0.2s ease; }
+    .quiz-pop-close:hover { background: var(--gray-50); color: var(--blue); }
+    .quiz-pop-close:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+    .quiz-pop-icon { width: 52px; height: 52px; margin: 0 auto 18px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(106,191,75,0.14), rgba(27,82,38,0.08)); }
+    .quiz-pop h2 { font-size: 1.72rem; font-weight: 700; color: var(--blue); letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 10px; }
+    .quiz-pop p { color: var(--gray-700); font-size: 15px; line-height: 1.65; margin-bottom: 24px; }
+    .quiz-pop .btn-green { width: 100%; justify-content: center; }
+    .quiz-pop-later { display: inline-block; margin-top: 14px; background: none; border: none; color: var(--gray-600); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; padding: 6px 10px; border-radius: 8px; transition: color 0.2s ease; }
+    .quiz-pop-later:hover { color: var(--blue); text-decoration: underline; }
+    .quiz-pop-later:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+    @media (prefers-reduced-motion: reduce) {
+      .quiz-pop-overlay, .quiz-pop { transition: none; }
+    }
+    @media (max-width: 767px) {
+      .quiz-pop { padding: 36px 22px 26px; }
+      .quiz-pop h2 { font-size: 1.5rem; }
+    }
   </style>
     <link rel="icon" href="/favicon.ico?v=2" sizes="any">
     <link rel="icon" type="image/png" href="/favicon.png?v=2">
@@ -851,6 +874,27 @@
   </div>
 </footer>
 
+<!-- ══════════════════════════ WELLNESS QUIZ POPUP ══════════════════════════ -->
+<div class="quiz-pop-overlay" id="quiz-pop-overlay" role="dialog" aria-modal="true" aria-labelledby="quiz-pop-title" aria-hidden="true">
+  <div class="quiz-pop" id="quiz-pop-card" tabindex="-1" style="outline: none;">
+    <button type="button" class="quiz-pop-close" id="quiz-pop-close" aria-label="Close">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="quiz-pop-icon">
+      <svg width="26" height="26" fill="none" stroke="var(--blue)" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5"/></svg>
+    </div>
+    <span class="tag" style="margin-bottom: 8px;">My Best Wellness Program</span>
+    <h2 id="quiz-pop-title">Not sure which supplements <em style="font-style: italic; color: var(--green-dk);">you</em> need?</h2>
+    <p>Our free 2-minute quiz asks a few simple questions, then our pharmacist recommends supplements that fit you.</p>
+    <a href="/wellness" class="btn-green" id="quiz-pop-cta">
+      Take the 2-Minute Quiz
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <br/>
+    <button type="button" class="quiz-pop-later" id="quiz-pop-later">Maybe later</button>
+  </div>
+</div>
+
 <script>
   // Sticky nav
   const nav = document.getElementById('navbar');
@@ -965,6 +1009,45 @@
 
     sync();
     mq.addEventListener ? mq.addEventListener('change', sync) : mq.addListener(sync);
+  })();
+
+  // Wellness quiz popup — shows once, then stays away for 7 days after dismissal
+  (() => {
+    const pop = document.getElementById('quiz-pop-overlay');
+    if (!pop) return;
+    const KEY = 'mbpQuizPopDismissed';
+    const SNOOZE_DAYS = 7;
+    const read = () => { try { return Number(localStorage.getItem(KEY)) || 0; } catch (e) { return 0; } };
+    const save = () => { try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {} };
+    if (Date.now() - read() < SNOOZE_DAYS * 86400000) return;
+
+    const closeBtn = document.getElementById('quiz-pop-close');
+    const laterBtn = document.getElementById('quiz-pop-later');
+    const cta = document.getElementById('quiz-pop-cta');
+    let prevFocus = null;
+
+    const show = () => {
+      prevFocus = document.activeElement;
+      pop.classList.add('open');
+      pop.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('quiz-pop-card').focus();
+    };
+    const hide = () => {
+      save();
+      pop.classList.remove('open');
+      pop.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (prevFocus && prevFocus.focus) prevFocus.focus();
+    };
+
+    closeBtn.addEventListener('click', hide);
+    laterBtn.addEventListener('click', hide);
+    pop.addEventListener('click', (e) => { if (e.target === pop) hide(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && pop.classList.contains('open')) hide(); });
+    cta.addEventListener('click', save);
+
+    setTimeout(show, navigator.webdriver ? 0 : 1200);
   })();
 </script>
 
