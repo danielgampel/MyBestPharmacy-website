@@ -36,6 +36,9 @@
     }
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+    /* Clear the fixed navbar when landing on #quiz (QR / direct-link traffic) */
+    #quiz { scroll-margin-top: 88px; }
+    @media (min-width: 768px) { #quiz { scroll-margin-top: 120px; } }
     body { font-family: 'DM Sans', sans-serif; background: var(--off-white); color: var(--gray-900); -webkit-font-smoothing: antialiased; margin: 0; padding: 0; }
     h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; margin: 0; }
     p { margin: 0; }
@@ -264,11 +267,11 @@
     .quiz-footer { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 4px 30px 30px; }
     .quiz-hint { font-size: 13px; color: var(--gray-600); }
     .quiz-disclaimer {
-      display: flex; align-items: flex-start; justify-content: center; gap: 9px;
-      max-width: 620px; margin: 22px auto 0; text-align: left;
-      color: rgba(255,255,255,0.66); font-size: 13.5px; line-height: 1.6;
+      display: flex; align-items: flex-start; justify-content: center; gap: 10px;
+      max-width: 660px; margin: 22px auto 0; text-align: left;
+      color: rgba(255,255,255,0.8); font-size: 15.5px; line-height: 1.62;
     }
-    .quiz-disclaimer svg { flex-shrink: 0; margin-top: 3px; color: var(--green); }
+    .quiz-disclaimer svg { flex-shrink: 0; margin-top: 4px; color: var(--green); }
 
     /* ── Results: selectable supplement cards ──────────────────────────────
        Same circular-check-plus-card idiom as the quiz's .opt buttons, because
@@ -405,6 +408,13 @@
       color: var(--gray-900); margin: 12px 0 0;
     }
     .rx-proto-sub { color: var(--gray-700); font-size: 14.5px; line-height: 1.6; margin: 9px auto 0; max-width: 470px; }
+    .rx-disclaimer {
+      display: flex; align-items: flex-start; gap: 10px; text-align: left;
+      max-width: 500px; margin: 16px auto 0; padding: 12px 15px;
+      border-radius: 12px; background: rgba(61,85,112,0.07); border: 1px solid var(--gray-100);
+      color: var(--gray-700); font-size: 14px; line-height: 1.55;
+    }
+    .rx-disclaimer svg { flex-shrink: 0; margin-top: 2px; color: var(--gray-600); }
     .rx-proto-includes { margin-top: 20px; padding-top: 18px; border-top: 1px dashed rgba(27,82,38,0.18); }
     .rx-proto-includes-label {
       display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.13em;
@@ -910,7 +920,7 @@
     <!-- Stated under the quiz itself, so it is read before the results rather
          than only alongside them. -->
     <p class="quiz-disclaimer">
-      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+      <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
       This quiz is not medical advice and does not replace your doctor. Always consult your physician before starting any supplement.
     </p>
   </div>
@@ -1537,8 +1547,8 @@
        'Several Xymogen formulas come as pre-measured daily packets &mdash; a whole day in one pouch. Nothing to count out, nothing to sort.'],
       ['Made in forms your body can absorb',
        'Magnesium glycinate, active B vitamins, chelated minerals &mdash; the premium forms, at the doses practitioners actually use.'],
-      ['A brand you can only get through a pharmacy',
-       'Xymogen is never sold in stores or on Amazon &mdash; only through licensed practitioners. Every bottle comes from us, so you know exactly what you&rsquo;re getting.'],
+      ['A brand best bought through a practitioner',
+       'Going through us means practitioner pricing, a bottle we can trace to the source, and someone to call if something is off &mdash; instead of a third-party seller you know nothing about.'],
       ['One line, known inside out',
        'We work with Xymogen every day, so we can tell you why each formula is in your plan &mdash; and pick up the phone when you ask.']
     ];
@@ -1835,6 +1845,15 @@
     const COPY_ICON = '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25"/></svg>';
     function valChip(t) { return '<span class="rx-val">' + CHECK_SM + t + '</span>'; }
 
+    // Repeated on the plan itself, not only under the quiz — this is the screen
+    // someone screenshots and acts on, so the reminder has to travel with it.
+    const RX_DISCLAIMER =
+      '<p class="rx-disclaimer">' +
+        '<svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>' +
+        '<span>Just a reminder: this is not medical advice. If you take prescription medication, ' +
+        'are pregnant or nursing, or have any concerns at all, check with your doctor before starting.</span>' +
+      '</p>';
+
     // Single Xymogen formula — the card brand is just the catalog brand.
     function brandFor(key) {
       return SUPPS[key].brand;
@@ -2023,6 +2042,7 @@
             '<p class="rx-proto-name">' + protocol.name + '</p>' +
             '<p class="rx-proto-sub">Built for you from your answers &mdash; ' + count +
               ' practitioner-grade supplement' + (count === 1 ? '' : 's') + ', already put together on WholeScripts.</p>' +
+            RX_DISCLAIMER +
             '<div class="rx-proto-includes">' +
               '<span class="rx-proto-includes-label">What&rsquo;s in it</span>' +
               '<div class="rx-proto-chips">' +
@@ -2037,6 +2057,7 @@
             '</div>' +
             '<h3 class="quiz-q-title" id="rx-title">' + count + ' supplement' + (count === 1 ? '' : 's') + ', chosen for you</h3>' +
             '<p class="quiz-q-sub rx-lede">Every one was chosen from your own answers &mdash; practitioner-grade, and matched to your goals.</p>' +
+            RX_DISCLAIMER +
           '</div>';
 
       stage.innerHTML =
