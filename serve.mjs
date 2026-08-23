@@ -56,7 +56,7 @@ function handleQuizLead(req, res) {
     }
 
     // Same rejections quiz-lead.php applies, so the UI's error paths are testable.
-    // ⚠️ Field rules mirrored from quiz-lead.php and wellness.html — keep all three in step.
+    // ⚠️ Field rules mirrored from quiz-lead.php and wellness.html. Keep all three in step.
     const LINK_RE = /(https?:\/\/|www\.)/i;
     const DOMAIN_TYPOS = {
       'gmial.com': 'gmail.com', 'gmai.com': 'gmail.com', 'gnail.com': 'gmail.com',
@@ -82,7 +82,7 @@ function handleQuizLead(req, res) {
       d = d.slice(0, 10);
       if (!d) return 'Please enter your phone number.';
       if (d.length < 10) return 'We need all 10 digits.';
-      if (!/^[2-9]\d{2}[2-9]\d{6}$/.test(d)) return "Check the area code — that isn't a US number.";
+      if (!/^[2-9]\d{2}[2-9]\d{6}$/.test(d)) return "Check the area code. That isn't a US number.";
       return null;
     };
     const emailError = (raw) => {
@@ -112,7 +112,7 @@ function handleQuizLead(req, res) {
 
     let error = null;
     if (String(payload.company || '').trim() !== '') {
-      console.log('\n[quiz-lead] honeypot tripped — no mail sent');
+      console.log('\n[quiz-lead] honeypot tripped, no mail sent');
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ ok: true }));
       return;
@@ -139,7 +139,7 @@ function handleQuizLead(req, res) {
     console.log(`  Tier: ${payload.tier}   Plan code: ${planCode}`);
     if (payload.note) console.log(`  Note: ${payload.note}`);
     console.log('  Send in WholeScripts:');
-    payload.plan.forEach(p => console.log(`    ☐ ${p.brand}  — ${p.name}`));
+    payload.plan.forEach(p => console.log(`    ☐ ${p.brand}  · ${p.name}`));
     const declined = Array.isArray(payload.declined) ? payload.declined.filter(d => !keys.includes(d.key)) : [];
     if (declined.length) console.log(`  Also suggested, patient skipped: ${declined.map(d => d.name).join(', ')}`);
     console.log('  Answers:');

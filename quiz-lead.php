@@ -1,6 +1,6 @@
 <?php
 /**
- * quiz-lead.php — wellness quiz handoff endpoint.
+ * quiz-lead.php: wellness quiz handoff endpoint.
  *
  * Receives a completed wellness-quiz submission from wellness.html and sends two emails:
  *   1. An intake to the pharmacy, formatted so the pharmacist can send the matching
@@ -23,7 +23,7 @@ const PHARMACY_INBOX = 'admin@mybest-pharmacy.com';
 const FROM_ADDRESS = 'wellness@mybest-pharmacy.com';
 const FROM_NAME    = 'My Best Pharmacy';
 
-/** Absolute URLs only — email clients have no page to resolve relative paths against. */
+/** Absolute URLs only, because email clients have no page to resolve relative paths against. */
 const SITE_URL  = 'https://mybest-pharmacy.com';
 const LOGO_URL  = SITE_URL . '/brand_assets/email-logo.png';
 
@@ -42,7 +42,7 @@ const PHARMACY_TEL     = '5612004245';
 const PHARMACY_ADDRESS = '1050 E Gateway Blvd, Suite 101, Boynton Beach, FL 33426';
 const PHARMACY_HOURS   = 'Mon-Fri 9 AM - 6 PM &middot; Sat 9 AM - 2 PM &middot; Sun Closed';
 
-/** Brand tokens (BUSINESS.md). Inlined below — email clients drop <style> blocks. */
+/** Brand tokens (BUSINESS.md). Inlined below, because email clients drop <style> blocks. */
 const C_GREEN_DEEP = '#1B5226';
 const C_GREEN_DARK = '#0B3016';
 const C_ACCENT     = '#6ABF4B';
@@ -52,7 +52,7 @@ const C_BORDER     = '#D8E4F0';
 const C_TEXT_MUTED = '#3D5570';
 
 /** Supplement keys the quiz can recommend, mapped to short codes for the plan code.
- *  Doubles as a whitelist — anything else in the payload is discarded. */
+ *  Doubles as a whitelist: anything else in the payload is discarded. */
 const PLAN_KEYS = [
     'magnesium' => 'MAG',
     'b12'       => 'B12',
@@ -69,7 +69,7 @@ const EMAIL_MAX       = 180;
 /** Anything that looks like a link. Spam is the only thing that puts one in a name. */
 const LINK_RE = '/(https?:\/\/|www\.)/i';
 
-/** Unambiguous misspellings of the big providers only — a real domain must never
+/** Unambiguous misspellings of the big providers only, since a real domain must never
  *  land in here, because a match is rejected rather than merely flagged. */
 const DOMAIN_TYPOS = [
     'gmial.com'   => 'gmail.com',   'gmai.com'    => 'gmail.com',
@@ -128,9 +128,8 @@ function headerSafe(string $value): string
 }
 
 /**
- * A person's name as an RFC 5322 display name. Angle brackets come out entirely —
- * a name like `Dana <script>` would otherwise leave the mail client reading
- * "script" as the reply address — and the rest is quoted so commas and periods
+ * A person's name as an RFC 5322 display name. Angle brackets come out entirely, since a name like `Dana <script>` would otherwise leave the mail client reading
+ * "script" as the reply address. The rest is quoted so commas and periods
  * cannot split the header either.
  */
 function displayName(string $name): string
@@ -161,7 +160,7 @@ function clientIp(): string
 
 /**
  * Best-effort per-IP throttle. Uses the system temp dir, which may be wiped between
- * requests on some hosts — that is acceptable, this is a speed bump, not a gate.
+ * requests on some hosts. That is acceptable; this is a speed bump, not a gate.
  */
 function rateLimited(string $ip): bool
 {
@@ -252,7 +251,7 @@ function requirePhone(string $raw): string
     }
     // North American numbering: area code and exchange both start 2–9.
     if (!preg_match('/^[2-9]\d{2}[2-9]\d{6}$/', $d)) {
-        fail("Check the area code — that isn't a US number.");
+        fail("Check the area code. That isn't a US number.");
     }
     return '(' . substr($d, 0, 3) . ') ' . substr($d, 3, 3) . '-' . substr($d, 6, 4);
 }
@@ -286,7 +285,7 @@ function requireEmail(string $raw): string
     if (array_key_exists($tld, TLD_TYPOS)) {
         fail('Did you mean ' . $local . '@' . substr($domain, 0, $dot + 1) . TLD_TYPOS[$tld] . '?');
     }
-    // Domain lowercased; the local part is left alone — technically it is
+    // Domain lowercased; the local part is left alone, since technically it is
     // case-sensitive and not ours to rewrite.
     return $local . '@' . $domain;
 }
@@ -403,7 +402,7 @@ function pharmacyEmail(array $d): string
 {
     $inner = emailHeaderBar('Wellness quiz submission', $d['name']);
 
-    // Contact — first because it is what gets acted on.
+    // Contact, first because it is what gets acted on.
     $inner .= '<tr><td style="padding:24px 30px 0;">'
         . '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" '
         . 'style="background:' . C_SURFACE . ';border:1px solid ' . C_BORDER . ';border-radius:12px;">'
@@ -451,7 +450,7 @@ function pharmacyEmail(array $d): string
             . 'color:' . C_GREEN_DARK . ';line-height:1.65;white-space:pre-wrap;">' . esc($d['note']) . '</p></td></tr>';
     }
 
-    // Full answers — reference material, so it comes last.
+    // Full answers: reference material, so it comes last.
     $rows = '';
     foreach ($d['answers'] as $qa) {
         $rows .= '<tr><td style="padding:10px 0;border-bottom:1px solid ' . C_BORDER . ';">'
@@ -472,7 +471,7 @@ function patientEmail(array $d): string
 {
     $first = explode(' ', $d['name'])[0];
 
-    $inner = emailHeaderBar('Your personalized plan', 'Thanks, ' . $first . ' — here is your plan');
+    $inner = emailHeaderBar('Your personalized plan', 'Thanks, ' . $first . '. Here is your plan');
 
     $inner .= '<tr><td style="padding:24px 30px 0;">'
         . '<p style="margin:0;font-size:16px;line-height:1.7;color:' . C_GREEN_DARK . ';">'
@@ -490,7 +489,7 @@ function patientEmail(array $d): string
     $inner .= '<tr><td style="padding:18px 30px 0;">'
         . '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">' . $items . '</table></td></tr>';
 
-    // If they asked us something, say so before anything else — otherwise the
+    // If they asked us something, say so before anything else, because otherwise the
     // email reads like nobody looked at it.
     if ($d['note'] !== '') {
         $inner .= '<tr><td style="padding:18px 30px 14px;">'
@@ -531,7 +530,7 @@ function patientEmail(array $d): string
         . '<p style="margin:0 0 14px;font-size:11px;font-weight:bold;letter-spacing:0.13em;text-transform:uppercase;color:' . C_ACCENT_DK . ';">What happens next</p>'
         . '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">' . $stepRows . '</table></td></tr>';
 
-    // Optional head start. Deliberately quieter than the three steps above — the
+    // Optional head start. Deliberately quieter than the three steps above, because the
     // recommendation is the path that arrives with products attached.
     $inner .= '<tr><td style="padding:4px 30px 0;">'
         . '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" '
@@ -605,13 +604,13 @@ if (($payload['consent'] ?? false) !== true) {
 
 // Plan. Keys are whitelisted; display strings are the quiz's own, escaped on output.
 // The patient picks which recommendations they actually want, so this is what they
-// kept — never the full set the quiz produced.
+// kept, never the full set the quiz produced.
 [$plan, $codes] = parsePlanArray($payload['plan'] ?? null);
 if (!$plan) {
     fail('Your plan did not come through. Please retake the quiz.');
 }
 
-// What was recommended and turned down. Context for the pharmacist only — it never
+// What was recommended and turned down. Context for the pharmacist only. It never
 // reaches the patient's copy, and it never affects the plan code.
 [$declined] = parsePlanArray($payload['declined'] ?? null);
 $declined = array_values(array_filter($declined, static fn($i) => !isset($codes[$i['key']])));
@@ -653,7 +652,7 @@ $data = [
 ];
 
 if (PHARMACY_INBOX === '') {
-    error_log('quiz-lead.php: PHARMACY_INBOX is unset — submission from ' . $email . ' was not delivered.');
+    error_log('quiz-lead.php: PHARMACY_INBOX is unset; submission from ' . $email . ' was not delivered.');
     respond(500, ['ok' => false, 'error' => 'We could not reach the pharmacy right now. Please call us at ' . PHARMACY_PHONE . '.']);
 }
 
@@ -669,7 +668,7 @@ if (!$intakeSent) {
     respond(500, ['ok' => false, 'error' => 'We could not send that through. Please call us at ' . PHARMACY_PHONE . '.']);
 }
 
-// The patient copy is a courtesy — the pharmacy already has what it needs, so a
+// The patient copy is a courtesy, and the pharmacy already has what it needs, so a
 // failure here must not tell the patient their submission was lost.
 if (!sendHtmlMail($email, 'Your personalized supplement plan from My Best Pharmacy', patientEmail($data))) {
     error_log('quiz-lead.php: patient copy failed for ' . $email);

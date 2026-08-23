@@ -1,4 +1,4 @@
-# LEARNINGS.md — Website Creation Knowledge Base
+# LEARNINGS.md: Website Creation Knowledge Base
 *Accumulated lessons from building My Best Pharmacy's website. Use this as an agent brief for future projects.*
 
 ---
@@ -6,12 +6,12 @@
 ## 1. Technical Pitfalls
 
 ### URL Encoding in Static Servers
-**Problem:** `serve.mjs` uses `path.join(__dirname, urlPath)` with no `decodeURIComponent()`. Filenames with spaces, commas, or special characters (e.g., `ChatGPT Image May 16, 2026, 11_37_04 PM.png`) fail silently — the browser requests the raw URL-encoded path, the server can't find the file, and returns 404.  
+**Problem:** `serve.mjs` uses `path.join(__dirname, urlPath)` with no `decodeURIComponent()`. Filenames with spaces, commas, or special characters (e.g., `ChatGPT Image May 16, 2026, 11_37_04 PM.png`) fail silently. The browser requests the raw URL-encoded path, the server can't find the file, and returns 404.  
 **Fix:** Always copy user-provided files to URL-safe names before referencing in HTML.  
 ```bash
 cp "brand_assets/bad name, here.png" brand_assets/good-name.png
 ```
-**Rule:** Every image `src` must contain only letters, numbers, hyphens, underscores, and dots — no spaces, commas, or parentheses.
+**Rule:** Every image `src` must contain only letters, numbers, hyphens, underscores, and dots. No spaces, commas, or parentheses.
 
 ---
 
@@ -32,7 +32,7 @@ pkill -f "node serve.mjs" 2>/dev/null; node serve.mjs &
 
 ### Puppeteer / Headless Screenshot Animation Bypass
 **Problem:** Scroll-reveal animations (`.reveal`, `.fu`) leave content invisible in full-page screenshots because Puppeteer doesn't scroll.  
-**Fix already in codebase:** Detect `navigator.webdriver` and instantly apply all animation classes. Don't remove this bypass — it's load-bearing for screenshot verification.
+**Fix already in codebase:** Detect `navigator.webdriver` and instantly apply all animation classes. Don't remove this bypass; it's load-bearing for screenshot verification.
 ```js
 if (navigator.webdriver) { /* instantly show all .reveal and .fu */ }
 ```
@@ -50,18 +50,18 @@ Always declare brand colors as `:root` CSS variables at the top of every page. T
   --blue:     #1B5226;  /* repurposed from old blue system */
 }
 ```
-When a client changes brand colors, replace variable values — not every instance.
+When a client changes brand colors, replace variable values, not every instance.
 
 ---
 
 ### Shared Asset Replacement Strategy
-When all pages reference the same image path (e.g., `brand_assets/pharmacylogo.png`), swapping the file at that path updates all pages at once — no HTML edits needed. Use this for logos, favicons, and any globally shared asset.
+When all pages reference the same image path (e.g., `brand_assets/pharmacylogo.png`), swapping the file at that path updates all pages at once. No HTML edits needed. Use this for logos, favicons, and any globally shared asset.
 
 ---
 
 ### Card Visual Consistency
 **Mistake made:** Added `border-top: 3px solid var(--green)` to only the lead card in a 4-card grid to "highlight" it. This looked like a bug / accidental extra border rather than intentional emphasis.  
-**Rule:** If you want to highlight one card in a uniform grid, use a different mechanism that reads clearly as intentional — a background color difference, a subtle `scale(1.02)` on hover, a badge/pill in the corner, or a slightly larger shadow. A single stray border on one card in a uniform row always looks like a mistake.
+**Rule:** If you want to highlight one card in a uniform grid, use a different mechanism that reads clearly as intentional: a background color difference, a subtle `scale(1.02)` on hover, a badge/pill in the corner, or a slightly larger shadow. A single stray border on one card in a uniform row always looks like a mistake.
 
 ---
 
@@ -70,7 +70,7 @@ After rebranding from blue → forest green, `--blue` now stores a green value. 
 - `--primary`, `--primary-dark`, `--primary-light`
 - `--accent`, `--surface`, `--text-body`, `--text-heading`
 
-Never use a hue name (`--blue`, `--green`) as a semantic variable — brands change colors.
+Never use a hue name (`--blue`, `--green`) as a semantic variable; brands change colors.
 
 ---
 
@@ -79,20 +79,20 @@ Never use a hue name (`--blue`, `--green`) as a semantic variable — brands cha
 ### Business-Specific Rules (My Best Pharmacy)
 - Compounded medications: **cash-pay only. No insurance.**
 - Retail prescriptions (non-compounded): insurance accepted, Express Scripts in-network.
-- Nations Benefits: Medicare Advantage OTC card — accepted for over-the-counter products and medical equipment.
+- Nations Benefits: Medicare Advantage OTC card, accepted for over-the-counter products and medical equipment.
 - Paper prescription: patients **must** bring a physical copy. Not paperless.
-- Equipment: both **rental and sales**. Purchase prices TBD — use "Call for Pricing."
+- Equipment: both **rental and sales**. Purchase prices TBD; use "Call for Pricing."
 
 ---
 
 ### Emphasis Balance
 **Mistake made:** Overemphasized compounding; underrepresented OTC and retail pharmacy.  
-**Rule:** When a business has multiple revenue streams, survey all of them before choosing visual hierarchy. The client knows their business better than you do — confirm which services are lead vs. support before building the first section.
+**Rule:** When a business has multiple revenue streams, survey all of them before choosing visual hierarchy. The client knows their business better than you do. Confirm which services are lead vs. support before building the first section.
 
 ---
 
 ### Insurance Claims Must Be Verified Per Service Type
-Don't assume a pharmacy accepts insurance for every service. Compounding is frequently cash-pay; retail is insurance-covered; DME may use Medicare/supplemental programs. Distinguish clearly in copy — mixing these up creates real-world patient confusion.
+Don't assume a pharmacy accepts insurance for every service. Compounding is frequently cash-pay; retail is insurance-covered; DME may use Medicare/supplemental programs. Distinguish clearly in copy; mixing these up creates real-world patient confusion.
 
 ---
 
@@ -170,7 +170,7 @@ Add `@keyframes scrollBounce` to CSS: `0%,100% { transform: translateY(0) } 50% 
 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
   <div class="spec-card reveal bg-white rounded-2xl p-8"
        style="box-shadow: 0 4px 20px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);">
-    <!-- all cards same style — highlight via badge or background, not border-top -->
+    <!-- all cards same style; highlight via badge or background, not border-top -->
   </div>
 </div>
 ```
@@ -187,5 +187,5 @@ Add `@keyframes scrollBounce` to CSS: `0%,100% { transform: translateY(0) } 50% 
 - [ ] Screenshot every page before declaring done
 - [ ] `border-top`, `border-left` visual treatments applied consistently or not at all
 - [ ] Logo appears correctly in both light and dark contexts (white card on dark hero; colored on white bg)
-- [ ] Insurance/payment claims verified with client — distinguish by service type
+- [ ] Insurance/payment claims verified with client, distinguished by service type
 - [ ] Mobile hamburger menu tested in screenshot at mobile viewport

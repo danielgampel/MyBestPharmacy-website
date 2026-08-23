@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Best Wellness Program — Personalized, Practitioner-Grade Supplements. No Subscription.</title>
-  <meta name="description" content="Take a short wellness quiz and get a personalized, practitioner-grade supplement plan from My Best Pharmacy — order what you need on WholeScripts, a month at a time. No subscription, no bulk buys." />
+  <title>My Best Wellness Program | Personalized, Practitioner-Grade Supplements. No Subscription.</title>
+  <meta name="description" content="Take a short wellness quiz and get a personalized, practitioner-grade supplement plan from My Best Pharmacy. Order what you need on WholeScripts, a month at a time. No subscription, no bulk buys." />
   <link rel="canonical" href="https://mybest-pharmacy.com/wellness" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="My Best Pharmacy" />
-  <meta property="og:title" content="My Best Wellness Program — Personalized, Practitioner-Grade Supplements. No Subscription." />
-  <meta property="og:description" content="Take a short wellness quiz and get a personalized, practitioner-grade supplement plan from My Best Pharmacy — order what you need on WholeScripts, a month at a time. No subscription, no bulk buys." />
+  <meta property="og:title" content="My Best Wellness Program | Personalized, Practitioner-Grade Supplements. No Subscription." />
+  <meta property="og:description" content="Take a short wellness quiz and get a personalized, practitioner-grade supplement plan from My Best Pharmacy. Order what you need on WholeScripts, a month at a time. No subscription, no bulk buys." />
   <meta property="og:url" content="https://mybest-pharmacy.com/wellness" />
   <meta property="og:image" content="https://mybest-pharmacy.com/brand_assets/og-image.png" />
   <meta property="og:image:width" content="1200" />
@@ -89,7 +89,7 @@
     .btn-ghost-white:hover { border-color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.08); transform: translateY(-1px); }
     .btn-ghost-white:active { transform: translateY(0); }
     .btn-ghost-white:focus-visible { outline: 3px solid #fff; outline-offset: 3px; border-radius: 10px; }
-    /* Secondary action on light ground — the returning-patient path. */
+    /* Secondary action on light ground: the returning-patient path. */
     .btn-ghost-green { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 30px; background: #fff; color: var(--green-dk); font-family: 'DM Sans',sans-serif; font-weight: 700; font-size: 15px; border-radius: 10px; border: 2px solid rgba(78,144,53,0.45); cursor: pointer; text-decoration: none; transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease; }
     .btn-ghost-green:hover { border-color: var(--green-dk); background: rgba(106,191,75,0.08); transform: translateY(-1px); }
     .btn-ghost-green:active { transform: translateY(0); }
@@ -131,14 +131,14 @@
     .story-cta { margin-top: 28px; }
     @media (max-width: 560px) { .story-cta .btn-green { width: 100%; } }
 
-    /* Dark panel — used as the interstitial step between the last quiz
+    /* Dark panel used as the interstitial step between the last quiz
        question and the results, inside the white quiz card. */
     .xy-panel { position: relative; overflow: hidden; border-radius: 20px; padding: 32px 30px; background: linear-gradient(155deg, #0B3016 0%, #1B5226 62%, #0A2E14 100%); box-shadow: 0 22px 52px rgba(11,48,22,0.20), 0 5px 16px rgba(11,48,22,0.12); }
     .xy-panel::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 55% at 85% 8%, rgba(106,191,75,0.20) 0%, transparent 60%); pointer-events: none; }
     .xy-panel > * { position: relative; z-index: 1; }
     .xy-panel-step { margin-top: 14px; }
 
-    /* Build-your-protocol wait state. The plan is already computed — the pause
+    /* Build-your-protocol wait state. The plan is already computed, and the pause
        exists so the Xymogen case gets read before the products appear. */
     .xy-load { display: flex; align-items: center; gap: 12px; margin-top: 22px; padding: 14px 16px; border-radius: 14px; background: rgba(106,191,75,0.08); border: 1px solid rgba(106,191,75,0.28); transition: background 0.3s ease, border-color 0.3s ease; }
     .xy-load.is-done { background: rgba(106,191,75,0.15); border-color: rgba(106,191,75,0.5); }
@@ -171,7 +171,7 @@
     .cmp-table > .cmp-cell:nth-last-child(-n+2) { border-bottom: none; }
     .cmp-ico { flex-shrink: 0; margin-top: 2px; }
 
-    /* Stays a real two-column comparison on phones — stacking it made the
+    /* Stays a real two-column comparison on phones. Stacking it made the
        rows read as one long alternating list instead of a side-by-side. */
     @media (max-width: 700px) {
       .cmp-table { border-radius: 16px; }
@@ -249,7 +249,7 @@
     .opt-hint { display: block; font-size: 12.5px; font-weight: 400; color: var(--gray-600); line-height: 1.35; margin-top: 3px; }
     .opt.selected .opt-hint { color: var(--green-dk); }
 
-    /* Write-in panel for an "Other" option — revealed only once Other is picked. */
+    /* Write-in panel for an "Other" option, revealed only once Other is picked. */
     .opt-other { margin-top: 14px; }
     .opt-other[hidden] { display: none; }
     .opt-other-label { display: block; font-size: 13.5px; font-weight: 600; color: var(--gray-700); margin-bottom: 8px; }
@@ -336,7 +336,7 @@
       display: flex; align-items: center; justify-content: center;
       background: linear-gradient(135deg, rgba(106,191,75,0.16), rgba(27,82,38,0.08));
     }
-    /* Display-only plan card: same look as the quiz's circular check, but static —
+    /* Display-only plan card: same look as the quiz's circular check, but static, because
        the patient orders these themselves on WholeScripts, so nothing toggles. */
     .rx-static { cursor: default; }
     .rx-static:hover { border-color: rgba(106,191,75,0.45); box-shadow: none; }
@@ -356,7 +356,7 @@
       font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; color: var(--blue);
       background: rgba(27,82,38,0.06); padding: 3px 9px; border-radius: 7px;
     }
-    /* A SKU is a long digit string, not a name — tabular figures and a touch of
+    /* A SKU is a long digit string, not a name, so tabular figures and a touch of
        tracking keep it legible, and it wraps rather than blowing out the row. */
     .rx-buy-term.is-sku {
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -375,7 +375,7 @@
     .rx-copy.is-copied { background: var(--green); border-color: var(--green); color: #fff; }
     @media (max-width: 480px) { .rx-buy-btn { margin-left: 0; width: 100%; } }
 
-    /* Value chips at the top of the results — the promise, scannable at a glance. */
+    /* Value chips at the top of the results: the promise, scannable at a glance. */
     /* ── Results: the protocol headline ──────────────────────────────────────
        The patient is handed one named thing, so the name leads and its contents
        sit directly under it. */
@@ -395,7 +395,7 @@
       margin: 0 0 2px; color: var(--gray-600); font-size: 14.5px; font-weight: 600;
       letter-spacing: 0.01em;
     }
-    /* The number is the answer the patient came for — it carries the page. */
+    /* The number is the answer the patient came for, so it carries the page. */
     .rx-proto-num {
       font-family: 'Cormorant Garamond', serif; font-weight: 700;
       font-size: clamp(2.7rem, 8.5vw, 4.9rem); line-height: 1.02; letter-spacing: -0.035em;
@@ -433,7 +433,7 @@
       color: var(--gray-600); margin: 0 0 13px;
     }
 
-    /* Not-medical-advice notice — deliberately not a footnote. */
+    /* Not-medical-advice notice, deliberately not a footnote. */
     .rx-notice {
       display: flex; align-items: flex-start; gap: 12px; margin-top: 22px;
       padding: 16px 18px; border-radius: 14px;
@@ -451,7 +451,7 @@
     }
     .rx-val svg { flex-shrink: 0; }
 
-    /* Compact catalog list — one tidy card instead of six big tiles. */
+    /* Compact catalog list: one tidy card instead of six big tiles. */
     .supp-row {
       display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 16px;
       padding: 16px 0; border-bottom: 1px solid var(--gray-100);
@@ -540,7 +540,7 @@
        button stays for whole-form problems.
 
        The line is reserved whether or not there is a message. Hiding it when
-       empty made the form grow the moment a field lost focus — and a message
+       empty made the form grow the moment a field lost focus, and a message
        appearing between mousedown and mouseup slid the consent checkbox out from
        under the pointer, so the click never landed. Messages are kept short
        enough to sit on one line at 390px for the same reason. */
@@ -549,7 +549,7 @@
       font-size: 12.5px; line-height: 17px; color: #A5321F;
     }
 
-    /* Honeypot — off-screen rather than display:none so bots still see it. */
+    /* Honeypot, off-screen rather than display:none so bots still see it. */
     .ws-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
     .ws-consent {
@@ -613,7 +613,7 @@
     .ws-step-cta { align-self: flex-start; margin-top: 13px; }
     @media (max-width: 640px) { .ws-step-cta { width: 100%; justify-content: center; } }
 
-    /* Optional head start — quieter than the numbered steps above it on purpose. */
+    /* Optional head start, quieter than the numbered steps above it on purpose. */
     .ws-headstart {
       margin-top: 20px; padding: 18px;
       border: 1px solid var(--gray-100); border-radius: 14px;
@@ -668,7 +668,7 @@
 
     /* Phones: the hint made the Back / hint / Next row run out of room (it
        collapsed to one word per line, then stacked awkwardly on its own line).
-       Drop the standalone hint here and keep Back / Next on one clean row — the
+       Drop the standalone hint here and keep Back / Next on one clean row. The
        greyed-out disabled Next already signals that an answer is required. */
     @media (max-width: 560px) {
       .quiz-hint { display: none; }
@@ -767,7 +767,7 @@
     </h1>
     <!-- Subheadline -->
     <p class="fu fu-3" style="font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: rgba(255,255,255,0.82); line-height: 1.7; max-width: 588px; margin: 0 auto 38px;">
-      Take a 1-minute quiz and get a personalized plan of practitioner-grade Xymogen supplements. Order just what you need, a month at a time — no subscription, no bulk buys.
+      Take a 1-minute quiz and get a personalized plan of practitioner-grade Xymogen supplements. Order just what you need, a month at a time. No subscription, no bulk buys.
     </p>
 
     <!-- CTAs -->
@@ -793,7 +793,7 @@
   <div class="max-w-2xl mx-auto px-6 lg:px-10 text-center reveal">
     <span class="tag">Our Story</span>
     <h2 class="underline-g underline-g-c" style="font-size: clamp(1.85rem, 4vw, 2.6rem); font-weight: 700; color: var(--gray-900); letter-spacing: -0.025em; margin-bottom: 22px;">Why We Built This Program</h2>
-    <p class="story-p">In a supplement aisle, most people are guessing — grabbing whatever sounds right and paying for bottles they never finish. We heard it from our own patients, week after week.</p>
+    <p class="story-p">In a supplement aisle, most people are guessing, grabbing whatever sounds right and paying for bottles they never finish. We heard it from our own patients, week after week.</p>
     <p class="story-p">So we built My Best Wellness: a short assessment that matches professional-grade Xymogen supplements to what you're actually dealing with.</p>
     <div class="story-cta">
       <a href="#quiz" class="btn-green">
@@ -858,7 +858,7 @@
         <div class="bg-white rounded-2xl p-8 h-full" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
           <span style="font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 700; color: rgba(106,191,75,0.5); line-height: 1;">02</span>
           <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Get your personalized plan</h3>
-          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">See your personalized plan right away — practitioner-grade supplements matched to your body, your symptoms, and your goals.</p>
+          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">See your personalized plan right away: practitioner-grade supplements matched to your body, your symptoms, and your goals.</p>
         </div>
       </div>
 
@@ -867,7 +867,7 @@
         <div class="bg-white rounded-2xl p-8 h-full" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04);">
           <span style="font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 700; color: rgba(106,191,75,0.5); line-height: 1;">03</span>
           <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--gray-900); margin: 12px 0 10px;">Order it on WholeScripts</h3>
-          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">Set up a free account under our pharmacy, add your supplements, and check out. Reorder anytime — no subscription. We show you exactly how, or set it up with you by phone.</p>
+          <p style="color: var(--gray-700); line-height: 1.7; font-size: 15px;">Set up a free account under our pharmacy, add your supplements, and check out. Reorder anytime. No subscription. We show you exactly how, or set it up with you by phone.</p>
         </div>
       </div>
 
@@ -884,7 +884,7 @@
     <div class="text-center" style="margin-bottom: 44px;">
       <span class="tag" style="color: var(--green);">Your Wellness Quiz</span>
       <h2 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: #fff; letter-spacing: -0.025em;">Let's find what your body needs</h2>
-      <p style="color: rgba(255,255,255,0.62); font-size: 1.05rem; margin-top: 12px; max-width: 560px; margin-left: auto; margin-right: auto;">No two patients are the same. Your answers shape a plan built for you — not a one-size-fits-all bundle.</p>
+      <p style="color: rgba(255,255,255,0.62); font-size: 1.05rem; margin-top: 12px; max-width: 560px; margin-left: auto; margin-right: auto;">No two patients are the same. Your answers shape a plan built for you, not a one-size-fits-all bundle.</p>
     </div>
 
     <!-- Quiz card -->
@@ -946,7 +946,7 @@
           <svg width="24" height="24" fill="none" stroke="var(--green)" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z"/></svg>
         </div>
         <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Personalized to you</h3>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Your plan comes from your own answers — matched to your body, symptoms, and goals. Never a one-size-fits-all bundle.</p>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">Your plan comes from your own answers, matched to your body, symptoms, and goals. Never a one-size-fits-all bundle.</p>
       </div>
 
       <div class="spec-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
@@ -954,7 +954,7 @@
           <svg width="24" height="24" fill="none" stroke="var(--green)" stroke-width="1.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
         </div>
         <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--gray-900); margin-bottom: 8px;">Practitioner-grade only</h3>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">100% Xymogen — professional-grade supplements you can't buy in retail stores, ordered through the WholeScripts dispensary under our pharmacy.</p>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px;">100% Xymogen: professional-grade supplements you can't buy in retail stores, ordered through the WholeScripts dispensary under our pharmacy.</p>
       </div>
 
       <div class="spec-card reveal bg-white rounded-2xl p-7" style="box-shadow: 0 4px 20px rgba(27,82,38,0.07), 0 1px 4px rgba(27,82,38,0.04); border: 1px solid var(--gray-100);">
@@ -982,7 +982,7 @@
       <div class="supp-row"><span class="supp-name">Vitamin K2 + D3</span><span class="supp-desc">Bone strength and healthy vitamin D.</span></div>
       <div class="supp-row"><span class="supp-name">Omega-3 Fish Oil</span><span class="supp-desc">Heart, cholesterol, joints, and a balanced inflammatory response.</span></div>
       <div class="supp-row"><span class="supp-name">B12 / B-Complex</span><span class="supp-desc">Everyday energy and mental clarity.</span></div>
-      <div class="supp-row"><span class="supp-name">DIM (DIMension 3)</span><span class="supp-desc">Healthy estrogen metabolism — added only when it fits your therapy.</span></div>
+      <div class="supp-row"><span class="supp-name">DIM (DIMension 3)</span><span class="supp-desc">Healthy estrogen metabolism. Added only when it fits your therapy.</span></div>
     </div>
     <p style="text-align: center; color: var(--gray-600); font-size: 13.5px; margin-top: 20px;">You only ever get the ones that fit you. We add more as the program grows.</p>
   </div>
@@ -998,19 +998,19 @@
     <div style="display: flex; flex-direction: column; gap: 14px;">
       <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
         <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">Is this a substitute for talking to my doctor?</summary>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">No. The quiz gives a personalized starting point based on your answers. These are supplement suggestions, not medical advice — we always recommend keeping your prescribing physician in the loop.</p>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">No. The quiz gives a personalized starting point based on your answers. These are supplement suggestions, not medical advice. We always recommend keeping your prescribing physician in the loop.</p>
       </details>
       <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
         <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">Do I have to subscribe?</summary>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">No. There's no subscription. You order your supplements on WholeScripts a month at a time and pay there — nothing auto-charges, and you're never locked in.</p>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">No. There's no subscription. You order your supplements on WholeScripts a month at a time and pay there. Nothing auto-charges, and you're never locked in.</p>
       </details>
       <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
         <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">How do I order after the quiz?</summary>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">The quiz matches you to one of our protocols — a set of supplements our pharmacist has already put together on WholeScripts — and your results page gives you the two links you need. <strong>1)</strong> Create your free WholeScripts account using the first link. It opens a page that already lists My Best Pharmacy as your practitioner, so there's no referral code to type in — and it's what connects your account to us, so do this one first. <strong>2)</strong> Open your protocol with the second link. Everything in it is already bundled, so you press <strong>Add to Cart</strong> once instead of searching for products one at a time. <strong>3)</strong> Choose monthly delivery if you want it to arrive automatically, then check out and pay WholeScripts directly. Rather not do it alone? Call us and a pharmacist will walk you through it.</p>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">The quiz matches you to one of our protocols, a set of supplements our pharmacist has already put together on WholeScripts, and your results page gives you the two links you need. <strong>1)</strong> Create your free WholeScripts account using the first link. It opens a page that already lists My Best Pharmacy as your practitioner, so there's no referral code to type in, and it's what connects your account to us, so do this one first. <strong>2)</strong> Open your protocol with the second link. Everything in it is already bundled, so you press <strong>Add to Cart</strong> once instead of searching for products one at a time. <strong>3)</strong> Choose monthly delivery if you want it to arrive automatically, then check out and pay WholeScripts directly. Rather not do it alone? Call us and a pharmacist will walk you through it.</p>
       </details>
       <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
         <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">What will it cost?</summary>
-        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">You pay WholeScripts directly for the supplements you order, and prices show once you're signed in. There's no membership fee and no subscription — you only pay for what you add to your cart.</p>
+        <p style="color: var(--gray-700); line-height: 1.7; font-size: 14.5px; margin-top: 12px;">You pay WholeScripts directly for the supplements you order, and prices show once you're signed in. There's no membership fee and no subscription. You only pay for what you add to your cart.</p>
       </details>
       <details class="reveal" style="background: var(--off-white); border: 1px solid var(--gray-100); border-radius: 14px; padding: 20px 22px;">
         <summary style="cursor: pointer; font-weight: 600; color: var(--gray-900); font-size: 16px; list-style: none;">Why WholeScripts and Xymogen?</summary>
@@ -1026,7 +1026,7 @@
     <div class="grid md:grid-cols-4 gap-10" style="margin-bottom: 48px;">
       <!-- Brand col -->
       <div class="md:col-span-2">
-        <!-- The logo PNG has no alpha channel — it is artwork on an opaque white
+        <!-- The logo PNG has no alpha channel: it is artwork on an opaque white
              background. A brightness(0)/invert(1) knockout therefore whited out the
              whole rectangle instead of the artwork, which is why it read as a blank
              box. The brand greens (#1B5226) are also too close to the footer
@@ -1034,7 +1034,7 @@
         <div class="footer-logo-card">
           <img src="brand_assets/newpharmacylogo.PNG" alt="My Best Pharmacy" class="h-16 w-auto" style="display: block;" />
         </div>
-        <p style="color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.75; max-width: 300px;">Full-service pharmacy — OTC products, retail prescriptions, custom compounding, and medical equipment — serving Boynton Beach and South Florida.</p>
+        <p style="color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.75; max-width: 300px;">Full-service pharmacy offering OTC products, retail prescriptions, custom compounding, and medical equipment, serving Boynton Beach and South Florida.</p>
         <p class="mt-4" style="color: var(--green); font-size: 13px; font-weight: 500;">Licensed pharmacy in the State of Florida.</p>
       </div>
       <!-- Quick links -->
@@ -1119,7 +1119,7 @@
     // Every formula is 100% Xymogen (practitioner-grade, sold through WholeScripts).
     // Patients register once through WS_REGISTER so their account links to the
     // pharmacy (account-based referral), then search each `product` and order it
-    // themselves — no cart is built for them on our side.
+    // themselves. No cart is built for them on our side.
     // The one and only WholeScripts entry point: registering through this referral
     // link is what credits the pharmacy and connects the account to our pharmacists.
     // We never send a patient to WholeScripts any other way (a cold search link would
@@ -1134,7 +1134,7 @@
        was run through the engine, and after the MIN_PLAN top-up they collapse to
        exactly these. Nothing else is reachable, so nothing else needs building.
 
-       `url` is the WholeScripts protocol link — it opens the protocol with the
+       `url` is the WholeScripts protocol link: it opens the protocol with the
        products already in the cart, and registering through it connects the new
        account to My Best Pharmacy. `name` should match what the protocol is
        called in WholeScripts so the page and the cart agree.
@@ -1170,11 +1170,11 @@
     }
     // `brand` = how the product reads on the card. `product` = the bare term the
     // patient searches on WholeScripts once signed in. `about` is the plain-English
-    // "what is this?" — supports phrasing only, no disease claims.
+    // "what is this?" blurb, supports phrasing only, no disease claims.
     // `sku` is the WholeScripts SKU the patient pastes into the search box. It is
     // size-specific (a 120-count and a 240-count bottle are different SKUs), so it
     // must be copied verbatim from the WholeScripts product page for the exact size
-    // we want patients ordering — never guessed. A supplement with an empty `sku`
+    // we want patients ordering, never guessed. A supplement with an empty `sku`
     // falls back to searching by product name, so the card is never blank.
     const SUPPS = {
       magnesium: {
@@ -1222,15 +1222,15 @@
         sub: 'This helps us tailor recommendations to your biology and life stage.',
         options: [
           { value: 'male',      label: 'Male' },
-          { value: 'premeno',   label: 'Female — premenopausal',  hint: 'Still getting regular periods' },
-          { value: 'perimeno',  label: 'Female — perimenopausal', hint: 'Periods irregular or changing' },
-          { value: 'postmeno',  label: 'Female — postmenopausal', hint: 'No period for a year or more' }
+          { value: 'premeno',   label: 'Female, premenopausal',   hint: 'Still getting regular periods' },
+          { value: 'perimeno',  label: 'Female, perimenopausal',  hint: 'Periods irregular or changing' },
+          { value: 'postmeno',  label: 'Female, postmenopausal',  hint: 'No period for a year or more' }
         ]
       },
       {
         id: 'age', type: 'single',
         title: "What's your age range?",
-        sub: 'Nutrient needs shift with age — this helps us tailor your plan.',
+        sub: 'Nutrient needs shift with age, so this helps us tailor your plan.',
         options: [
           { value: 'under30', label: 'Under 30' },
           { value: '30to44',  label: '30 – 44' },
@@ -1241,7 +1241,7 @@
       {
         id: 'therapy', type: 'multi',
         title: 'Are you currently on hormone therapy?',
-        sub: 'Select all that apply — or choose "Not currently."',
+        sub: 'Select all that apply, or choose "Not currently."',
         options: [
           { value: 'testosterone', label: 'Testosterone' },
           { value: 'progesterone', label: 'Progesterone' },
@@ -1251,7 +1251,7 @@
           { value: 'none',         label: 'Not currently' }
         ],
         // Picking `value` reveals a free-text box stored under `id`. The text is
-        // required before Next unlocks — an unnamed "Other" tells us nothing.
+        // required before Next unlocks, since an unnamed "Other" tells us nothing.
         other: {
           value: 'other', id: 'therapyOther',
           label: 'Which hormone therapy are you on?',
@@ -1261,7 +1261,7 @@
       {
         id: 'goal', type: 'multi',
         title: "What are your main wellness goals?",
-        sub: 'Select all that apply — more than one is totally normal.',
+        sub: 'Select all that apply. More than one is totally normal.',
         options: [
           { value: 'energy',  label: 'More energy' },
           { value: 'sleep',   label: 'Better sleep' },
@@ -1276,7 +1276,7 @@
       {
         id: 'symptoms', type: 'multi',
         title: 'Which symptoms have you been experiencing?',
-        sub: 'Select all that apply — or choose "None of the above."',
+        sub: 'Select all that apply, or choose "None of the above."',
         options: [
           { value: 'fatigue',     label: 'Fatigue' },
           { value: 'brainfog',    label: 'Brain fog / poor concentration' },
@@ -1296,9 +1296,9 @@
         title: 'How would you describe your daily stress level?',
         sub: 'Chronic stress depletes key nutrients and disrupts sleep, mood, and hormone balance.',
         options: [
-          { value: 'low',      label: 'Low — I feel mostly calm' },
-          { value: 'moderate', label: 'Moderate — occasional stress' },
-          { value: 'high',     label: 'High — frequently stressed' },
+          { value: 'low',      label: 'Low: I feel mostly calm' },
+          { value: 'moderate', label: 'Moderate: occasional stress' },
+          { value: 'high',     label: 'High: frequently stressed' },
           { value: 'veryhigh', label: 'Very high or chronic stress' }
         ]
       },
@@ -1307,9 +1307,9 @@
         title: 'How much time do you spend in direct sunlight each week?',
         sub: 'Sun exposure is the primary natural trigger for vitamin D production.',
         options: [
-          { value: 'rarely',    label: 'Rarely — mostly indoors' },
-          { value: 'sometimes', label: 'Sometimes — a few hours a week' },
-          { value: 'often',     label: 'Often — outdoors most days' }
+          { value: 'rarely',    label: 'Rarely: mostly indoors' },
+          { value: 'sometimes', label: 'Sometimes: a few hours a week' },
+          { value: 'often',     label: 'Often: outdoors most days' }
         ]
       },
       {
@@ -1326,7 +1326,7 @@
       {
         id: 'history', type: 'multi',
         title: 'Any relevant medical history?',
-        sub: 'Select all that apply — or choose "None of the above."',
+        sub: 'Select all that apply, or choose "None of the above."',
         options: [
           { value: 'lowvitd',      label: 'Low vitamin D' },
           { value: 'osteopenia',   label: 'Osteopenia' },
@@ -1349,7 +1349,7 @@
     const MAX_REASONS = 3;
     const FALLBACK_REASON = 'nothing in your answers pointed to a specific gap, so this is where most plans start';
     // Every plan is filled as a WholeScripts protocol, and a protocol is built from
-    // at least three products — so a plan must never come back shorter than this.
+    // at least three products, so a plan must never come back shorter than this.
     const MIN_PLAN = 3;
     const TOPUP_REASON = 'it is one of the foundations we build every plan on';
 
@@ -1370,7 +1370,7 @@
     }
 
     const RULES = {
-      // Magnesium Glycinate — sleep, stress, muscle tension, energy support
+      // Magnesium Glycinate: sleep, stress, muscle tension, energy support
       magnesium: { reasons: [
         [v => v.sym('poorsleep'),  'you told us you sleep poorly'],
         [v => v.sym('anxiety'),    "you've been feeling anxious or stressed"],
@@ -1384,7 +1384,7 @@
         [v => v.a.stress === 'high' || v.a.stress === 'veryhigh', 'your daily stress runs high']
       ] },
 
-      // B12 / B-Complex — energy, cognition, nerve support
+      // B12 / B-Complex: energy, cognition, nerve support
       b12: { reasons: [
         [v => v.sym('fatigue'),   "you've been running low on energy"],
         [v => v.sym('brainfog'),  'brain fog has been getting in your way'],
@@ -1395,7 +1395,7 @@
         [v => v.a.lifestage === 'postmeno', 'B12 gets harder to absorb after menopause']
       ] },
 
-      // Omega-3 Fish Oil — heart, joints, inflammation, mood
+      // Omega-3 Fish Oil: heart, joints, inflammation, mood
       omega: { reasons: [
         [v => v.sym('joint'),          'your joints have been bothering you'],
         [v => v.sym('moodswings'),     'your mood has been swinging'],
@@ -1406,7 +1406,7 @@
         [v => v.a.diet === 'veganveg', 'vegetarian and vegan diets are naturally low in omega-3s']
       ] },
 
-      // Vitamin K2 + D3 — bone, vitamin D, menopause support
+      // Vitamin K2 + D3: bone, vitamin D, menopause support
       k2d3: { reasons: [
         [v => v.hist('lowvitd'),      'low vitamin D is part of your history'],
         [v => v.hist('osteopenia'),   'osteopenia is part of your history'],
@@ -1419,13 +1419,13 @@
         [v => v.a.sun === 'rarely',   "you're rarely in direct sunlight"]
       ] },
 
-      // DIM — estrogen metabolism. Gated conservatively: never for males, for
+      // DIM: estrogen metabolism. Gated conservatively: never for males, for
       // estrogen or combination therapy, or alongside hot flashes. The gate runs
       // before the reasons, so no trigger can route around it.
       dim: {
         // A written-in therapy also blocks. We cannot tell from free text whether
-        // what the patient typed is estrogen-based — brand names and misspellings
-        // make keyword matching unreliable — so an unrecognized therapy is treated
+        // what the patient typed is estrogen-based, since brand names and misspellings
+        // make keyword matching unreliable, so an unrecognized therapy is treated
         // as one DIM should not be paired with, rather than guessed at.
         blocked: v => v.thr('estrogen') || v.thr('combination') || v.thr('other') ||
                       v.sym('hotflashes') || v.a.lifestage === 'male',
@@ -1447,7 +1447,7 @@
         if (hits.length) matched[key] = hits;
       });
       // Top up short plans to MIN_PLAN from the foundational supplements, in ORDER.
-      // A supplement whose `blocked` gate fired is never used to fill — that gate is
+      // A supplement whose `blocked` gate fired is never used to fill. That gate is
       // a safety rule, not a preference, so DIM can never arrive this way. The first
       // four carry no gate, so three is always reachable without touching it.
       ORDER.forEach(key => {
@@ -1533,7 +1533,7 @@
     }
 
     /* One beat between the last answer and the plan. The plan is already computed
-       the moment the last question is answered — this pause is deliberate, so the
+       the moment the last question is answered, and this pause is deliberate, so the
        Xymogen case gets read before the product list appears and the patient knows
        what they are looking at. Change INTERLUDE_MS to retune the wait. */
     const INTERLUDE_MS = 22000;
@@ -1623,7 +1623,7 @@
     }
 
     // Stepping back from the finished plan. The protocol is already built, so this
-    // opens ready — no second wait — and Back / Next behave like any other step.
+    // opens ready with no second wait, and Back / Next behave like any other step.
     function showInterludeFromResults() {
       clearInterludeTimers();
       interlude = true;
@@ -1662,7 +1662,7 @@
       if (hint) hint.textContent = '';
       if (nextBtn) { nextBtn.disabled = true; nextBtn.innerHTML = 'Preparing…'; }
 
-      // Already sat through it once this attempt — changing an answer and coming
+      // Already sat through it once this attempt, so changing an answer and coming
       // forward again should not cost another wait.
       if (waitServed) {
         fill.style.transition = '';
@@ -1772,7 +1772,7 @@
         btn.setAttribute('aria-checked', on);
       });
       // Reveal the write-in with Other, and drop whatever was typed when it is
-      // cleared — including via "Not currently", which wipes every other pick.
+      // cleared, including via "Not currently", which wipes every other pick.
       if (q.other) {
         const on = otherOn(q);
         const panel = document.getElementById('opt-other');
@@ -1817,7 +1817,7 @@
       }
     }
     function goBack() {
-      // One screen back from the plan is the Xymogen page, not the last question —
+      // One screen back from the plan is the Xymogen page, not the last question,
       // and it never replays the wait.
       if (finished) { showInterludeFromResults(); scrollToQuiz(); return; }
       if (interlude) { renderQuestion(); scrollToQuiz(); return; }
@@ -1837,7 +1837,7 @@
     /* ── Results ─────────────────────────────────────────────────────────────
        The plan is display-only: the patient registers on WholeScripts under our
        pharmacy and orders each product themselves, so there is nothing to submit
-       here. The quiz never lists a supplement it did not recommend — that would
+       here. The quiz never lists a supplement it did not recommend, which would
        route around the DIM safety gate in RULES. */
     let recommended = [];          // keys the engine returned, in ORDER
     let reasons = {};              // key → matched reason strings
@@ -1851,7 +1851,7 @@
     const COPY_ICON = '<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25"/></svg>';
     function valChip(t) { return '<span class="rx-val">' + CHECK_SM + t + '</span>'; }
 
-    // Repeated on the plan itself, not only under the quiz — this is the screen
+    // Repeated on the plan itself, not only under the quiz. This is the screen
     // someone screenshots and acts on, so the reminder has to travel with it.
     const RX_DISCLAIMER =
       '<p class="rx-disclaimer">' +
@@ -1860,7 +1860,7 @@
         'are pregnant or nursing, or have any concerns at all, check with your doctor before starting.</span>' +
       '</p>';
 
-    // Single Xymogen formula — the card brand is just the catalog brand.
+    // Single Xymogen formula, so the card brand is just the catalog brand.
     function brandFor(key) {
       return SUPPS[key].brand;
     }
@@ -1871,7 +1871,7 @@
       const s = SUPPS[key];
       const why = reasonSentence(reasons[key] || [FALLBACK_REASON]);
       const open = expanded.has(key);
-      // Order by SKU when we have one — an exact code can't be mistyped or matched
+      // Order by SKU when we have one, since an exact code can't be mistyped or matched
       // to the wrong bottle size. Without a SKU on file we fall back to the product
       // name, which is still searchable, rather than showing an empty row.
       const hasSku = !!s.sku;
@@ -1915,7 +1915,7 @@
       // Order matters. A logged-out visitor opening a protocol link is bounced to a
       // bare /login that carries no pharmacy context, so the account gets made with
       // no connection to us. Registering first through the referral link is the only
-      // path that attaches the pharmacy — that page shows "Your Practitioner: My Best
+      // path that attaches the pharmacy, and that page shows "Your Practitioner: My Best
       // Pharmacy" already filled in, so there is no code for the patient to enter.
       const steps = [
         ['Create your free account',
@@ -1943,9 +1943,9 @@
           }).join('') +
         '</ol>' +
         // Two actions, in the order that keeps the pharmacy attached. WholeScripts
-        // has no post-registration redirect — its own redirect service is defined but
+        // has no post-registration redirect. Its own redirect service is defined but
         // never called, and it drops the whole URL when bouncing a logged-out visitor
-        // to /login — so the patient genuinely has to come back for step 2. Saying so
+        // to /login, so the patient genuinely has to come back for step 2. Saying so
         // is better than letting them finish signing up and wonder where to go.
         '<div class="ws-final-cta">' +
           '<p class="ws-final-label">Step 1 &mdash; new to WholeScripts</p>' +
@@ -1997,8 +1997,8 @@
       '</div>';
     }
 
-    // Puts the exact search term — the SKU where we have one, otherwise the product
-    // name — on the clipboard so the patient can paste it straight into the
+    // Puts the exact search term (the SKU where we have one, otherwise the product
+    // name) on the clipboard so the patient can paste it straight into the
     // WholeScripts search box after signing up. The button restores its own label
     // rather than a hardcoded one, since it differs per card.
     function copyProduct(btn) {
@@ -2069,11 +2069,11 @@
       stage.innerHTML =
         header +
 
-        // Why each one is in there — the personalization, under the protocol name.
+        // Why each one is in there: the personalization, under the protocol name.
         '<p class="rx-why-heading">Why each of these is in your protocol</p>' +
         '<div style="display:flex; flex-direction:column; gap:12px;">' + rows + '</div>' +
 
-        // How to order — the protocol walkthrough, or the manual product-by-product
+        // How to order: the protocol walkthrough, or the manual product-by-product
         // fallback for any plan that has no protocol link yet.
         (protocol ? protocolCalloutMarkup(protocol, count) : wsCalloutMarkup());
 
@@ -2110,7 +2110,7 @@
       renderResultsBody();
 
       // Swap footer to result actions. Back keeps working the way it does on every
-      // other step — it steps back one screen, to the Xymogen page.
+      // other step: it steps back one screen, to the Xymogen page.
       footer.innerHTML =
         '<div class="rx-nav">' +
           '<button class="btn-quiet" id="quiz-back">' +
@@ -2156,7 +2156,7 @@
 <script>
   /* Tuck the call bar away while the quiz is on screen. It is fixed to the
      bottom at z-index 150, so on the taller questions it can sit over the
-     Next button — a tap meant for Next would dial the pharmacy instead. */
+     Next button, and a tap meant for Next would dial the pharmacy instead. */
   (function () {
     const bar = document.querySelector('.mob-call-bar');
     const shell = document.getElementById('quiz-shell');

@@ -1,4 +1,4 @@
-# CONTEXT.md — My Best Pharmacy Website
+# CONTEXT.md: My Best Pharmacy Website
 *Last updated: 2026-07-21. Allows a fresh Claude Code session to resume with zero context loss.*
 
 > **Business facts** (address, hours, phone, business rules, brand palette) are canonical in
@@ -18,12 +18,12 @@ A **6-page static informational website** for **My Best Pharmacy**, a full-servi
 ---
 
 ## Critical Business Rules
-- Compounded medications: **cash-pay only — no insurance**
+- Compounded medications: **cash-pay only, no insurance**
 - Retail Rx (non-compounded): insurance accepted; **Express Scripts (Cigna/Evernorth) in-network**
 - **Nations Benefits** Medicare Advantage OTC card accepted for OTC products and medical equipment
-- Patients **must bring a physical paper Rx** — not paperless
+- Patients **must bring a physical paper Rx**, not paperless
 - Medical equipment available for **rent AND purchase**; purchase prices TBD → display "Call for Pricing"
-- **(561) 292-0423 no longer exists — removed from every page**
+- **(561) 292-0423 no longer exists; removed from every page**
 
 ---
 
@@ -31,14 +31,14 @@ A **6-page static informational website** for **My Best Pharmacy**, a full-servi
 
 | File | Title / URL | Key Sections |
 |------|-------------|--------------|
-| `index.html` | My Best Pharmacy — Full-Service Pharmacy | Two-column hero, 4 service cards, Equipment Rental banner, patient reviews carousel (mobile), Services Strip (desktop only), Accepted Programs, Provider Callout, Location & Hours + map, Footer |
+| `index.html` | My Best Pharmacy | Full-Service Pharmacy | Two-column hero, 4 service cards, Equipment Rental banner, patient reviews carousel (mobile), Services Strip (desktop only), Accepted Programs, Provider Callout, Location & Hours + map, Footer |
 | `services.html` | For Patients | Hero, How It Works (paper Rx, cash-pay compounding), 4 patient service cards, What Is Compounding, FAQ accordion, Accepted Programs, Provider CTA, Footer |
 | `wellness.html` | Wellness Program | Wellness program page (added Jun 2026) |
 | `equipment.html` | Medical Equipment Rental & Sales | Two-column hero, "Rent or Purchase" callout, 7 pricing table sections (monthly/bi-weekly/deposit + "Call for Pricing" purchase column), click-to-preview photo modal, CTA, Footer |
 | `providers.html` | For Providers | Hero, How to Send Rx (Fax / Call / Contact cards), Compounds We Prepare (full formulary, 3 columns), CTA, Footer |
 | `contact.html` | Contact | Hero, Contact + Map (2-column), Service Area note, Provider CTA Strip, Footer |
 
-**Footer "Quick Links" on every page:** Home, For Patients, Equipment, Wellness Program, For Providers, Contact — keep this list and its labels identical across all 6 pages (fixed Jul 2026; previously index/wellness were missing the Equipment link and mislabeled it "Services").
+**Footer "Quick Links" on every page:** Home, For Patients, Equipment, Wellness Program, For Providers, Contact. Keep this list and its labels identical across all 6 pages (fixed Jul 2026; previously index/wellness were missing the Equipment link and mislabeled it "Services").
 
 ---
 
@@ -46,9 +46,9 @@ A **6-page static informational website** for **My Best Pharmacy**, a full-servi
 
 | File | Purpose |
 |------|---------|
-| `serve.mjs` | Static file server → `http://localhost:3000`. Also stubs `POST /quiz-lead.php` (there's no PHP locally) — it applies the same validation and prints the payload instead of mailing it. Deploy-excluded. |
+| `serve.mjs` | Static file server → `http://localhost:3000`. Also stubs `POST /quiz-lead.php` (there's no PHP locally); it applies the same validation and prints the payload instead of mailing it. Deploy-excluded. |
 | `screenshot.mjs` | Puppeteer full-page screenshot → `temporary screenshots/screenshot-{N}-{label}.png` (1440×900) |
-| `quiz-lead.php` | **Deploys to production.** Wellness-quiz handoff endpoint — see below. |
+| `quiz-lead.php` | **Deploys to production.** Wellness-quiz handoff endpoint; see below. |
 
 ---
 
@@ -58,13 +58,13 @@ A **6-page static informational website** for **My Best Pharmacy**, a full-servi
 - Excluded from deploy: `.git*`, `node_modules/`, `fable/`, `temporary screenshots/`, `README.md`, `CLAUDE.md`, `CONTEXT.md`, `LEARNINGS.md`, `package*.json`, `serve.mjs`, `screenshot.mjs`, the `.code-workspace` file, `.DS_Store`.
 - `robots.txt` + `sitemap.xml` are in place and list all 6 pages.
 - **SEO package deployed** (Jul 16, 2026): meta descriptions, Open Graph tags, `schema.org` Pharmacy/LocalBusiness structured data, Google Business Profile CID link.
-- **The wellness quiz has a form; no other page does** — the rest are informational only.
+- **The wellness quiz has a form; no other page does**; the rest are informational only.
 
 ---
 
 ## Wellness Quiz → WholeScripts Handoff (`wellness.html` + `quiz-lead.php`)
 
-> **Status (Jul 21 2026): the email handoff is DORMANT — reverted off the live page.** Dad found the
+> **Status (Jul 21 2026): the email handoff is DORMANT, reverted off the live page.** Dad found the
 > pharmacist-emails-a-cart flow too manual, so `wellness.html` was reverted to the earlier **self-serve
 > WholeScripts** experience: the results page shows a display-only plan (single Xymogen formula, no
 > Essential tier, no checkboxes), each card names the exact WholeScripts product to search + a "Search
@@ -80,7 +80,7 @@ dropped them on an unfamiliar catalog with an empty cart. It now hands the pharm
 intake instead.
 
 **Why this shape:** WholeScripts lets a practitioner account send a recommendation to a patient's
-email *even when that patient has no account yet* — the products arrive attached and the account is
+email *even when that patient has no account yet*: the products arrive attached and the account is
 created during checkout. There is no public WholeScripts API (automation runs only through paid EHR
 partnerships: Practice Better, CharmHealth, OptiMantra), so the pharmacist sends it manually. The
 website's job is to make that a ~90-second task.
@@ -90,7 +90,7 @@ handoff form → `POST /quiz-lead.php` → two emails → pharmacist opens Whole
 recommendation → patient registers and checks out.
 
 **Why selection happens on the results page, not in the cart:** the engine returns up to 5 items and
-often 4. Deleting them at checkout would be too late — the pharmacist would already have spent time
+often 4. Deleting them at checkout would be too late; the pharmacist would already have spent time
 recommending things the patient never wanted, and "we curated this for you" breaks the moment the
 cart is being emptied. Choosing up front means the recommendation that gets sent is already correct.
 
@@ -105,7 +105,7 @@ an "add anything" control would route around that gate. Unchecking is the only e
   messages get treated as forged.
 - `plan[]` is **what the patient kept**, `declined[]` is what they turned down. Both go through the
   same `parsePlanArray()` whitelist; a key appearing in both is dropped from `declined`. The plan code
-  and the WholeScripts checklist derive from the kept items only — the declined names appear once, as
+  and the WholeScripts checklist derive from the kept items only; the declined names appear once, as
   a muted "Also suggested, patient skipped: …" line for the pharmacist. The patient copy never
   mentions them.
 - The `Reply-To` display name goes through `displayName()`. Without it a name containing `<` would
@@ -117,24 +117,24 @@ an "add anything" control would route around that gate. Unchecking is the only e
   `htmlspecialchars` on output) and whitelists plan keys via `PLAN_KEYS`.
 - Anti-spam is a honeypot field plus a 3-second minimum between results rendering and submit. No captcha.
 - `mail()` on SiteGround is often spam-foldered by Gmail. If deliverability is poor, switch to
-  authenticated SMTP via PHPMailer — still self-hosted, still no third party.
+  authenticated SMTP via PHPMailer, still self-hosted, still no third party.
 
 **`wellness.html` notes:**
 - **Reasons engine.** `RULES` is a table of `[predicate, reason]` pairs per supplement, plus an
   optional `blocked` gate. `evaluate()` returns `{ key: [reasons] }`; `recommend()` is just the keys
   of that in `ORDER`. One source means a supplement can never appear without a reason drawn from the
-  patient's own answers. **Changing a predicate changes who gets recommended what** — re-run the
+  patient's own answers. **Changing a predicate changes who gets recommended what**, so re-run the
   equivalence check against a snapshot of the old function before shipping any edit here. Reason
   strings must contain no commas; three of them get joined into one sentence by `reasonSentence()`.
 - `SUPPS[key].about` is the plain-English "What is this?" copy. Supports phrasing only, no disease
-  claims — same posture as the disclaimer at the bottom of the results.
+  claims, same posture as the disclaimer at the bottom of the results.
 - **Selection state** is a `Set` of keys in `selected`, initialized to everything in `showResults()`.
   The formula toggle re-renders the whole results body, so `selected`, `expanded` (open disclosure
   panels), and `captureDraft()` (typed form input) all exist to survive that round trip. `resetQuiz()`
   clears all three.
 - Each card is a real `<input type="checkbox">` styled as the quiz's circular check, so keyboard and
   screen readers work. The whole card toggles it, with the label and the disclosure carved out of the
-  card-level handler — reacting to those would toggle twice.
+  card-level handler, because reacting to those would toggle twice.
 - Heading, submit label, and the empty-selection hint all read from `selected.size` in
   `updateSelectionUI()`, so they cannot disagree. Zero selected disables submit; `quiz-lead.php`
   rejects an empty plan as well.
@@ -148,30 +148,30 @@ an "add anything" control would route around that gate. Unchecking is the only e
 
 | File | Description |
 |------|-------------|
-| `newpharmacylogo.PNG` | **Current logo** — all-green palette. Footer: `filter: brightness(0) invert(1)`. |
+| `newpharmacylogo.PNG` | **Current logo**, all-green palette. Footer: `filter: brightness(0) invert(1)`. |
 | `newbrandguidelines.png` | **Current brand guidelines** (all-green palette). |
 | `og-image.png` | Open Graph share-preview image, referenced from every page's `<meta property="og:image">`. |
-| `email-logo.png` | 440×238, 23 KB, white-flattened logo for the `quiz-lead.php` emails. Generated from `newpharmacylogo.PNG` with sharp. Must stay reachable at `https://mybest-pharmacy.com/brand_assets/email-logo.png` — email clients can't use relative paths, and CSS filters (how the footer whitens the logo) don't work in email, so it sits on a white band above the green header. |
+| `email-logo.png` | 440×238, 23 KB, white-flattened logo for the `quiz-lead.php` emails. Generated from `newpharmacylogo.PNG` with sharp. Must stay reachable at `https://mybest-pharmacy.com/brand_assets/email-logo.png`; email clients can't use relative paths, and CSS filters (how the footer whitens the logo) don't work in email, so it sits on a white band above the green header. |
 
 Equipment hero/banner photos and the storefront photo live in `website_pics/` (root), **not** `brand_assets/`:
-- `website_pics/equipment-banner.jpg` — home page equipment banner
-- `website_pics/equipment-hero.jpg` — equipment.html hero
-- `website_pics/pharmacy-storefront.jpeg` — stacked below the logo card in the home hero
+- `website_pics/equipment-banner.jpg`: home page equipment banner
+- `website_pics/equipment-hero.jpg`: equipment.html hero
+- `website_pics/pharmacy-storefront.jpeg`: stacked below the logo card in the home hero
 
 ---
 
 ## Equipment Catalog (`equipment.html`)
 
-34 priced line items across 7 category tables. **19 of them have a real photo** wired up via `data-item="<key>"` on the `<tr>` + a matching entry in the `EQ_DATA` object (last `<script>` block) — clicking/tapping a row opens a photo + description modal. The other 15 (Elevating Legrests, Air Mattress, Mattress, IV Pole, both Medela pumps, Suction Pump Aspirator, Billi Blanket, both Oxygen Concentrators, Oxygen Cylinder, Nebulizer, CPAP, Oxygen Tank Service, Crutches) are plain text/price rows with no photo preview — intentionally left that way (Jul 17, 2026 decision), even though matching photo files for most of them already sit unused in `website_pics/equipment/`.
+34 priced line items across 7 category tables. **19 of them have a real photo** wired up via `data-item="<key>"` on the `<tr>` + a matching entry in the `EQ_DATA` object (last `<script>` block); clicking/tapping a row opens a photo + description modal. The other 15 (Elevating Legrests, Air Mattress, Mattress, IV Pole, both Medela pumps, Suction Pump Aspirator, Billi Blanket, both Oxygen Concentrators, Oxygen Cylinder, Nebulizer, CPAP, Oxygen Tank Service, Crutches) are plain text/price rows with no photo preview, intentionally left that way (Jul 17, 2026 decision), even though matching photo files for most of them already sit unused in `website_pics/equipment/`.
 
 - To add/replace a photo for any item: drop the file in `website_pics/equipment/`, add `data-item="<key>"` + the `eq-eye` icon span to its `<tr>`, and add a matching entry to `EQ_DATA`.
-- `website_pics/equipment/suction-pump.jpg` is a 0-byte broken file if that item is ever wired up — needs a real photo re-sourced first.
+- `website_pics/equipment/suction-pump.jpg` is a 0-byte broken file if that item is ever wired up; needs a real photo re-sourced first.
 
 ---
 
 ## Design System
 
-**Palette (all forest green — rebranded from blue):**
+**Palette (all forest green, rebranded from blue):**
 ```css
 :root {
   --blue:      #1B5226;   /* primary forest green */
@@ -179,12 +179,12 @@ Equipment hero/banner photos and the storefront photo live in `website_pics/` (r
   --green:     #6ABF4B;   /* accent lime green */
   --green-dk:  #4E9035;   /* hover green */
   --off-white: #F8F9FA;
-  --gray-900:  #0B3016;   /* body text — dark green (was navy; changed during recolor) */
+  --gray-900:  #0B3016;   /* body text, dark green (was navy; changed during recolor) */
 }
 ```
 > If body text looks off, reset `--gray-900` to `#111`.
 
-**No shared stylesheet** — each of the 6 pages carries its own inline `:root` block and CSS. Known drift: `index.html`, `providers.html`, and `wellness.html` also define `--blue-md: #14421E`, which `services.html`, `contact.html`, and `equipment.html` lack. When editing the palette, grep all 6 files — don't assume one page's `:root` is authoritative.
+**No shared stylesheet.** Each of the 6 pages carries its own inline `:root` block and CSS. Known drift: `index.html`, `providers.html`, and `wellness.html` also define `--blue-md: #14421E`, which `services.html`, `contact.html`, and `equipment.html` lack. When editing the palette, grep all 6 files; don't assume one page's `:root` is authoritative.
 
 **Typography:** Cormorant Garamond (headings) + DM Sans (body)
 
@@ -200,26 +200,26 @@ Equipment hero/banner photos and the storefront photo live in `website_pics/` (r
 
 ## Known Issues / Todo
 
-- **Wellness handoff — reverted to self-serve (Jul 21, 2026):** the email handoff is off the live page
+- **Wellness handoff, reverted to self-serve (Jul 21, 2026):** the email handoff is off the live page
   (see the Status banner in the WholeScripts Handoff section). The three items below are **resolved or
   moot** now that the site is self-serve, but kept for history:
   - ✅ `wellness@mybest-pharmacy.com` exists as a real mailbox (created Jul 21, 2026). Now unused by the
     live page (the email flow is dormant).
-  - ~~Confirm WholeScripts can email a recommendation to an account-less address~~ — **moot on the live
+  - ~~Confirm WholeScripts can email a recommendation to an account-less address~~: **moot on the live
     page**: patients now register first, then order themselves. Still relevant only if the email flow is
     ever re-enabled.
-  - ~~Monthly refills / autoship not wired~~ — **resolved by messaging**: the page no longer sells
+  - ~~Monthly refills / autoship not wired~~: **resolved by messaging**: the page no longer sells
     auto-refill; it explicitly says no subscription, order a month at a time.
-  - ~~Delivery-included wording conflict~~ — **fixed**: "delivery included" copy removed; the page now
+  - ~~Delivery-included wording conflict~~: **fixed**: "delivery included" copy removed; the page now
     says supplements ship direct from WholeScripts.
   - **Referral link is the sole WholeScripts entry point.** The only external WholeScripts link on the
     page is the sign-up button → `WS_REGISTER` (`.../register/mybestpharmacy`). Per-card buttons now
     **Copy the product name** to the clipboard (no cold search deep-link), so a patient can't register
     outside the referral and lose the pharmacy connection. The results page spells out sign up → search
     → add to cart → check out in 3 plain steps, with a "call us and we'll do it with you" fallback.
-- **Accessibility/typography debt (open):** body and pricing-table text is set at 14px (13px on mobile) sitewide — below the 15–16px recommended for the pharmacy's older patient demographic. The lime accent `--green: #6ABF4B` is also used for body text/links on white backgrounds in places, which is roughly 2:1 contrast — below WCAG AA's 4.5:1 for text. `--green-dk: #4E9035` already exists as a darker, higher-contrast alternative but is barely used. Fix: reserve lime for buttons/badges on dark backgrounds; use `--green-dk` (or `--gray-900`) for any green text on light backgrounds; bump body/table text to 15–16px.
-- **Suction Pump Aspirator photo missing** — see Equipment Catalog section above; the sourced file is 0 bytes.
-- **CSS variable drift** — `--blue-md` only defined on 3 of 6 pages (see Design System above).
+- **Accessibility/typography debt (open):** body and pricing-table text is set at 14px (13px on mobile) sitewide, below the 15–16px recommended for the pharmacy's older patient demographic. The lime accent `--green: #6ABF4B` is also used for body text/links on white backgrounds in places, which is roughly 2:1 contrast, below WCAG AA's 4.5:1 for text. `--green-dk: #4E9035` already exists as a darker, higher-contrast alternative but is barely used. Fix: reserve lime for buttons/badges on dark backgrounds; use `--green-dk` (or `--gray-900`) for any green text on light backgrounds; bump body/table text to 15–16px.
+- **Suction Pump Aspirator photo missing**: see Equipment Catalog section above; the sourced file is 0 bytes.
+- **CSS variable drift**: `--blue-md` only defined on 3 of 6 pages (see Design System above).
 
 ---
 
