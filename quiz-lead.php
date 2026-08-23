@@ -417,7 +417,7 @@ function pharmacyEmail(array $d): string
     foreach ($d['plan'] as $item) {
         $items .= '<tr><td style="padding:9px 0;border-bottom:1px solid ' . C_BORDER . ';font-size:15px;color:' . C_GREEN_DARK . ';">'
             . '&#9744;&nbsp;&nbsp;<strong>' . esc($item['brand']) . '</strong>'
-            . '<span style="color:' . C_TEXT_MUTED . ';font-size:13px;"> &nbsp;&mdash; ' . esc($item['name']) . '</span>'
+            . '<span style="color:' . C_TEXT_MUTED . ';font-size:13px;"> &nbsp;&middot; ' . esc($item['name']) . '</span>'
             . '</td></tr>';
     }
 
@@ -507,7 +507,7 @@ function patientEmail(array $d): string
     // Three steps, in the order they will actually happen.
     $steps = [
         ['A pharmacist reviews your plan', 'We check it against your hormone therapy, prescriptions, and anything else you take, then set how much of each one you take and when.'],
-        ['WholeScripts emails you', 'WholeScripts is the practitioner-grade dispensary we order through &mdash; it is not sold in stores. Look for the subject line <strong>My Best Pharmacy sent you a recommendation</strong>. That one is from us.'],
+        ['WholeScripts emails you', 'WholeScripts is the practitioner-grade dispensary we order through, and it is not sold in stores. Look for the subject line <strong>My Best Pharmacy sent you a recommendation</strong>. That one is from us.'],
         ['Open it and check out', 'Your supplements are already in the cart, with your pharmacist\'s directions for taking them. Create your free account right there and order.'],
     ];
 
@@ -537,7 +537,7 @@ function patientEmail(array $d): string
         . 'style="border:1px solid ' . C_BORDER . ';border-radius:12px;"><tr><td style="padding:16px 18px;">'
         . '<p style="margin:0;font-size:15px;font-weight:bold;color:' . C_GREEN_DARK . ';">Want to get a head start?</p>'
         . '<p style="margin:5px 0 12px;font-size:14px;line-height:1.65;color:' . C_TEXT_MUTED . ';">'
-        . 'Create your free WholeScripts account through our pharmacy now &mdash; it takes about a minute, '
+        . 'Create your free WholeScripts account through our pharmacy now. It takes about a minute, '
         . 'and your recommendation will be waiting in it. You do not have to do this first; '
         . 'the email above works on its own.</p>'
         . '<a href="' . WS_REGISTER . '" style="display:inline-block;padding:11px 22px;background:' . C_ACCENT . ';'

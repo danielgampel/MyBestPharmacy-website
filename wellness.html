@@ -919,7 +919,7 @@
 
     <!-- Stated under the quiz itself, so both are read before the results rather
          than only alongside them. The privacy note is accurate as built: the quiz
-         runs entirely in the browser — no form, no request, no storage — so if
+         runs entirely in the browser, with no form, no request and no storage, so if
          that ever changes, this line has to change with it. -->
     <p class="quiz-disclaimer">
       <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
@@ -927,7 +927,7 @@
     </p>
     <p class="quiz-disclaimer">
       <svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
-      Your answers stay private. They are used only to generate your protocol on this page &mdash; they are never saved next to your name or contact details, so we have no record of how any individual answered.
+      Your answers stay private. They are used only to generate your protocol on this page. They are never saved next to your name or contact details, so we have no record of how any individual answered.
     </p>
   </div>
 </section>
@@ -1550,13 +1550,13 @@
       ['Ingredients tested before they reach you',
        'Raw materials are screened and finished batches are tested for purity and potency. No hidden fillers, no mystery blends.'],
       ['Daily packets, so nothing gets forgotten',
-       'Several Xymogen formulas come as pre-measured daily packets &mdash; a whole day in one pouch. Nothing to count out, nothing to sort.'],
+       'Several Xymogen formulas come as pre-measured daily packets: a whole day in one pouch. Nothing to count out, nothing to sort.'],
       ['Made in forms your body can absorb',
-       'Magnesium glycinate, active B vitamins, chelated minerals &mdash; the premium forms, at the doses practitioners actually use.'],
+       'Magnesium glycinate, active B vitamins, chelated minerals: the premium forms, at the doses practitioners actually use.'],
       ['A brand best bought through a practitioner',
-       'Going through us means practitioner pricing, a bottle we can trace to the source, and someone to call if something is off &mdash; instead of a third-party seller you know nothing about.'],
+       'Going through us means practitioner pricing, a bottle we can trace to the source, and someone to call if something is off, instead of a third-party seller you know nothing about.'],
       ['One line, known inside out',
-       'We work with Xymogen every day, so we can tell you why each formula is in your plan &mdash; and pick up the phone when you ask.']
+       'We work with Xymogen every day, so we can tell you why each formula is in your plan, and pick up the phone when you ask.']
     ];
 
     /* `readOnly` is the revisit from the finished plan: same reasons, but there is
@@ -1571,7 +1571,7 @@
             '<span class="xy-load-ico" id="xy-load-ico">' + XY_SPIN + '</span>' +
             '<span class="xy-load-txt" id="xy-load-txt" aria-live="polite">' + XY_STATUS[0] + '</span>' +
           '</div>' +
-          '<p class="xy-while" id="xy-while">While you wait &mdash; why every supplement in your plan is <em>Xymogen</em>:</p>';
+          '<p class="xy-while" id="xy-while">While you wait, here is why every supplement in your plan is <em>Xymogen</em>:</p>';
 
       stage.innerHTML = lead +
         '<div class="xy-panel xy-panel-step' + (readOnly ? ' xy-panel-solo' : '') + '">' +
@@ -1919,13 +1919,13 @@
       // Pharmacy" already filled in, so there is no code for the patient to enter.
       const steps = [
         ['Create your free account',
-         'Green button below. Free, no membership &mdash; and it already lists us as your pharmacy. <strong>Do this first.</strong>'],
+         'Green button below. Free, no membership, and it already lists us as your pharmacy. <strong>Do this first.</strong>'],
         ['Come back and open your protocol',
          'Return to this tab, press the second button. <strong>Protocol No. ' + protocol.n + '</strong> opens with all ' + count + ' supplement' + (count === 1 ? '' : 's') + ' in it.'],
         ['Add to cart',
          'One tap adds the whole protocol.'],
         ['Choose monthly, then check out',
-         'Pick <strong>monthly delivery</strong> so you never run out &mdash; or just order once. Change or stop it anytime.']
+         'Pick <strong>monthly delivery</strong> so you never run out, or just order once. Change or stop it anytime.']
       ];
       return '<div class="ws-join" id="ws-callout">' +
         '<p class="ws-join-eyebrow">' + CHECK_ICON + 'How to order &middot; 2 minutes</p>' +
@@ -1948,12 +1948,12 @@
         // to /login, so the patient genuinely has to come back for step 2. Saying so
         // is better than letting them finish signing up and wonder where to go.
         '<div class="ws-final-cta">' +
-          '<p class="ws-final-label">Step 1 &mdash; new to WholeScripts</p>' +
+          '<p class="ws-final-label">Step 1: new to WholeScripts</p>' +
           '<a class="btn-green ws-final-btn" href="' + WS_REGISTER +
             '" target="_blank" rel="noopener noreferrer">Create my free account' + EXT_ICON + '</a>' +
           '<span class="ws-join-note">Free &middot; no code to enter &middot; come back to this tab after</span>' +
           '<span class="ws-final-divider"></span>' +
-          '<p class="ws-final-label">Step 2 &mdash; once you have an account</p>' +
+          '<p class="ws-final-label">Step 2: once you have an account</p>' +
           '<a class="btn-ghost-green ws-final-btn" href="' + protocol.url + '" target="_blank" rel="noopener noreferrer">' +
             'Open Protocol No. ' + protocol.n + EXT_ICON + '</a>' +
           '<span class="ws-join-note">' + protocol.name + ' &middot; already have an account? Start here</span>' +
@@ -1966,16 +1966,16 @@
     function wsCalloutMarkup() {
       const steps = [
         ['Create your free account',
-         'Green button below. Free, no membership &mdash; and it already lists us as your pharmacy.'],
+         'Green button below. Free, no membership, and it already lists us as your pharmacy.'],
         ['Add your supplements',
          'Tap <strong>Copy SKU</strong> on a card above, paste it into WholeScripts search, then <strong>Add to Cart</strong>. Repeat for each one.'],
         ['Check out',
-         'Press <strong>Check Out</strong> and pay WholeScripts directly. Reorder anytime &mdash; nothing charges automatically.']
+         'Press <strong>Check Out</strong> and pay WholeScripts directly. Reorder anytime. Nothing charges automatically.']
       ];
       return '<div class="ws-join" id="ws-callout">' +
         '<p class="ws-join-eyebrow">' + CHECK_ICON + 'How to order &middot; 5 minutes</p>' +
         '<h4 class="ws-join-title">Get your plan in 3 steps</h4>' +
-        '<p class="ws-join-body">WholeScripts is the dispensary we order practitioner-grade supplements through. You buy under our pharmacy &mdash; no subscription.</p>' +
+        '<p class="ws-join-body">WholeScripts is the dispensary we order practitioner-grade supplements through. You buy under our pharmacy, with no subscription.</p>' +
         '<ol class="ws-steps ws-steps-lg">' +
           steps.map(function (s, i) {
             // Green deepens step to step; each tile gets a matching soft wash.
@@ -2046,7 +2046,7 @@
             '<p class="rx-proto-kicker">Your protocol is</p>' +
             '<h3 class="rx-proto-num" id="rx-title">Protocol <span class="rx-proto-hash">No.&nbsp;' + protocol.n + '</span></h3>' +
             '<p class="rx-proto-name">' + protocol.name + '</p>' +
-            '<p class="rx-proto-sub">Built for you from your answers &mdash; ' + count +
+            '<p class="rx-proto-sub">Built for you from your answers: ' + count +
               ' practitioner-grade supplement' + (count === 1 ? '' : 's') + ', already put together on WholeScripts.</p>' +
             RX_DISCLAIMER +
             '<div class="rx-proto-includes">' +
@@ -2062,7 +2062,7 @@
               '<span style="color:var(--green-dk); font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;">Your personalized plan</span>' +
             '</div>' +
             '<h3 class="quiz-q-title" id="rx-title">' + count + ' supplement' + (count === 1 ? '' : 's') + ', chosen for you</h3>' +
-            '<p class="quiz-q-sub rx-lede">Every one was chosen from your own answers &mdash; practitioner-grade, and matched to your goals.</p>' +
+            '<p class="quiz-q-sub rx-lede">Every one was chosen from your own answers, practitioner-grade and matched to your goals.</p>' +
             RX_DISCLAIMER +
           '</div>';
 

@@ -66,8 +66,14 @@
   - A true parenthetical → use parentheses.
 - Do not swap in an en dash (–) or a double hyphen (--) as a replacement. En dashes stay reserved
   for genuine numeric and time ranges (`9 AM–6 PM`, `15–16px`, `Mon–Fri`), which are correct as-is.
-- **Before finishing any session that touched a file, run this and expect zero hits:**
-  `grep -rn "—" --include="*.html" --include="*.php" --include="*.mjs" --include="*.md" . | grep -v fable | grep -v node_modules`
+- **Watch for the HTML entity form.** `&mdash;` (and `&#8212;` / `&#x2014;`) render as em dashes on
+  the page but do not show up in a search for the character itself. `wellness.html` and
+  `quiz-lead.php` build a lot of copy from JavaScript and PHP strings that use the entity form.
+- **Before finishing any session that touched a file, run this and expect zero hits** (other than
+  the examples in this file):
+  `grep -rn "—\|&mdash;\|&#8212;\|&#x2014;" --include="*.html" --include="*.php" --include="*.mjs" --include="*.md" . | grep -v fable | grep -v node_modules`
+- A page that looks clean on load is not proof. Most of the wellness quiz copy only reaches the DOM
+  after a visitor answers the questions, so walk the quiz to the results screen before calling it done.
 
 ## Hard Rules
 - Do not use an em dash (—) in any copy, comment, or doc you write (see Writing Copy above)
